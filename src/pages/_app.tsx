@@ -1,12 +1,13 @@
-import type { AppProps } from "next/app";
+import { AppProps } from "next/app";
+import type { ReactElement } from "react";
 import "../styles/global.css";
 
 /**
  * Next.js App function
  * @param {AppProps} appProps props
- * @return {JSX.Element} App
+ * @return {ReactNode} App
  */
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return <Component {...pageProps} />;
 }
 

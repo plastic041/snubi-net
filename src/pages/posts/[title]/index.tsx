@@ -104,25 +104,31 @@ type Props = {
 const PostPage = ({ html, frontmatter }: Props) => {
   return (
     <Layout>
-      <article className="flex flex-1 flex-col gap-8 p-4 lg:grid lg:grid-cols-3">
+      <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <div className="top-2 col-span-1 flex flex-col gap-2 self-start lg:sticky">
           <nav>
             <Link href="/posts">
-              <a className="flex gap-2 items-center text-gray-500 transition-color hover:text-gray-900 duration-200">
+              <a className="flex gap-2 items-center text-gray-500 transition-color hover:text-gray-900 duration-200 dark:text-gray-200 dark:hover:text-gray-400">
                 <ArrowUturnLeftIcon className="w-4 h-4" />
                 <span>목록으로</span>
               </a>
             </Link>
           </nav>
-          <h1 className="break-words text-4xl font-extrabold [word-break:keep-all]">
+          <h1 className="break-words text-4xl font-extrabold [word-break:keep-all] text-gray-900 dark:text-gray-100">
             {frontmatter.title}
           </h1>
-          <time dateTime={frontmatter.created_at}>
+          <p className="text-gray-700 hidden lg:block">
+            {frontmatter.description}
+          </p>
+          <time
+            dateTime={frontmatter.created_at}
+            className="text-gray-700 dark:text-gray-300"
+          >
             {frontmatter.created_at}
           </time>
         </div>
         <div
-          className="prose col-span-2"
+          className="prose col-span-2 dark:prose-invert break-words [word-break:keep-all]"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </article>

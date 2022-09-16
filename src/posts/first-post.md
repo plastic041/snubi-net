@@ -1,6 +1,6 @@
 ---
-title: "첫 번째 글"
-description: "첫 번째로 쓰는 글"
+title: "주며, 능히 미묘한 무한한 구할 산야에 말이다."
+description: "그들은 주며, 주는 황금시대를 속에서 시들어 설산에서 관현악이며, 만천하의 그리하였는가?"
 slug: "first-post"
 created_at: "2022-09-15"
 is_draft: false

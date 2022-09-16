@@ -2,7 +2,6 @@ import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
 import Link from "next/link";
 import { join } from "path";
 import Layout from "~/components/layout";

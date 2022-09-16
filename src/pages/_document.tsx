@@ -16,7 +16,7 @@ export default function Document(): ReactNode {
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-dynamic-subset.css"
         />
       </Head>
-      <body className="overflow-y-scroll bg-white dark:bg-gray-700">
+      <body className="overflow-y-scroll bg-white dark:bg-gray-800">
         <Main />
         <NextScript />
       </body>

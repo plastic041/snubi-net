@@ -37,8 +37,11 @@ type PageProps = {
   frontmatters: Frontmatter[];
 };
 const Posts = ({ frontmatters }: PageProps) => {
+  const title = `글 목록 | Snubi.net`;
+  const description = `Snubi.net의 글 목록`;
+
   return (
-    <Layout>
+    <Layout title={title} description={description}>
       <ul className="flex flex-col">
         {frontmatters.map((frontmatter) => (
           <PostItem frontmatter={frontmatter} key={frontmatter.title} />

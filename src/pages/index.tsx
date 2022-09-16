@@ -3,8 +3,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
+  const title = `Snubi.net`;
+  const description = `Snubi.net`;
+
   return (
-    <Layout>
+    <Layout title={title} description={description}>
       <Link href="/posts">
         <a>
           <div>hello</div>

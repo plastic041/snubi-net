@@ -1,15 +1,24 @@
 import Header from "./header";
+import Head from "next/head";
 import React from "react";
 
 type LayoutProps = {
   children: React.ReactElement;
+  title: string;
+  description: string;
 };
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, title, description }: LayoutProps) => {
   return (
-    <div className="container mx-auto flex h-screen w-screen flex-col">
-      <Header />
-      <main className="flex-1">{children}</main>
-    </div>
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
+      <div className="flex w-full flex-col gap-8">
+        <Header />
+        <main className="flex-1 container mx-auto xl:px-40">{children}</main>
+      </div>
+    </>
   );
 };
 

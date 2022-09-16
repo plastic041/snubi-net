@@ -5,9 +5,9 @@ import rehyperSanitize from "rehype-sanitize";
 import rehypeStringify from "rehype-stringify";
 import { readFile, readdir } from "fs/promises";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import PostLayout from "../../components/post-layout";
 import { join } from "path";
 import matter from "gray-matter";
+import Layout from "../../components/layout";
 
 const md2html = async (md: string) => {
   const html = await unified()
@@ -20,15 +20,11 @@ const md2html = async (md: string) => {
   return html;
 };
 
-type Matter = {
+type Frontmatter = {
   title: string;
   description: string;
   created_at: string;
   is_draft: boolean;
-  // title: "첫 번째 글",
-  // description: "첫 번째로 쓰는 글",
-  // created_at: "2022-09-15",
-  // is_draft: "false",
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -51,12 +47,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const text = await readFile(join(postsPath, filename), { encoding: "utf8" });
-  const { content, data } = matter(text) as unknown as {
+  const { content, data: frontmatter } = matter(text) as unknown as {
     content: string;
-    data: Matter;
+    data: Frontmatter;
   };
 
-  if (data.is_draft) {
+  if (frontmatter.is_draft) {
     return {
       notFound: true,
     };
@@ -67,6 +63,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       html: String(html),
+      frontmatter,
     },
   };
 };
@@ -88,12 +85,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 type Props = {
   html: string;
+  frontmatter: Frontmatter;
 };
-const PostPage = ({ html }: Props) => {
+const PostPage = ({ html, frontmatter }: Props) => {
   return (
-    <PostLayout>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </PostLayout>
+    <Layout>
+      <div className="flex flex-1 flex-col gap-8 p-4 lg:grid lg:grid-cols-3">
+        <div className="top-2 col-span-1 flex flex-col gap-2 self-start lg:sticky">
+          <h1 className="break-words text-4xl font-extrabold [word-break:keep-all]">
+            {frontmatter.title}
+          </h1>
+          <time dateTime={frontmatter.created_at}>
+            {frontmatter.created_at}
+          </time>
+        </div>
+        <div
+          className="prose col-span-2"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </div>
+    </Layout>
   );
 };
 

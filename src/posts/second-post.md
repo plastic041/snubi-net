@@ -1,7 +1,7 @@
 ---
-title: "첫 번째 글"
-description: "첫 번째로 쓰는 글"
-slug: "first-post"
+title: "두 번째 글"
+description: "두 번째로 쓰는 글"
+slug: "second-post"
 created_at: "2022-09-15"
 is_draft: false
 ---

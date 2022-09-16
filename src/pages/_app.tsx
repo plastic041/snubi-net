@@ -1,6 +1,6 @@
+import "../styles/global.css";
 import { AppProps } from "next/app";
 import type { ReactElement } from "react";
-import "../styles/global.css";
 
 /**
  * Next.js App function

@@ -10,7 +10,7 @@ import type { ReactElement } from "react";
  */
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (
-    <MotionConfig>
+    <MotionConfig reducedMotion="user">
       <Component {...pageProps} />
     </MotionConfig>
   );

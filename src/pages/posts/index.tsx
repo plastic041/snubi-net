@@ -26,9 +26,14 @@ export const getStaticProps: GetStaticProps = async () => {
     (frontmatter) => !frontmatter.is_draft
   );
 
+  const frontmattersSorted = frontmattersPublished.sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
   return {
     props: {
-      frontmatters: frontmattersPublished,
+      frontmatters: frontmattersSorted,
     },
   };
 };

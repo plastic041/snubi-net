@@ -4,4 +4,5 @@ export type Frontmatter = {
   slug: string;
   created_at: string;
   is_draft: boolean;
+  tags: string[];
 };

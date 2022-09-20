@@ -7,7 +7,7 @@ type PostItemProps = {
 const PostItem = ({ frontmatter }: PostItemProps) => {
   return (
     <Link href={`/posts/${frontmatter.slug}`}>
-      <a className="p-8 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+      <a className="p-4 lg:p-8 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
         <li className="flex flex-col">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {frontmatter.title}

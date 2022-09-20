@@ -1,6 +1,7 @@
 import Layout from "../components/layout";
 import type { NextPage } from "next";
-import Link from "next/link";
+import Image from "next/future/image";
+import heroCatPic from "~/public/hero-cat.png";
 
 const Home: NextPage = () => {
   const title = `Snubi.net`;
@@ -8,11 +9,16 @@ const Home: NextPage = () => {
 
   return (
     <Layout title={title} description={description}>
-      <Link href="/posts">
-        <a>
-          <div>hello</div>
-        </a>
-      </Link>
+      <div className="flex flex-col p-4 items-center">
+        <Image
+          className="rounded-md shadow-lg"
+          src={heroCatPic}
+          placeholder="blur"
+          width={400}
+          height={400}
+          alt="snubi.net hero image"
+        />
+      </div>
     </Layout>
   );
 };

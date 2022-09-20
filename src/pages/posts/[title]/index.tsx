@@ -103,7 +103,7 @@ type Props = {
   frontmatter: Frontmatter;
 };
 const PostPage = ({ html, frontmatter }: Props) => {
-  const title = `${frontmatter.title} | Snubi.net`;
+  const title = `${frontmatter.title} | Snubi`;
 
   return (
     <Layout title={title} description={frontmatter.description}>

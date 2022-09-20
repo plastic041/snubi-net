@@ -12,7 +12,6 @@ const Header = () => {
           </a>
         </Link>
         <div className="flex flex-row gap-2">
-          <Git
           <Link href="/posts">
             <a>
               <span className="text-blue-500 dark:text-blue-300">글 목록</span>

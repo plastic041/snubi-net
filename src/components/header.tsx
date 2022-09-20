@@ -7,11 +7,12 @@ const Header = () => {
         <Link href="/">
           <a>
             <span className="text-3xl font-extrabold transition-colors hover:text-blue-500 text-gray-900 dark:text-gray-100 dark:hover:text-blue-300">
-              Snubi.net
+              Snubi
             </span>
           </a>
         </Link>
         <div className="flex flex-row gap-2">
+          <Git
           <Link href="/posts">
             <a>
               <span className="text-blue-500 dark:text-blue-300">글 목록</span>

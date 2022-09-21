@@ -9,7 +9,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout title={title} description={description}>
-      <div className="flex flex-col p-4 items-center">
+      <div className="flex flex-col items-center p-4">
         <Image
           className="rounded-md shadow-lg"
           src={heroCatPic}

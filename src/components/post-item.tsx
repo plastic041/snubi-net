@@ -1,3 +1,4 @@
+import Tag from "./tag";
 import Link from "next/link";
 import type { Frontmatter } from "~/typings/frontmatter";
 
@@ -6,13 +7,13 @@ type PostItemProps = {
 };
 const PostItem = ({ frontmatter }: PostItemProps) => {
   return (
-    <Link href={`/posts/${frontmatter.slug}`}>
-      <a className="p-4 lg:p-8 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-        <li className="flex flex-col">
+    <li className="flex flex-col">
+      <Link href={`/posts/${frontmatter.slug}`}>
+        <a className="flex flex-col rounded-lg p-4 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 lg:p-8">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {frontmatter.title}
           </h3>
-          <span className="text-gray-700 dark:text-gray-200 mb-2">
+          <span className="mb-2 text-gray-700 dark:text-gray-200">
             {frontmatter.description}
           </span>
           <time
@@ -21,9 +22,14 @@ const PostItem = ({ frontmatter }: PostItemProps) => {
           >
             {frontmatter.created_at}
           </time>
-        </li>
-      </a>
-    </Link>
+          <div className="flex flex-row gap-1">
+            {frontmatter.tags.map((tag) => (
+              <Tag tag={tag} key={tag} />
+            ))}
+          </div>
+        </a>
+      </Link>
+    </li>
   );
 };
 

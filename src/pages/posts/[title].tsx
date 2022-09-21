@@ -1,10 +1,13 @@
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
 import type { GetStaticPaths, GetStaticProps } from "next";
+import { MDXRemote } from "next-mdx-remote";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import Image from "next/future/image";
 import { join } from "path";
 import Layout from "~/components/layout";
 import PostHeader from "~/components/post-header";
-import { md2html } from "~/lib/md";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -56,11 +59,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const html = await md2html(content);
+  const mdxSource = await serialize(content);
 
   return {
     props: {
-      html: String(html),
+      source: mdxSource,
       frontmatter,
     },
   };
@@ -96,21 +99,42 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
+type ImageProps = {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+};
+const components = {
+  Image: ({ src, alt, width, height }: ImageProps) => (
+    <Image
+      alt={alt}
+      src={src}
+      width={width || 512}
+      height={height || 512}
+      style={{
+        maxHeight: `${height || 512}px`,
+        maxWidth: `${width || 512}px`,
+      }}
+      className="rounded object-contain"
+    />
+  ),
+};
+
 type Props = {
-  html: string;
+  source: MDXRemoteSerializeResult;
   frontmatter: Frontmatter;
 };
-const PostPage = ({ html, frontmatter }: Props) => {
+const PostPage = ({ source, frontmatter }: Props) => {
   const title = `${frontmatter.title} | Snubi`;
 
   return (
     <Layout title={title} description={frontmatter.description}>
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={frontmatter} />
-        <div
-          className="prose col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert">
+          <MDXRemote {...source} components={components} />
+        </div>
       </article>
     </Layout>
   );

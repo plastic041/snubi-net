@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 flex h-16 flex-shrink-0 items-center border-b bg-gray-50 dark:border-b-gray-500 dark:bg-gray-700">
+    <header className="sticky top-0 flex h-16 flex-shrink-0 items-center border-b bg-gray-50 dark:border-b-gray-500 dark:bg-gray-700 z-10">
       <nav className="container mx-auto flex flex-row items-center justify-between p-4 xl:px-40">
         <Link href="/">
           <a>

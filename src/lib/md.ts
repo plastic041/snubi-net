@@ -9,7 +9,9 @@ export const md2html = async (md: string) => {
     .use(remarkParse)
     .use(remarkRehype)
     .use(rehyperSanitize)
-    .use(rehypeStringify)
+    .use(rehypeStringify, {
+      closeSelfClosing: true,
+    })
     .process(md);
 
   return html.toString();

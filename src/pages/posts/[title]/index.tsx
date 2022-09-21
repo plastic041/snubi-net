@@ -108,7 +108,7 @@ const PostPage = ({ html, frontmatter }: Props) => {
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={frontmatter} />
         <div
-          className="prose col-span-2 dark:prose-invert break-words [word-break:keep-all] whitespace-pre-wrap flex flex-col"
+          className="prose col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </article>

@@ -12,5 +12,5 @@ export const md2html = async (md: string) => {
     .use(rehypeStringify)
     .process(md);
 
-  return html;
+  return html.toString();
 };

@@ -9,21 +9,22 @@ import type { Frontmatter } from "~/typings/frontmatter";
 export const getStaticProps: GetStaticProps = async () => {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
-  const frontmattersAll = await Promise.all(
+  const fms = await Promise.all(
     postsFilenames.map(async (filename) => {
       const text = await readFile(join(postsPath, filename), {
         encoding: "utf8",
       });
-      const { data: frontmatter } = matter(text) as unknown as {
+      const { data: fm } = matter(text) as unknown as {
         data: Frontmatter;
       };
 
-      return frontmatter;
+      return fm;
     })
   );
 
-  const flatTags = frontmattersAll
-    .map((frontmatter) => frontmatter.tags)
+  const flatTags = fms
+    .filter((fm) => !fm.is_draft)
+    .map((fm) => fm.tags)
     .flat();
 
   // count tags like { name: "tag", count: 1 }[];
@@ -53,14 +54,19 @@ const TagsPage = ({ tags }: PageProps) => {
   return (
     <Layout title="tags | snubi" description="tags">
       <>
-        <h1 className="mb-8 text-4xl font-extrabold">Tags</h1>
+        <h1 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+          Tags
+        </h1>
         <ul className="flex gap-8">
           {tags.map((tag) => (
             <li key={tag.name} className="flex items-center gap-2">
               <a href={`/tags/${tag.name}`}>
                 <Tag tag={tag.name} />
               </a>
-              <span title={`${tag.name} 태그를 가진 글 수`} className="text-sm">
+              <span
+                title={`${tag.name} 태그를 가진 글 수`}
+                className="text-sm text-gray-700 dark:text-gray-200"
+              >
                 {tag.count}
               </span>
             </li>

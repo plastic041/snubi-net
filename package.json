@@ -23,10 +23,12 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "remark-stringify": "^10.0.2",
+    "shart": "^0.0.4",
     "tailwindcss": "^3.1.8",
     "unified": "^10.1.2"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.3.1",
     "@tailwindcss/typography": "^0.5.7",
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "@types/node": "18.7.18",

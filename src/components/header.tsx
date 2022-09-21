@@ -1,3 +1,4 @@
+import { GithubIcon } from "./icons";
 import Link from "next/link";
 
 const Header = () => {
@@ -11,12 +12,24 @@ const Header = () => {
             </span>
           </a>
         </Link>
-        <div className="flex flex-row gap-2">
+        <div className="flex gap-4 items-center">
           <Link href="/posts">
-            <a>
-              <span className="text-blue-500 dark:text-blue-300">글 목록</span>
+            <a className="flex">
+              <span className="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">
+                글 목록
+              </span>
             </a>
           </Link>
+
+          <a
+            className="flex"
+            href="https://github.com/plastic041"
+            target="_blank"
+            rel="noreferrer"
+            title="snubi Github"
+          >
+            <GithubIcon className="h-6 w-6 text-blue-500 dark:text-blue-300 hover:text-blue-700 transition-colors dark:hover:text-blue-400" />
+          </a>
         </div>
       </nav>
     </header>

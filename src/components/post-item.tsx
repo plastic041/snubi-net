@@ -17,7 +17,7 @@ const PostItem = ({ frontmatter }: PostItemProps) => {
             {frontmatter.description}
           </span>
           <time
-            className="text-gray-700 dark:text-gray-200"
+            className="mb-2 text-gray-700 dark:text-gray-200"
             dateTime={frontmatter.created_at}
           >
             {frontmatter.created_at}

@@ -9,18 +9,14 @@ type CategoryProps = {
 const CategoryItem = ({ name, href }: CategoryProps) => {
   const isActive = useIsActive(href);
 
-  if (isActive) {
-    return (
-      <span className="text-gray-900 transition-colors dark:text-gray-100">
-        {name}
-      </span>
-    );
-  }
-
   return (
     <Link href={href}>
       <a className="flex">
-        <span className="text-blue-500 transition-colors hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-400">
+        <span
+          className={`text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-400
+          ${isActive ? "underline" : ""}
+        `}
+        >
           {name}
         </span>
       </a>
@@ -41,7 +37,7 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-4">
           <CategoryItem name="작업" href="/works" />
-          <CategoryItem name="글 목록" href="/posts" />
+          <CategoryItem name="글" href="/posts" />
           <a
             className="flex"
             href="https://github.com/plastic041"

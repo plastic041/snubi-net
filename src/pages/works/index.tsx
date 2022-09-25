@@ -7,7 +7,7 @@ const WorksPage = () => {
     <Layout title="작업 | Snubi" description="작업 모음">
       <div className="flex flex-col items-center gap-4">
         <HeroImage src={ConstructionCat} alt="안전모를 쓴 고양이" />
-        <p className="text-gray-500 dark:text-gray-400">준비중입니다.</p>
+        <p className="text-gray-500 dark:text-gray-400">공사중입니다.</p>
       </div>
     </Layout>
   );

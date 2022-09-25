@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { GithubIcon } from "~/components/icons";
 
 type CategoryProps = {
@@ -6,6 +7,17 @@ type CategoryProps = {
   href: string;
 };
 const CategoryItem = ({ name, href }: CategoryProps) => {
+  const router = useRouter();
+  const isActive = router.pathname === href;
+
+  if (isActive) {
+    return (
+      <span className="text-gray-900 transition-colors dark:text-gray-100">
+        {name}
+      </span>
+    );
+  }
+
   return (
     <Link href={href}>
       <a className="flex">

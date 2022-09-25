@@ -1,7 +1,7 @@
 import Layout from "../components/layout";
 import type { NextPage } from "next";
 import Image from "next/future/image";
-import heroCatPic from "~/../public/hero-cat.png";
+import heroCatPic from "~/../public/images/hero-cat.png";
 
 const Home: NextPage = () => {
   const title = `Snubi.net`;
@@ -9,7 +9,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout title={title} description={description}>
-      <div className="flex flex-col items-center p-4">
+      <div className="flex flex-col items-center">
         <Image
           title="Hero cat"
           id="hero-cat"

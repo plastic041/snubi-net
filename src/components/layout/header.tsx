@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { GithubIcon } from "~/components/icons";
+import { useIsActive } from "~/lib/use-is-active";
 
 type CategoryProps = {
   name: string;
   href: string;
 };
 const CategoryItem = ({ name, href }: CategoryProps) => {
-  const router = useRouter();
-  const isActive = router.pathname === href;
+  const isActive = useIsActive(href);
 
   if (isActive) {
     return (

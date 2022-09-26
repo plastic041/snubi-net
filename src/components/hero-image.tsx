@@ -7,7 +7,7 @@ type HeroImageProps = {
 };
 const HeroImage = ({ src, alt }: HeroImageProps) => {
   return (
-    <div className="m-4 flex overflow-hidden rounded shadow-lg sm:m-0">
+    <div className="flex overflow-hidden rounded shadow-lg">
       <Image
         className="scale-105 transform overflow-hidden"
         src={src}

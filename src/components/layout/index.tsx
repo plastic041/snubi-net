@@ -14,7 +14,7 @@ const Layout = ({ children, title, description }: LayoutProps) => {
         <title>{title}</title>
         <meta name="description" content={description} />
       </Head>
-      <div className="flex w-full flex-col gap-8">
+      <div className="relative flex w-full flex-col">
         <Header />
         <main className="container mx-auto flex-1 xl:px-40">{children}</main>
       </div>

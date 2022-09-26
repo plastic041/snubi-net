@@ -1,7 +1,7 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Tag from "~/components/tag";
+import TagChip from "~/components/tag-chip";
 import { Frontmatter } from "~/typings/frontmatter";
 
 type PostHeaderProps = {
@@ -35,7 +35,7 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
       </time>
       <div className="flex flex-row gap-1">
         {frontmatter.tags.map((tag) => (
-          <Tag tag={tag} key={tag} isAnchor />
+          <TagChip tag={tag} key={tag} />
         ))}
       </div>
     </motion.div>

@@ -52,7 +52,7 @@ type PageProps = {
 };
 const TagsPage = ({ tags }: PageProps) => {
   return (
-    <Layout title="tags | snubi" description="tags">
+    <Layout title="tags | snubi" description="태그 모음">
       <h1 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
         Tags
       </h1>

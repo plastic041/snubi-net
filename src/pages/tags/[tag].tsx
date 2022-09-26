@@ -4,7 +4,7 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { join } from "path";
 import Layout from "~/components/layout";
-import PostItem from "~/components/post-item";
+import PostItem from "~/components/post-list-item";
 import { Frontmatter } from "~/typings/frontmatter";
 
 export const getStaticProps: GetStaticProps = async (context) => {

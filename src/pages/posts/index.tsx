@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import type { GetStaticProps } from "next";
 import { join } from "path";
 import Layout from "~/components/layout";
-import PostItem from "~/components/post-item";
+import PostItem from "~/components/post-list-item";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 export const getStaticProps: GetStaticProps = async () => {

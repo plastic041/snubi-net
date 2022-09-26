@@ -53,26 +53,24 @@ type PageProps = {
 const TagsPage = ({ tags }: PageProps) => {
   return (
     <Layout title="tags | snubi" description="tags">
-      <>
-        <h1 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
-          Tags
-        </h1>
-        <ul className="flex gap-8">
-          {tags.map((tag) => (
-            <li key={tag.name} className="flex items-center gap-2">
-              <a href={`/tags/${tag.name}`}>
-                <Tag tag={tag.name} />
-              </a>
-              <span
-                title={`${tag.name} 태그를 가진 글 수`}
-                className="text-sm text-gray-700 dark:text-gray-200"
-              >
-                {tag.count}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </>
+      <h1 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+        Tags
+      </h1>
+      <ul className="flex gap-8">
+        {tags.map((tag) => (
+          <li key={tag.name} className="flex items-center gap-2">
+            <a href={`/tags/${tag.name}`}>
+              <Tag tag={tag.name} />
+            </a>
+            <span
+              title={`${tag.name} 태그를 가진 글 수`}
+              className="text-sm text-gray-700 dark:text-gray-200"
+            >
+              {tag.count}
+            </span>
+          </li>
+        ))}
+      </ul>
     </Layout>
   );
 };

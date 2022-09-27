@@ -132,7 +132,7 @@ const PostPage = ({ source, frontmatter }: Props) => {
     <Layout title={title} description={frontmatter.description}>
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={frontmatter} />
-        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words indent-2 [word-break:keep-all] dark:prose-invert">
+        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_p+p]:indent-2">
           <MDXRemote {...source} components={components} />
         </div>
       </article>

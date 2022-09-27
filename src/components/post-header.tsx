@@ -10,7 +10,7 @@ type PostHeaderProps = {
 const PostHeader = ({ frontmatter }: PostHeaderProps) => {
   return (
     <motion.div
-      className="top-[5rem] col-span-1 -mt-8 flex flex-col gap-2 self-start lg:sticky"
+      className="top-[5rem] col-span-1 -mt-8 flex flex-col gap-4 self-start lg:sticky"
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}

@@ -109,13 +109,12 @@ const DestinyCardPage = () => {
   return (
     <Layout title="Destiny Card | snubi" description="Destiny Card">
       <Head>
-        <link
-          rel="preload"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
+        <style>
+          {`@font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2');
+          }`}
+        </style>
         <meta name="title" content="데스티니 무기 카드 생성기" />
         <meta
           name="description"

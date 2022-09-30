@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
  */
 export default function Document(): ReactNode {
   return (
-    <Html>
+    <Html lang="ko">
       <Head>
         <link
           rel="stylesheet"

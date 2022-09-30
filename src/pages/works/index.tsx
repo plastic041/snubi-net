@@ -1,5 +1,6 @@
 import Image from "next/future/image";
 import Link from "next/link";
+import destinyCardThumbnail from "~/../public/images/destiny-card/thumbnail.png";
 import Layout from "~/components/layout";
 
 const WorksPage = () => {
@@ -9,11 +10,12 @@ const WorksPage = () => {
         <Link href="/works/destiny-card">
           <a className="flex flex-col items-center gap-4 border border-gray-300 p-4 transition-colors dark:border-gray-400 hover:dark:bg-gray-600">
             <Image
-              src="/images/destiny-card/thumbnail.png"
+              src={destinyCardThumbnail}
               alt="destiny-card"
               width={400}
               height={400}
               className="w-64"
+              placeholder="blur"
             />
             <div className="flex flex-col items-center gap-2">
               <span className="text-xl font-bold text-gray-900 dark:text-gray-50">

@@ -1,9 +1,9 @@
 import type { DamageType, ItemRarity } from "~/typings/destiny-item";
 
-export const WIDTH = 280;
-export const HEIGHT = 280;
-export const PX = 16;
-export const PY = 16;
+export const WIDTH = 600;
+export const HEIGHT = 600;
+export const PX = 32;
+export const PY = 32;
 export const FONT_FAMILY = "pretendard variable";
 
 export const DAMAGE_TYPE_IMAGE_SRCS: Record<DamageType, string> = {

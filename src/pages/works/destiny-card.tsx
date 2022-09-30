@@ -37,46 +37,46 @@ const DestinyCardPage = () => {
 
     // name, type, rarity bg
     ctx.fillStyle = RARITY_COLORS[item.rarity].bg;
-    ctx.fillRect(0, 0, canvas.width, 86);
+    ctx.fillRect(0, 0, canvas.width, 170);
 
     // name
     ctx.fillStyle = RARITY_COLORS[item.rarity].name;
-    ctx.font = `bold 1.8rem ${FONT_FAMILY}`;
+    ctx.font = `bold 4.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
     ctx.fillText(item.name, PX, PY);
 
     // slot
     ctx.fillStyle = RARITY_COLORS[item.rarity].type;
-    ctx.font = `1rem ${FONT_FAMILY}`;
+    ctx.font = `2.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(STRING_KR.slot[item.slot], PX, 56);
+    ctx.fillText(STRING_KR.slot[item.slot], PX, 110);
 
     // rarity
     ctx.fillStyle = RARITY_COLORS[item.rarity].rarity;
-    ctx.font = `1rem ${FONT_FAMILY}`;
+    ctx.font = `2.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "right";
-    ctx.fillText(rarityKr, canvas.width - PX, 56);
+    ctx.fillText(rarityKr, canvas.width - PX, 110);
 
     // level
     ctx.fillStyle = DAMAGE_TYPE_COLORS[item.damageType];
-    ctx.font = `900 3rem ${FONT_FAMILY}`;
+    ctx.font = `900 7rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(String(item.level), PX + 44, 103);
+    ctx.fillText(String(item.level), PX + 96, 204);
 
     // damage type image
     const damageTypeImage = new Image();
     damageTypeImage.src = DAMAGE_TYPE_IMAGE_SRCS[item.damageType];
     damageTypeImage.onload = () => {
-      ctx.drawImage(damageTypeImage, PX, 104, 40, 40);
+      ctx.drawImage(damageTypeImage, PX, 210, 86, 86);
     };
 
     // description
     ctx.fillStyle = RARITY_COLORS[item.rarity].desc;
-    ctx.font = `1rem ${FONT_FAMILY}`;
+    ctx.font = `2.2rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
 
     let line = "";
-    let y = 160;
+    let y = 340;
 
     const words = item.description.split(" ");
     for (let i = 0; i < words.length; i++) {
@@ -86,7 +86,7 @@ const DestinyCardPage = () => {
       if (testWidth > canvas.width - PX * 2 && i > 0) {
         ctx.fillText(line, PX, y);
         line = words[i] + " ";
-        y += 20;
+        y += 44;
 
         if (y > canvas.height - PY * 2) {
           break;
@@ -144,13 +144,13 @@ const DestinyCardPage = () => {
           content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
         />
       </Head>
-      <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:justify-between lg:gap-0">
+      <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
         <canvas
           id="canvas"
           width={WIDTH}
           height={HEIGHT}
           ref={canvasRef}
-          className="align-self-start shadow-lg dark:shadow-gray-900"
+          className="h-[280px] w-[280px] shadow-lg dark:shadow-gray-900 md:h-[400px] md:w-[400px]"
         />
         <form className="flex w-full flex-col gap-2 lg:w-80 [&_input]:border [&_input]:p-2 [&_label]:text-lg [&_label]:text-gray-500 [&_label]:dark:text-gray-300">
           <div className="flex flex-col">

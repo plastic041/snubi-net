@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useCallback, useEffect, useRef } from "react";
 import Layout from "~/components/layout";
 import {
@@ -28,6 +29,8 @@ const DestinyCardPage = () => {
 
     const rarityKr = STRING_KR.rarity[item.rarity];
 
+    ctx.textBaseline = "top";
+
     // bg
     ctx.fillStyle = "#2a232b";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -38,27 +41,27 @@ const DestinyCardPage = () => {
 
     // name
     ctx.fillStyle = RARITY_COLORS[item.rarity].name;
-    ctx.font = `bold 2rem ${FONT_FAMILY}`;
+    ctx.font = `bold 1.8rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(item.name, PX, 40);
+    ctx.fillText(item.name, PX, PY);
 
     // slot
     ctx.fillStyle = RARITY_COLORS[item.rarity].type;
     ctx.font = `1rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(STRING_KR.slot[item.slot], PX, 70);
+    ctx.fillText(STRING_KR.slot[item.slot], PX, 56);
 
     // rarity
     ctx.fillStyle = RARITY_COLORS[item.rarity].rarity;
     ctx.font = `1rem ${FONT_FAMILY}`;
     ctx.textAlign = "right";
-    ctx.fillText(rarityKr, canvas.width - PX, 70);
+    ctx.fillText(rarityKr, canvas.width - PX, 56);
 
     // level
     ctx.fillStyle = DAMAGE_TYPE_COLORS[item.damageType];
     ctx.font = `900 3rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(String(item.level), PX + 44, 140);
+    ctx.fillText(String(item.level), PX + 44, 103);
 
     // damage type image
     const damageTypeImage = new Image();
@@ -73,7 +76,7 @@ const DestinyCardPage = () => {
     ctx.textAlign = "left";
 
     let line = "";
-    let y = 174;
+    let y = 160;
 
     const words = item.description.split(" ");
     for (let i = 0; i < words.length; i++) {
@@ -105,6 +108,42 @@ const DestinyCardPage = () => {
 
   return (
     <Layout title="Destiny Card | snubi" description="Destiny Card">
+      <Head>
+        <meta name="title" content="데스티니 무기 카드 생성기" />
+        <meta
+          name="description"
+          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
+        />
+        <meta name="copyright" content="snubi" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://snubi-net.vercel.app/works/destiny-card"
+        />
+        <meta property="og:title" content="데스티니 무기 카드 생성기" />
+        <meta
+          property="og:description"
+          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
+        />
+        <meta
+          property="og:image"
+          content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
+        />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content="https://snubi-net.vercel.app/works/destiny-card"
+        />
+        <meta property="twitter:title" content="데스티니 무기 카드 생성기" />
+        <meta
+          property="twitter:description"
+          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
+        />
+        <meta
+          property="twitter:image"
+          content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
+        />
+      </Head>
       <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:justify-between lg:gap-0">
         <canvas
           id="canvas"

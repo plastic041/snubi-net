@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";
 import {
   STRING_KR,
@@ -9,18 +9,24 @@ import {
   HEIGHT,
   PX,
   PY,
-  FONT_FAMILY,
   RARITY_COLORS,
+  FONT_FAMILY,
 } from "~/lib/constants/destiny-card";
 import { useDestinyItemStore } from "~/stores/destiny-item";
-import type { DamageType, Item, ItemRarity } from "~/typings/destiny-item";
+import type { Item } from "~/typings/destiny-item";
 
 const DestinyCardPage = () => {
   const item = useDestinyItemStore();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const draw = useCallback(() => {
+  const [imageCache, setImageCache] = useState<
+    Record<string, HTMLImageElement>
+  >({});
+
+  const isFirstRender = useRef(true);
+
+  const draw = useCallback(async () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) {
@@ -64,11 +70,20 @@ const DestinyCardPage = () => {
     ctx.fillText(String(item.level), PX + 96, 204);
 
     // damage type image
-    const damageTypeImage = new Image();
-    damageTypeImage.src = DAMAGE_TYPE_IMAGE_SRCS[item.damageType];
-    damageTypeImage.onload = () => {
+    const damageTypeImage = imageCache[DAMAGE_TYPE_IMAGE_SRCS[item.damageType]];
+    if (damageTypeImage) {
       ctx.drawImage(damageTypeImage, PX, 210, 86, 86);
-    };
+    } else {
+      const damageTypeImage = new Image();
+      damageTypeImage.src = DAMAGE_TYPE_IMAGE_SRCS[item.damageType];
+      damageTypeImage.onload = () => {
+        setImageCache((prev) => ({
+          ...prev,
+          [DAMAGE_TYPE_IMAGE_SRCS[item.damageType]]: damageTypeImage,
+        }));
+        ctx.drawImage(damageTypeImage, PX, 210, 86, 86);
+      };
+    }
 
     // description
     ctx.fillStyle = RARITY_COLORS[item.rarity].desc;
@@ -103,18 +118,29 @@ const DestinyCardPage = () => {
       return;
     }
 
+    if (isFirstRender.current) {
+      console.log("first render");
+      isFirstRender.current = false;
+
+      const ready = async () => {
+        const font = new FontFace(
+          FONT_FAMILY,
+          "url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2')"
+        );
+
+        await font.load();
+
+        document.fonts.add(font);
+      };
+
+      ready();
+    }
     draw();
   }, [draw]);
 
   return (
     <Layout title="Destiny Card | snubi" description="Destiny Card">
       <Head>
-        <style>
-          {`@font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2') format('woff2');
-          }`}
-        </style>
         <meta name="title" content="데스티니 무기 카드 생성기" />
         <meta
           name="description"
@@ -150,7 +176,7 @@ const DestinyCardPage = () => {
           content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
         />
       </Head>
-      <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
+      <div className="flex flex-col items-center justify-center gap-8 p-8 font-['Press_Start_2P'] lg:flex-row lg:gap-12">
         <canvas
           id="canvas"
           width={WIDTH}

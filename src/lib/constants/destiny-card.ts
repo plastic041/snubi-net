@@ -4,7 +4,7 @@ export const WIDTH = 600;
 export const HEIGHT = 600;
 export const PX = 32;
 export const PY = 32;
-export const FONT_FAMILY = "pretendard variable";
+export const FONT_FAMILY = "pretendard";
 
 export const DAMAGE_TYPE_IMAGE_SRCS: Record<DamageType, string> = {
   kinetic: "/images/destiny-card/destiny-kinetic.webp",

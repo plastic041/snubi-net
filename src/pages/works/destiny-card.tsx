@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";

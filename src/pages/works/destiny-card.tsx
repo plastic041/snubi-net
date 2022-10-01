@@ -37,7 +37,7 @@ const DestinyCardPage = () => {
 
     const rarityKr = STRING_KR.rarity[item.rarity];
 
-    ctx.textBaseline = "bottom";
+    ctx.textBaseline = "alphabetic";
 
     // bg
     ctx.fillStyle = "#2a232b";
@@ -51,25 +51,25 @@ const DestinyCardPage = () => {
     ctx.fillStyle = RARITY_COLORS[item.rarity].name;
     ctx.font = `bold 4.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(item.name, PX, PY + 70);
+    ctx.fillText(item.name, PX, PY + 56);
 
     // slot
     ctx.fillStyle = RARITY_COLORS[item.rarity].type;
     ctx.font = `2.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(STRING_KR.slot[item.slot], PX, PY + 116);
+    ctx.fillText(STRING_KR.slot[item.slot], PX, PY + 110);
 
     // rarity
     ctx.fillStyle = RARITY_COLORS[item.rarity].rarity;
     ctx.font = `2.4rem ${FONT_FAMILY}`;
     ctx.textAlign = "right";
-    ctx.fillText(rarityKr, canvas.width - PX, PY + 116);
+    ctx.fillText(rarityKr, canvas.width - PX, PY + 110);
 
     // level
     ctx.fillStyle = DAMAGE_TYPE_COLORS[item.damageType];
     ctx.font = `900 7rem ${FONT_FAMILY}`;
     ctx.textAlign = "left";
-    ctx.fillText(String(item.level), PX + 96, PY + 286);
+    ctx.fillText(String(item.level), PX + 96, PY + 260);
 
     // damage type image
     const damageTypeImage = imageCache[DAMAGE_TYPE_IMAGE_SRCS[item.damageType]];
@@ -93,7 +93,7 @@ const DestinyCardPage = () => {
     ctx.textAlign = "left";
 
     let line = "";
-    let y = PY + 340;
+    let y = PY + 332;
 
     const words = item.description.split(" ");
     for (let i = 0; i < words.length; i++) {

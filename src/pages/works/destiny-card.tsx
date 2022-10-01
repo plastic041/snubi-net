@@ -178,7 +178,7 @@ const DestinyCardPage = () => {
           content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
         />
       </Head>
-      <div className="flex flex-col items-center justify-center gap-8 p-8 font-['Press_Start_2P'] lg:flex-row lg:gap-12">
+      <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
         <div className="flex flex-col items-center gap-4">
           <canvas
             id="canvas"

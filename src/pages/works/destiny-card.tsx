@@ -188,7 +188,7 @@ const DestinyCardPage = () => {
             className="h-[280px] w-[280px] shadow-lg dark:shadow-gray-900 md:h-[400px] md:w-[400px]"
           />
           <button
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-lg"
+            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-25"
             onClick={() => {
               if (canvasRef.current) {
                 downloadImage(
@@ -199,7 +199,7 @@ const DestinyCardPage = () => {
             }}
             disabled={!canvasRef.current}
           >
-            다운로드
+            {canvasRef.current ? "다운로드" : "준비 중..."}
           </button>
         </div>
         <form className="flex w-full flex-col gap-2 lg:w-80 [&_input]:border [&_input]:p-2 [&_label]:text-lg [&_label]:text-gray-500 [&_label]:dark:text-gray-300">

@@ -12,6 +12,7 @@ import {
   RARITY_COLORS,
   FONT_FAMILY,
 } from "~/lib/constants/destiny-card";
+import { downloadImage } from "~/lib/download-image";
 import { useDestinyItemStore } from "~/stores/destiny-item";
 import type { Item } from "~/typings/destiny-item";
 
@@ -111,7 +112,7 @@ const DestinyCardPage = () => {
       }
     }
     ctx.fillText(line, PX, y);
-  }, [item]);
+  }, [item, imageCache]);
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -133,9 +134,10 @@ const DestinyCardPage = () => {
         document.fonts.add(font);
       };
 
-      ready();
+      ready().then(draw);
+    } else {
+      draw();
     }
-    draw();
   }, [draw]);
 
   return (
@@ -177,13 +179,29 @@ const DestinyCardPage = () => {
         />
       </Head>
       <div className="flex flex-col items-center justify-center gap-8 p-8 font-['Press_Start_2P'] lg:flex-row lg:gap-12">
-        <canvas
-          id="canvas"
-          width={WIDTH}
-          height={HEIGHT}
-          ref={canvasRef}
-          className="h-[280px] w-[280px] shadow-lg dark:shadow-gray-900 md:h-[400px] md:w-[400px]"
-        />
+        <div className="flex flex-col items-center gap-4">
+          <canvas
+            id="canvas"
+            width={WIDTH}
+            height={HEIGHT}
+            ref={canvasRef}
+            className="h-[280px] w-[280px] shadow-lg dark:shadow-gray-900 md:h-[400px] md:w-[400px]"
+          />
+          <button
+            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-lg"
+            onClick={() => {
+              if (canvasRef.current) {
+                downloadImage(
+                  `${item.name}.png`,
+                  canvasRef.current?.toDataURL()
+                );
+              }
+            }}
+            disabled={!canvasRef.current}
+          >
+            다운로드
+          </button>
+        </div>
         <form className="flex w-full flex-col gap-2 lg:w-80 [&_input]:border [&_input]:p-2 [&_label]:text-lg [&_label]:text-gray-500 [&_label]:dark:text-gray-300">
           <div className="flex flex-col">
             <label htmlFor="name">이름</label>

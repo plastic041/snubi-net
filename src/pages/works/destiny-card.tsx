@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";
@@ -215,7 +216,7 @@ const DestinyCardPage = () => {
           <div className="flex flex-col">
             <label htmlFor="rarity">등급</label>
             <select
-              className="border p-2"
+              className="unstyled rounded-none border bg-white p-2"
               id="rarity"
               value={item.rarity}
               onChange={(e) => item.setRarity(e.target.value as Item["rarity"])}
@@ -231,7 +232,7 @@ const DestinyCardPage = () => {
             <div className="flex flex-1 flex-col">
               <label htmlFor="slot">타입</label>
               <select
-                className="border p-2"
+                className="unstyled rounded-none border bg-white p-2"
                 id="slot"
                 value={item.slot}
                 onChange={(e) => item.setSlot(e.target.value as Item["slot"])}
@@ -245,7 +246,7 @@ const DestinyCardPage = () => {
               <label htmlFor="rarity">피해 유형</label>
               <select
                 disabled={item.slot === "kinetic"}
-                className="border p-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:dark:bg-gray-500"
+                className="unstyled rounded-none border bg-white p-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:dark:bg-gray-500"
                 id="rarity"
                 value={item.damageType}
                 onChange={(e) =>
@@ -261,6 +262,7 @@ const DestinyCardPage = () => {
           <div className="flex flex-col">
             <label htmlFor="level">레벨</label>
             <input
+              className="border bg-white p-2"
               id="level"
               type="number"
               value={item.level}
@@ -270,7 +272,7 @@ const DestinyCardPage = () => {
           <div className="flex flex-col">
             <label htmlFor="description">설명</label>
             <textarea
-              className="border p-2"
+              className="border bg-white p-2"
               id="description"
               value={item.description}
               onChange={(e) => item.setDescription(e.target.value)}

@@ -1,11 +1,13 @@
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
+import "highlight.js/styles/a11y-dark.css";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/future/image";
 import { join } from "path";
+import { useEffect } from "react";
 import Layout from "~/components/layout";
 import PostHeader from "~/components/post-header";
 import type { Frontmatter } from "~/typings/frontmatter";
@@ -128,11 +130,28 @@ type Props = {
 const PostPage = ({ source, frontmatter }: Props) => {
   const title = `${frontmatter.title} | Snubi`;
 
+  useEffect(() => {
+    const highlight = async () => {
+      const hljs = (await import("highlight.js/lib/core")).default;
+      const ini = (await import("highlight.js/lib/languages/ini")).default;
+      const rust = (await import("highlight.js/lib/languages/rust")).default;
+      const typescript = (await import("highlight.js/lib/languages/typescript"))
+        .default;
+
+      hljs.registerLanguage("rust", rust);
+      hljs.registerLanguage("toml", ini);
+      hljs.registerLanguage("typescript", typescript);
+      hljs.highlightAll();
+    };
+
+    highlight();
+  }, []);
+
   return (
     <Layout title={title} description={frontmatter.description}>
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={frontmatter} />
-        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0">
+        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
           <MDXRemote {...source} components={components} />
         </div>
       </article>

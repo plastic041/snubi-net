@@ -1,6 +1,6 @@
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
-import type { GetStaticProps } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { join } from "path";
 import Layout from "~/components/layout";
@@ -9,7 +9,7 @@ import TagChip from "~/components/tag-chip";
 import type { Frontmatter } from "~/typings/frontmatter";
 import type { Tag } from "~/typings/tags";
 
-export const getStaticProps: GetStaticProps = async () => {
+const getStaticProps = async () => {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
   const fms = await Promise.all(
@@ -52,13 +52,16 @@ export const getStaticProps: GetStaticProps = async () => {
       tags: tagsCounted,
     },
   };
-};
+} satisfies GetStaticProps;
 
-type PageProps = {
-  frontmatters: Frontmatter[];
-  tags: Tag[];
-};
-const Posts = ({ tags, frontmatters }: PageProps) => {
+// type PageProps = {
+//   frontmatters: Frontmatter[];
+//   tags: Tag[];
+// };
+const Posts = ({
+  tags,
+  frontmatters,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const title = `글 목록 | Snubi`;
   const description = `글 목록`;
 

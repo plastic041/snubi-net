@@ -9,7 +9,7 @@ import TagChip from "~/components/tag-chip";
 import type { Frontmatter } from "~/typings/frontmatter";
 import type { Tag } from "~/typings/tags";
 
-const getStaticProps = async () => {
+const getStaticProps = async function() {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
   const fms = await Promise.all(

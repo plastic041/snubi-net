@@ -1,5 +1,4 @@
 import { readFile, readdir } from "fs/promises";
-import matter from "gray-matter";
 import "highlight.js/styles/a11y-dark.css";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
@@ -8,14 +7,16 @@ import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/future/image";
 import { join } from "path";
 import { useEffect } from "react";
+import remarkGfm from "remark-gfm";
 import Layout from "~/components/layout";
 import PostHeader from "~/components/post-header";
+import { validateFrontmatter } from "~/lib/validate-fm";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const title = context.params?.title as string | undefined;
+  const slug = context.params?.slug as string | undefined;
 
-  if (!title) {
+  if (!slug) {
     return {
       notFound: true,
     };
@@ -23,50 +24,51 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
-  const postsAll = await Promise.all(
+  const mdxSources = await Promise.all(
     postsFilenames.map(async (filename) => {
       const text = await readFile(join(postsPath, filename), {
         encoding: "utf8",
       });
-      const { data: frontmatter } = matter(text) as unknown as {
-        data: Frontmatter;
-      };
 
-      return {
-        filename,
-        frontmatter,
-      };
+      const mdxSource = await serialize(text, {
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+        parseFrontmatter: true,
+      });
+
+      return mdxSource;
     })
   );
 
-  const post = postsAll.find(({ frontmatter }) => frontmatter.slug === title);
+  const mdxSource = mdxSources.find(
+    (source) => source.frontmatter?.slug === slug
+  );
 
-  if (!post) {
+  if (!mdxSource) {
     return {
       notFound: true,
     };
   }
 
-  const text = await readFile(join(postsPath, post.filename), {
-    encoding: "utf8",
-  });
-  const { content, data: frontmatter } = matter(text) as unknown as {
-    content: string;
-    data: Frontmatter;
-  };
+  const fm = mdxSource.frontmatter;
+  const isValid = validateFrontmatter(fm);
 
-  if (frontmatter.is_draft) {
+  if (!isValid) {
     return {
       notFound: true,
     };
   }
 
-  const mdxSource = await serialize(content);
+  if (fm.is_draft) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      source: mdxSource,
-      frontmatter,
+      mdxSource,
     },
   };
 };
@@ -74,25 +76,28 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
-  const frontmattersAll = await Promise.all(
+  const fms = await Promise.all(
     postsFilenames.map(async (filename) => {
       const text = await readFile(join(postsPath, filename), {
         encoding: "utf8",
       });
-      const { data: frontmatter } = matter(text) as unknown as {
-        data: Frontmatter;
+      const { frontmatter } = (await serialize(text, {
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+        parseFrontmatter: true,
+      })) as unknown as {
+        frontmatter: Frontmatter;
       };
 
       return frontmatter;
     })
   );
 
-  const frontmattersPublished = frontmattersAll.filter(
-    (frontmatter) => !frontmatter.is_draft
-  );
+  const fmsPublished = fms.filter((fm) => !fm.is_draft);
 
-  const paths = frontmattersPublished.map((fm) => ({
-    params: { title: fm.slug },
+  const paths = fmsPublished.map((fm) => ({
+    params: { slug: fm.slug },
   }));
 
   return {
@@ -124,11 +129,10 @@ const components = {
 };
 
 type Props = {
-  source: MDXRemoteSerializeResult;
-  frontmatter: Frontmatter;
+  mdxSource: MDXRemoteSerializeResult & { frontmatter: Frontmatter };
 };
-const PostPage = ({ source, frontmatter }: Props) => {
-  const title = `${frontmatter.title} | Snubi`;
+const PostPage = ({ mdxSource }: Props) => {
+  const title = `${mdxSource.frontmatter?.title} | Snubi`;
 
   useEffect(() => {
     const highlight = async () => {
@@ -148,11 +152,14 @@ const PostPage = ({ source, frontmatter }: Props) => {
   }, []);
 
   return (
-    <Layout title={title} description={frontmatter.description}>
+    <Layout
+      title={title}
+      description={mdxSource.frontmatter?.description || ""}
+    >
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
-        <PostHeader frontmatter={frontmatter} />
+        <PostHeader frontmatter={mdxSource.frontmatter} />
         <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
-          <MDXRemote {...source} components={components} />
+          <MDXRemote {...mdxSource} components={components} />
         </div>
       </article>
     </Layout>

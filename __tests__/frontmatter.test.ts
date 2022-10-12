@@ -1,5 +1,5 @@
 import { readFile, readdir } from "fs/promises";
-import matter from "gray-matter";
+import { serialize } from "next-mdx-remote/serialize";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
@@ -14,8 +14,10 @@ describe("frontmatter", () => {
         const text = await readFile(join(postsPath, filename), {
           encoding: "utf8",
         });
-        const { data: frontmatter } = matter(text) as unknown as {
-          data: Frontmatter;
+        const { frontmatter } = (await serialize(text, {
+          parseFrontmatter: true,
+        })) as unknown as {
+          frontmatter: Frontmatter;
         };
 
         return frontmatter;
@@ -32,7 +34,7 @@ describe("frontmatter", () => {
     });
 
     fms.forEach((fm) => {
-      expect(schema.parse(fm)).toBeTruthy();
+      expect(schema.safeParse(fm).success).toBeTruthy();
     });
   });
 });

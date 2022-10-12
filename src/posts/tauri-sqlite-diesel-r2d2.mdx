@@ -13,7 +13,9 @@ tags: [dev]
 
 `yarn create tauri-app` 을 사용해 프로젝트를 생성했다. `cargo create-tauri-app` 으로 생성하면 웹 프레임워크를 선택할 수 없고 vanilla js로만 만들어진다.
 
-**주의:** `yarn create tauri-app` 의 `svelte` 나 `svelte-ts` 는 sveltekit이 아니라 그냥 svelte 프로젝트다. 그래서 `yarn create svelte@latest` 로 sveltekit 프로젝트를 생성하고 tauri를 따로 설치해주었다. 자세한 과정은 [tauri 문서](https://tauri.app/v1/guides/getting-started/setup/sveltekit)에 설명되어 있다.
+~~**주의:** `yarn create tauri-app` 의 `svelte` 나 `svelte-ts` 는 sveltekit이 아니라 그냥 svelte 프로젝트다. 그래서 `yarn create svelte@latest` 로 sveltekit 프로젝트를 생성하고 tauri를 따로 설치해주었다. 자세한 과정은 [tauri 문서](https://tauri.app/v1/guides/getting-started/setup/sveltekit)에 설명되어 있다.~~
+
+[2022년 10월 5일부터 create-tauri-app이 Sveltekit도 지원한다.](https://github.com/tauri-apps/create-tauri-app/pull/200) 그래서 `yarn create tauri-app`을 쓰면 된다.
 
 ## Diesel
 

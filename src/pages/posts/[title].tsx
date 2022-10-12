@@ -8,6 +8,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/future/image";
 import { join } from "path";
 import { useEffect } from "react";
+import remarkGfm from "remark-gfm";
 import Layout from "~/components/layout";
 import PostHeader from "~/components/post-header";
 import type { Frontmatter } from "~/typings/frontmatter";
@@ -61,7 +62,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const mdxSource = await serialize(content);
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+    },
+  });
 
   return {
     props: {

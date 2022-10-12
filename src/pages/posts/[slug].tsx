@@ -82,9 +82,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         encoding: "utf8",
       });
       const { frontmatter } = (await serialize(text, {
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-        },
         parseFrontmatter: true,
       })) as unknown as {
         frontmatter: Frontmatter;
@@ -132,7 +129,7 @@ type Props = {
   mdxSource: MDXRemoteSerializeResult & { frontmatter: Frontmatter };
 };
 const PostPage = ({ mdxSource }: Props) => {
-  const title = `${mdxSource.frontmatter?.title} | Snubi`;
+  const title = `${mdxSource.frontmatter.title} | Snubi`;
 
   useEffect(() => {
     const highlight = async () => {
@@ -152,10 +149,7 @@ const PostPage = ({ mdxSource }: Props) => {
   }, []);
 
   return (
-    <Layout
-      title={title}
-      description={mdxSource.frontmatter?.description || ""}
-    >
+    <Layout title={title} description={mdxSource.frontmatter.description || ""}>
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={mdxSource.frontmatter} />
         <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">

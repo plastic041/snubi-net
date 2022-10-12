@@ -1,6 +1,6 @@
 import { readFile, readdir } from "fs/promises";
-import matter from "gray-matter";
 import type { GetStaticProps } from "next";
+import { serialize } from "next-mdx-remote/serialize";
 import { useRouter } from "next/router";
 import { join } from "path";
 import Layout from "~/components/layout";
@@ -17,8 +17,10 @@ export const getStaticProps: GetStaticProps = async () => {
       const text = await readFile(join(postsPath, filename), {
         encoding: "utf8",
       });
-      const { data: frontmatter } = matter(text) as unknown as {
-        data: Frontmatter;
+      const { frontmatter } = (await serialize(text, {
+        parseFrontmatter: true,
+      })) as unknown as {
+        frontmatter: Frontmatter;
       };
 
       return frontmatter;

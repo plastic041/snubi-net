@@ -4,13 +4,7 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-const font = fetch(
-  new URL("../../assets/Pretendard-Regular.otf", import.meta.url)
-).then((res) => res.arrayBuffer());
-
 const og = async () => {
-  const fontData = await font;
-
   return new ImageResponse(
     (
       <div
@@ -23,20 +17,12 @@ const og = async () => {
           justifyContent: "center",
           alignItems: "center",
           fontFamily: "'pretendard'",
+          fontWeight: "50",
         }}
       >
-        마작
+        아무 말 대잔치
       </div>
-    ),
-    {
-      fonts: [
-        {
-          name: "Pretendard Variable",
-          data: fontData,
-          style: "normal",
-        },
-      ],
-    }
+    )
   );
 };
 

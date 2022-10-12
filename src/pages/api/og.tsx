@@ -4,7 +4,13 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-const og = () => {
+const font = fetch(
+  new URL("../../assets/Pretendard-Regular.otf", import.meta.url)
+).then((res) => res.arrayBuffer());
+
+const og = async () => {
+  const fontData = await font;
+
   return new ImageResponse(
     (
       <div
@@ -16,12 +22,21 @@ const og = () => {
           height: "100%",
           justifyContent: "center",
           alignItems: "center",
-          fontFamily: "Alkalami",
+          fontFamily: "'pretendard'",
         }}
       >
         마작
       </div>
-    )
+    ),
+    {
+      fonts: [
+        {
+          name: "Pretendard Variable",
+          data: fontData,
+          style: "normal",
+        },
+      ],
+    }
   );
 };
 

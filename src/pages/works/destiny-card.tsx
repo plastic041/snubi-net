@@ -120,7 +120,6 @@ const DestinyCardPage = () => {
     }
 
     if (isFirstRender.current) {
-      console.log("first render");
       isFirstRender.current = false;
 
       const ready = async () => {

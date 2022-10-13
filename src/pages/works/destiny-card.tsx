@@ -125,7 +125,12 @@ const DestinyCardPage = () => {
       const ready = async () => {
         const font = new FontFace(
           FONT_FAMILY,
-          "url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2')"
+          "url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2-variations')",
+          {
+            style: "normal",
+            weight: "45 920",
+            display: "swap",
+          }
         );
 
         await font.load();

@@ -30,9 +30,9 @@ const Header = () => {
       <nav className="container mx-auto flex flex-row items-center justify-between p-4 xl:px-40">
         <Link href="/">
           <a>
-            <span className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
+            <h1 className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
               Snubi
-            </span>
+            </h1>
           </a>
         </Link>
         <div className="flex items-center gap-4">

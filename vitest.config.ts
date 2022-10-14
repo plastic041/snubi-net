@@ -23,6 +23,8 @@ export default defineConfig({
         "**/*.d.ts",
       ],
     },
+    globals: true,
+    setupFiles: "./__tests__/setup.ts",
   },
   resolve: {
     alias: {

@@ -18,8 +18,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run test
-        run: yarn test
+      - name: Run unit test
+        run: yarn test:unit
   lint:
     runs-on: ubuntu-latest
     steps:

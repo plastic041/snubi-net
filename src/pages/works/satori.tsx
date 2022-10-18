@@ -5,8 +5,9 @@ import Layout from "~/components/layout";
 
 const Svg = async () => {
   const font = await fetch(
-    new URL("../../lib/Inter-Regular.woff", import.meta.url)
+    "https://cdn.jsdelivr.net/gh/eunchurn/NanumSquareNeo@0.0.2/ttf/NanumSquareNeo-bRg.ttf"
   ).then((res) => res.arrayBuffer());
+
   const s = await satori(
     <div
       style={{

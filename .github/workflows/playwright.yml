@@ -15,7 +15,7 @@ jobs:
         id: wait-for-vercel-preview
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          timeout: 60
+          max_timeout: 300
 
   test:
     needs: test_setup

@@ -32,7 +32,33 @@ export const SpotifyTopTracksSchema = z.object({
 export type SpotifyTopTrack = z.infer<typeof SpotifyTopTrackSchema>;
 export type SpotifyTopTracks = z.infer<typeof SpotifyTopTracksSchema>;
 
-export const SongSchema = z.object({
+export const SpotifyNowPlayingSchema = z.object({
+  is_playing: z.boolean(),
+  item: z.object({
+    album: z.object({
+      name: z.string(),
+      images: z.array(
+        z.object({
+          url: z.string(),
+        })
+      ),
+    }),
+    artists: z.array(
+      z.object({
+        name: z.string(),
+      })
+    ),
+    external_urls: z.object({
+      spotify: z.string(),
+    }),
+    id: z.string(),
+    name: z.string(),
+  }),
+});
+
+export type SpotifyNowPlaying = z.infer<typeof SpotifyNowPlayingSchema>;
+
+export const TrackSchema = z.object({
   id: z.string(),
   artist: z.string(),
   songUrl: z.string(),
@@ -40,4 +66,9 @@ export const SongSchema = z.object({
   image: z.string(),
 });
 
-export type Song = z.infer<typeof SongSchema>;
+export type Track = z.infer<typeof TrackSchema>;
+
+export type SpotifyNowPlayingSong = Track & {
+  album: string;
+  isPlaying: boolean;
+};

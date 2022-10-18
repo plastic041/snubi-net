@@ -23,7 +23,7 @@ export default async function handler(req: NextRequest) {
     return new Response("Invalid data from spotify", { status: 500 });
   }
 
-  const songs = data.items.map((track) => ({
+  const tracks = data.items.map((track) => ({
     id: track.id,
     artist: track.artists.map((_artist) => _artist.name).join(", "),
     songUrl: track.external_urls.spotify,
@@ -31,7 +31,7 @@ export default async function handler(req: NextRequest) {
     image: track.album.images[0].url,
   }));
 
-  return new Response(JSON.stringify({ songs }), {
+  return new Response(JSON.stringify({ tracks }), {
     status: 200,
     headers: {
       "content-type": "application/json",

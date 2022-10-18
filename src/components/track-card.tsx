@@ -1,11 +1,14 @@
 import Image from "next/future/image";
 import { Track } from "~/typings/spotify";
 
-type TrackCard = {
+type TrackCardProps = {
   track: Track;
 };
-export const TrackCard = ({ track }: TrackCard) => (
-  <article className="flex flex-1 gap-4 border-gray-300 p-4">
+export const TrackCard = ({ track }: TrackCardProps) => (
+  <article
+    className="flex flex-1 gap-4 border-gray-300 p-4"
+    aria-label="노래 정보"
+  >
     <Image
       src={track.image}
       width={60}
@@ -20,10 +23,14 @@ export const TrackCard = ({ track }: TrackCard) => (
         href={track.songUrl}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`spotify의 ${track.title} 곡 페이지로 이동`}
       >
         {track.title}
       </a>
-      <span className="text-sm text-gray-700 dark:text-gray-300">
+      <span
+        className="text-sm text-gray-700 dark:text-gray-300"
+        aria-label="아티스트"
+      >
         {track.artist}
       </span>
     </div>

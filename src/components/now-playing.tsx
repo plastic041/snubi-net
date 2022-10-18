@@ -1,5 +1,5 @@
 import { SpotifyIcon } from "./icons";
-import { TrackCard } from "./track-card";
+import { TrackCardProps } from "./track-card";
 import useSWR from "swr";
 import { fetcher } from "~/lib/fetcher";
 import { type SpotifyNowPlayingSong } from "~/typings/spotify";

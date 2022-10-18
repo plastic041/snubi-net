@@ -14,9 +14,15 @@ export const TopTracks = () => {
   }
 
   return (
-    <ul className="flex flex-col gap-2">
-      {data.tracks.map((track) => (
-        <li key={track.id}>
+    // border-b to track items
+    <ul className="flex flex-col [&>li:not(:last-child)]:border-b">
+      {data.tracks.map((track, index) => (
+        <li key={track.id} className="flex items-center">
+          <div className="w-6 flex-shrink-0 text-right">
+            <span className="text-right text-lg tabular-nums text-gray-700 dark:text-gray-300">
+              {index + 1}
+            </span>
+          </div>
           <TrackCard track={track} />
         </li>
       ))}

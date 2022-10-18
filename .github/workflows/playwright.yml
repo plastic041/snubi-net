@@ -4,9 +4,21 @@ on:
     branches: [main]
 
 jobs:
+  test_setup:
+    name: Playwright test setup
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        id: wait-for-vercel-preview
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          timeout: 60
+
   test:
-    if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
-    timeout-minutes: 60
+    needs: test_setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +37,7 @@ jobs:
       - name: Run Playwright tests
         run: yarn test:e2e
         env:
-          BASE_URL: ${{ github.event.deployment_status.target_url }}
+          BASE_URL: ${{ needs.test_setup.outputs.preview_url }}
 
       - uses: actions/upload-artifact@v3
         if: always()

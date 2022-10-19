@@ -1,5 +1,5 @@
 import { readFile, readdir } from "fs/promises";
-import "highlight.js/styles/a11y-dark.css";
+import "highlight.js/styles/base16/dracula.css";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";

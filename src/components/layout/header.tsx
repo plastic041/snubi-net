@@ -43,7 +43,7 @@ const Header = () => {
             href="https://github.com/plastic041"
             target="_blank"
             rel="noreferrer"
-            title="snubi Github"
+            title="snubi GitHub"
           >
             <GithubIcon className="h-6 w-6 text-blue-500 transition-colors hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-400" />
           </a>

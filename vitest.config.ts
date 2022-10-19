@@ -24,8 +24,9 @@ export default defineConfig({
       ],
     },
     globals: true,
-    setupFiles: "./__tests__/setup.ts",
-    exclude: ["**/node_modules/**", "**/.next/**", "**/__tests__e2e/**"],
+    setupFiles: "./tests/setup.ts",
+    exclude: ["**/node_modules/**", "**/.next/**", "**/e2e/**"],
+    include: ["tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
   },
   resolve: {
     alias: {

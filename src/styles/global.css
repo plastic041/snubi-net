@@ -12,6 +12,10 @@
   }
 }
 
+.prose {
+  --tw-prose-pre-bg: #282936;
+}
+
 .prose > blockquote {
   display: flex;
   flex-direction: column;

@@ -16,7 +16,7 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <Link href="/posts">
-        <a className="transition-color flex items-center gap-2 self-start text-gray-500 duration-200 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-400">
+        <a className="transition-colors flex items-center gap-2 self-start text-gray-500 duration-200 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-400">
           <ArrowUturnLeftIcon className="h-4 w-4" />
           <span>목록으로</span>
         </a>

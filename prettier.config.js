@@ -16,5 +16,6 @@ const myPlugin = {
 
 module.exports = {
   plugins: [myPlugin],
+  // plugins: [pluginTailwindcss],
   // your settings
 };

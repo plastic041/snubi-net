@@ -100,7 +100,7 @@ const Posts = ({ tags, frontmatters }: PageProps) => {
           ))}
         </ul>
       </aside>
-      <div className="absolute left-0 right-0 hidden border-b border-b-gray-500 lg:block"></div>
+      <div className="absolute inset-x-0 hidden border-b border-b-gray-500 lg:block"></div>
       <ul className="flex flex-col gap-12 p-8">
         {filteredFms.map((fm) => (
           <PostItem frontmatter={fm} key={fm.title} />

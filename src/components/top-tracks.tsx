@@ -24,7 +24,7 @@ export const TopTracks = () => {
           className="flex items-center"
           aria-label={`${index + 1}번째로 많이 들은 노래`}
         >
-          <div className="w-6 flex-shrink-0 text-right">
+          <div className="w-6 shrink-0 text-right">
             <span className="text-right text-lg tabular-nums text-gray-700 dark:text-gray-300">
               {index + 1}
             </span>

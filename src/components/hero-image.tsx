@@ -9,7 +9,7 @@ const HeroImage = ({ src, alt }: HeroImageProps) => {
   return (
     <div className="flex overflow-hidden rounded shadow-lg">
       <Image
-        className="scale-105 transform overflow-hidden"
+        className="scale-105 overflow-hidden"
         src={src}
         width={400}
         height={400}

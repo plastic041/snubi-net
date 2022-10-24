@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";

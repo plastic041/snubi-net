@@ -1,4 +1,3 @@
-import { type NextRequest } from "next/server";
 import { getTopTracks } from "~/lib/spotify";
 import {
   SpotifyTopTracksSchema,
@@ -15,7 +14,11 @@ const validateTopTracks = (data: unknown): data is SpotifyTopTracks => {
   return result.success;
 };
 
-export default async function handler(req: NextRequest) {
+/**
+ * returns top tracks from spotify
+ * @return {Promise<Response>}
+ */
+export default async function handler() {
   const response = await getTopTracks();
   const data = await response.json();
 

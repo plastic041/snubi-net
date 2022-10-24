@@ -4,9 +4,11 @@ import { serialize } from "next-mdx-remote/serialize";
 import { useRouter } from "next/router";
 import { join } from "path";
 import Layout from "~/components/layout";
+import { OgHead } from "~/components/og";
 import PostItem from "~/components/post-list-item";
 import TagChip from "~/components/tag-chip";
 import type { Frontmatter } from "~/typings/frontmatter";
+import { type Og } from "~/typings/og";
 import type { Tag } from "~/typings/tags";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -56,14 +58,18 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
+const og: Og = {
+  title: "글 목록 | Snubi",
+  description: "글 목록",
+  image: "https://snubi-net.vercel.app/images/hero-cat.png",
+  url: "https://snubi-net.vercel.app/posts",
+};
+
 type PageProps = {
   frontmatters: Frontmatter[];
   tags: Tag[];
 };
 const Posts = ({ tags, frontmatters }: PageProps) => {
-  const title = `글 목록 | Snubi`;
-  const description = `글 목록`;
-
   const router = useRouter();
   const { tag: tagQuery } = router.query;
 
@@ -76,7 +82,8 @@ const Posts = ({ tags, frontmatters }: PageProps) => {
   });
 
   return (
-    <Layout title={title} description={description}>
+    <Layout>
+      <OgHead og={og} />
       <aside className="hidden flex-col p-8 lg:flex">
         <h1 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           글

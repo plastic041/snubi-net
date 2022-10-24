@@ -9,9 +9,11 @@ import { join } from "path";
 import { useEffect } from "react";
 import remarkGfm from "remark-gfm";
 import Layout from "~/components/layout";
+import { OgHead } from "~/components/og";
 import PostHeader from "~/components/post-header";
 import { validateFrontmatter } from "~/lib/validate-fm";
 import type { Frontmatter } from "~/typings/frontmatter";
+import { type Og } from "~/typings/og";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug as string | undefined;
@@ -130,6 +132,12 @@ type Props = {
 };
 const PostPage = ({ mdxSource }: Props) => {
   const title = `${mdxSource.frontmatter.title} | Snubi`;
+  const og: Og = {
+    title: `${mdxSource.frontmatter.title} | Snubi`,
+    description: mdxSource.frontmatter.description,
+    image: "https://snubi-net.vercel.app/images/hero-cat.png",
+    url: `https://snubi-net.vercel.app/posts/${mdxSource.frontmatter.slug}`,
+  };
 
   useEffect(() => {
     const highlight = async () => {
@@ -149,7 +157,8 @@ const PostPage = ({ mdxSource }: Props) => {
   }, []);
 
   return (
-    <Layout title={title} description={mdxSource.frontmatter.description || ""}>
+    <Layout>
+      <OgHead og={og} />
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader frontmatter={mdxSource.frontmatter} />
         <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">

@@ -28,7 +28,7 @@ const WorksPage = () => {
               placeholder="blur"
             />
             <div className="flex flex-col items-center gap-2">
-              <span className="text-xl font-bold text-gray-900 dark:text-gray-50">
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 데스티니 카드 생성기
               </span>
               <time

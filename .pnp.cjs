@@ -63,7 +63,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["remark-gfm", "npm:3.0.1"],\
             ["swr", "virtual:b65f0f6fb306f57b5adb123363a8ed6408382fcdc6c4630f22da9730721bebf23882a3bdebf4d077eb463752243a8e323f013bf59603be66fe40131e9c6bf2b8#npm:1.3.0"],\
             ["tailwindcss", "virtual:958f462eaf1b567202663b2af085b94ee9073e7da366d6ab720316205a106d919fa5a6ebdd5984c6335f04502ff7958307ca6a0cf3edf1186d05659de9525563#npm:3.2.1"],\
-            ["tiny-invariant", "npm:1.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=701156"],\
             ["vite", "virtual:4870a68c919a0327245cb751d9c40c1f1c7fed1f8f86cff331a0d3b49d8ef9ef466ca3eb732d9cc1839f23f3e3146f36dea248d9ca70fbd6bf7f268f3a749f80#npm:3.1.8"],\
             ["vitest", "virtual:b65f0f6fb306f57b5adb123363a8ed6408382fcdc6c4630f22da9730721bebf23882a3bdebf4d077eb463752243a8e323f013bf59603be66fe40131e9c6bf2b8#npm:0.23.4"],\
@@ -7607,7 +7606,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["remark-gfm", "npm:3.0.1"],\
             ["swr", "virtual:b65f0f6fb306f57b5adb123363a8ed6408382fcdc6c4630f22da9730721bebf23882a3bdebf4d077eb463752243a8e323f013bf59603be66fe40131e9c6bf2b8#npm:1.3.0"],\
             ["tailwindcss", "virtual:958f462eaf1b567202663b2af085b94ee9073e7da366d6ab720316205a106d919fa5a6ebdd5984c6335f04502ff7958307ca6a0cf3edf1186d05659de9525563#npm:3.2.1"],\
-            ["tiny-invariant", "npm:1.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.3#~builtin<compat/typescript>::version=4.8.3&hash=701156"],\
             ["vite", "virtual:4870a68c919a0327245cb751d9c40c1f1c7fed1f8f86cff331a0d3b49d8ef9ef466ca3eb732d9cc1839f23f3e3146f36dea248d9ca70fbd6bf7f268f3a749f80#npm:3.1.8"],\
             ["vitest", "virtual:b65f0f6fb306f57b5adb123363a8ed6408382fcdc6c4630f22da9730721bebf23882a3bdebf4d077eb463752243a8e323f013bf59603be66fe40131e9c6bf2b8#npm:0.23.4"],\
@@ -8017,15 +8015,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/text-table-npm-0.2.0-d92a778b59-b6937a38c8.zip/node_modules/text-table/",\
           "packageDependencies": [\
             ["text-table", "npm:0.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["tiny-invariant", [\
-        ["npm:1.3.1", {\
-          "packageLocation": "./.yarn/cache/tiny-invariant-npm-1.3.1-a8ca214e49-872dbd1ff2.zip/node_modules/tiny-invariant/",\
-          "packageDependencies": [\
-            ["tiny-invariant", "npm:1.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\

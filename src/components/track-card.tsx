@@ -26,7 +26,7 @@ export const TrackCard = ({ track }: TrackCardProps) => (
     </a>
     <div className="flex flex-col justify-center">
       <a
-        className="overflow-hidden text-base font-bold text-gray-900 transition-colors [-webkit-box-orient:vertical] [-webkit-line-clamp:1] [display:-webkit-box] hover:text-blue-500 dark:text-gray-100 hover:dark:text-blue-400 md:text-xl"
+        className="overflow-hidden text-base font-bold text-gray-900 transition-colors [-webkit-box-orient:vertical] [-webkit-line-clamp:1] [display:-webkit-box] hover:text-blue-500 dark:text-gray-100 hover:dark:text-blue-300 md:text-xl"
         href={track.songUrl}
         target="_blank"
         rel="noopener noreferrer"

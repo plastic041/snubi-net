@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";
+import { OgHead } from "~/components/og";
 import {
   STRING_KR,
   DAMAGE_TYPE_COLORS,
@@ -15,6 +16,14 @@ import {
 import { downloadImage } from "~/lib/download-image";
 import { useDestinyItemStore } from "~/stores/destiny-item";
 import type { Item } from "~/typings/destiny-item";
+import { type Og } from "~/typings/og";
+
+const og: Og = {
+  title: "데스티니 무기 카드 생성기",
+  description: "데스티니 무기 카드를 생성하는 웹 도구입니다.",
+  image: "https://snubi-net.vercel.app/images/destiny-card/open-image.jpg",
+  url: "https://snubi-net.vercel.app/works/destiny-card",
+};
 
 const DestinyCardPage = () => {
   const item = useDestinyItemStore();
@@ -145,43 +154,8 @@ const DestinyCardPage = () => {
   }, [draw]);
 
   return (
-    <Layout title="Destiny Card | snubi" description="Destiny Card">
-      <Head>
-        <meta name="title" content="데스티니 무기 카드 생성기" />
-        <meta
-          name="description"
-          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
-        />
-        <meta name="copyright" content="snubi" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://snubi-net.vercel.app/works/destiny-card"
-        />
-        <meta property="og:title" content="데스티니 무기 카드 생성기" />
-        <meta
-          property="og:description"
-          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
-        />
-        <meta
-          property="og:image"
-          content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
-        />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content="https://snubi-net.vercel.app/works/destiny-card"
-        />
-        <meta property="twitter:title" content="데스티니 무기 카드 생성기" />
-        <meta
-          property="twitter:description"
-          content="데스티니 무기 카드를 생성하는 웹 도구입니다."
-        />
-        <meta
-          property="twitter:image"
-          content="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
-        />
-      </Head>
+    <Layout>
+      <OgHead og={og} />
       <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
         <div className="flex flex-col items-center gap-4">
           <canvas

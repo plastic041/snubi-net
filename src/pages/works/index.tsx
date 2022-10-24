@@ -2,10 +2,20 @@ import Image from "next/future/image";
 import Link from "next/link";
 import destinyCardThumbnail from "~/../public/images/destiny-card/thumbnail.png";
 import Layout from "~/components/layout";
+import { OgHead } from "~/components/og";
+import { type Og } from "~/typings/og";
+
+const og: Og = {
+  title: "Snubi.net",
+  description: "Snubi.net",
+  image: "https://snubi-net.vercel.app/images/hero-cat.png",
+  url: "https://snubi-net.vercel.app",
+};
 
 const WorksPage = () => {
   return (
-    <Layout title="작업 | Snubi" description="작업 모음">
+    <Layout>
+      <OgHead og={og} />
       <div className="flex flex-col items-center gap-4 p-8">
         <Link href="/works/destiny-card">
           <a className="flex flex-col items-center gap-4 border border-gray-300 p-4 transition-colors dark:border-gray-400 hover:dark:bg-gray-600">

@@ -45,3 +45,5 @@ next-env.d.ts
 /e2e
 /playwright-report
 /.yarn/*
+
+/src/posts/

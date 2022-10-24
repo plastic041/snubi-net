@@ -131,7 +131,6 @@ type Props = {
   mdxSource: MDXRemoteSerializeResult & { frontmatter: Frontmatter };
 };
 const PostPage = ({ mdxSource }: Props) => {
-  const title = `${mdxSource.frontmatter.title} | Snubi`;
   const og: Og = {
     title: `${mdxSource.frontmatter.title} | Snubi`,
     description: mdxSource.frontmatter.description,

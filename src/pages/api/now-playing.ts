@@ -1,4 +1,3 @@
-import { type NextRequest } from "next/server";
 import { getNowPlaying } from "~/lib/spotify";
 import {
   type SpotifyNowPlaying,
@@ -15,7 +14,11 @@ const validateTopTracks = (data: unknown): data is SpotifyNowPlaying => {
   return result.success;
 };
 
-export default async function handler(req: NextRequest) {
+/**
+ * returns now playing track from spotify
+ * @return {Promise<Response>}
+ */
+export default async function handler() {
   const response = await getNowPlaying();
 
   if (response.status === 204 || response.status > 400) {

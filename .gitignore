@@ -2,8 +2,6 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
 # testing
 /coverage
@@ -38,8 +36,8 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 
+.pnp.*
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases

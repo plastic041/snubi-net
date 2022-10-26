@@ -8,20 +8,6 @@ import type { ReactNode } from "react";
 export default function Document(): ReactNode {
   return (
     <Html lang="ko">
-      <Head>
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"
-        />
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-jp-dynamic-subset.css"
-        />
-      </Head>
       <body className="overflow-y-scroll bg-white dark:bg-gray-800">
         <Main />
         <NextScript />

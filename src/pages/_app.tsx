@@ -1,4 +1,3 @@
-import "../styles/global.css";
 import { MotionConfig } from "framer-motion";
 import { AppProps } from "next/app";
 import type { ReactElement } from "react";

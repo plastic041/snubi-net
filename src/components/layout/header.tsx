@@ -6,7 +6,7 @@ type CategoryProps = {
   href: string;
 };
 const CategoryItem = ({ name, href }: CategoryProps) => {
-  const isActive = true;
+  const isActive = false;
 
   return (
     <Link href={href}>

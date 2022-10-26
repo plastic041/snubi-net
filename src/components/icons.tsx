@@ -1,16 +1,9 @@
 import type { SVGProps } from "react";
 
-export const GithubIcon = (
-  props: SVGProps<SVGSVGElement>,
-  {
-    className,
-  }: {
-    className?: string;
-  }
-) => {
+export const GithubIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      className={className || "h-6 w-6"}
+      className="h-6 w-6"
       fill="currentColor"
       viewBox="0 0 24 24"
       aria-hidden="true"

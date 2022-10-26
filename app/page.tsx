@@ -1,7 +1,7 @@
-import Layout from "../components/layout";
 import type { NextPage } from "next";
 import heroCatPic from "~/../public/images/hero-cat.png";
 import HeroImage from "~/components/hero-image";
+import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import { type Og } from "~/typings/og";
 

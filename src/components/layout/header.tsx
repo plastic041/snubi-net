@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { GithubIcon } from "~/components/icons";
-import { useIsActive } from "~/lib/hooks/use-is-active";
 
 type CategoryProps = {
   name: string;
   href: string;
 };
 const CategoryItem = ({ name, href }: CategoryProps) => {
-  const isActive = useIsActive(href);
+  const isActive = true;
 
   return (
     <Link href={href}>

@@ -2,7 +2,7 @@ import type { StaticImageData } from "next/image";
 import Image from "next/image";
 
 type HeroImageProps = {
-  src: string | StaticImageData;
+  src: StaticImageData;
   alt: string;
 };
 const HeroImage = ({ src, alt }: HeroImageProps) => {
@@ -14,6 +14,7 @@ const HeroImage = ({ src, alt }: HeroImageProps) => {
         width={400}
         height={400}
         alt={alt}
+        placeholder="blur"
       />
     </div>
   );

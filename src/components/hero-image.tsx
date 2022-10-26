@@ -1,5 +1,5 @@
-import type { StaticImageData } from "next/future/image";
-import Image from "next/future/image";
+import type { StaticImageData } from "next/image";
+import Image from "next/image";
 
 type HeroImageProps = {
   src: string | StaticImageData;

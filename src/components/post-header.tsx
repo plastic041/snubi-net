@@ -15,11 +15,12 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <Link href="/posts">
-        <a className="flex items-center gap-2 self-start text-gray-500 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">
-          <ArrowUturnLeftIcon className="h-4 w-4" />
-          <span>목록으로</span>
-        </a>
+      <Link
+        href="/posts"
+        className="flex items-center gap-2 self-start text-gray-500 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+      >
+        <ArrowUturnLeftIcon className="h-4 w-4" />
+        <span>목록으로</span>
       </Link>
       <h1 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
         {frontmatter.title}

@@ -9,21 +9,22 @@ const PostItem = ({ frontmatter }: PostItemProps) => {
   return (
     <li className="flex flex-col">
       <section className="flex flex-col rounded-lg">
-        <Link href={`/posts/${frontmatter.slug}`}>
-          <a className="group flex flex-col">
-            <h3 className="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 group-hover:dark:text-blue-300">
-              {frontmatter.title}
-            </h3>
-            <span className="mb-2 text-gray-700 dark:text-gray-200">
-              {frontmatter.description}
-            </span>
-            <time
-              className="mb-2 text-gray-700 dark:text-gray-200"
-              dateTime={frontmatter.created_at}
-            >
-              {frontmatter.created_at}
-            </time>
-          </a>
+        <Link
+          href={`/posts/${frontmatter.slug}`}
+          className="group flex flex-col"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 group-hover:dark:text-blue-300">
+            {frontmatter.title}
+          </h3>
+          <span className="mb-2 text-gray-700 dark:text-gray-200">
+            {frontmatter.description}
+          </span>
+          <time
+            className="mb-2 text-gray-700 dark:text-gray-200"
+            dateTime={frontmatter.created_at}
+          >
+            {frontmatter.created_at}
+          </time>
         </Link>
         <div className="flex flex-row gap-2">
           {frontmatter.tags.map((name) => {

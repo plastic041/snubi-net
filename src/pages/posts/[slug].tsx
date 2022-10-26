@@ -4,7 +4,7 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import Image from "next/future/image";
+import Image from "next/image";
 import { join } from "path";
 import { useEffect } from "react";
 import remarkGfm from "remark-gfm";

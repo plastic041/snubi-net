@@ -1,3 +1,5 @@
+import { request } from "undici";
+
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
@@ -30,11 +32,17 @@ const getAccessToken = async () => {
 export const getNowPlaying = async () => {
   const { access_token: accessToken } = await getAccessToken();
 
-  return fetch(NOW_PLAYING_ENDPOINT, {
+  const url = new URL(NOW_PLAYING_ENDPOINT);
+
+  const { body } = await request(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  const json = await body.json();
+
+  return json;
 };
 
 export const getTopTracks = async (): Promise<Response> => {
@@ -43,9 +51,13 @@ export const getTopTracks = async (): Promise<Response> => {
   const url = new URL(TOP_TRACKS_ENDPOINT);
   url.searchParams.set("limit", "10");
 
-  return fetch(url, {
+  const { body } = await request(url, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+
+  const json = await body.json();
+
+  return json;
 };

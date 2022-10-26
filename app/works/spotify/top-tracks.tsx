@@ -1,32 +1,15 @@
+import { handleTopTracks } from "./get-top-tracks";
 import { TrackCard } from "./track-card";
 import React from "react";
-import { getTopTracks } from "~/lib/spotify";
-import {
-  SpotifyTopTracksSchema,
-  type SpotifyTopTracks,
-} from "~/typings/spotify.d";
-
-export const config = {
-  runtime: "experimental-edge",
-};
-
-const validateTopTracks = (data: unknown): data is SpotifyTopTracks => {
-  const result = SpotifyTopTracksSchema.safeParse(data);
-
-  return result.success;
-};
 
 export const TopTracks = async () => {
-  if (!data) {
-    return <div>error</div>;
-  }
-
+  const tracks = await handleTopTracks();
   return (
     <ul
       className="flex flex-col [&>li:not(:last-child)]:border-b"
       aria-label="많이 들은 노래 10곡"
     >
-      {data.map((track, index) => (
+      {tracks.map((track, index) => (
         <li
           key={track.id}
           className="flex items-center"

@@ -2,7 +2,7 @@ import { getNowPlaying } from "~/lib/spotify";
 import {
   type SpotifyNowPlaying,
   SpotifyNowPlayingSchema,
-} from "~/typings/spotify.d";
+} from "~/typings/spotify";
 
 export const config = {
   runtime: "experimental-edge",

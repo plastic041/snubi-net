@@ -1,12 +1,9 @@
-import { getTopTracks } from "~/lib/spotify";
+import { getTopTracks } from "./spotify";
 import {
   SpotifyTopTracksSchema,
   type SpotifyTopTracks,
-} from "~/typings/spotify.d";
-
-export const config = {
-  runtime: "experimental-edge",
-};
+  Track,
+} from "~/typings/spotify";
 
 const validateTopTracks = (data: unknown): data is SpotifyTopTracks => {
   const result = SpotifyTopTracksSchema.safeParse(data);
@@ -14,18 +11,14 @@ const validateTopTracks = (data: unknown): data is SpotifyTopTracks => {
   return result.success;
 };
 
-export const handleTopTracks = async (): Promise<Response> => {
-  const response = await getTopTracks();
-  // const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
-  console.log(response);
-  return response;
-  const data = await response.json();
+export const handleTopTracks = async () => {
+  const data = await getTopTracks();
 
   if (!validateTopTracks(data)) {
-    return null;
+    return [];
   }
 
-  const tracks = data.items.map((track) => ({
+  const tracks: Track[] = data.items.map((track) => ({
     id: track.id,
     artist: track.artists.map((_artist) => _artist.name).join(", "),
     songUrl: track.external_urls.spotify,

@@ -16,13 +16,14 @@ export const TrackCard = ({ track }: TrackCardProps) => (
       aria-label={`spotify의 ${track.title} 곡 페이지로 이동`}
       className="overflow-hidden rounded transition-transform hover:scale-110 md:rounded-lg"
     >
-      <Image
+      <img src={track.image} width={60} height={60} aria-hidden="true" alt="" />
+      {/* <Image
         src={track.image}
         width={60}
         height={60}
         aria-hidden="true"
         alt=""
-      />
+      /> */}
     </a>
     <div className="flex flex-col justify-center">
       <a

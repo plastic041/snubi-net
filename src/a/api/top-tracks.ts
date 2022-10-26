@@ -2,7 +2,7 @@ import { getTopTracks } from "~/lib/spotify";
 import {
   SpotifyTopTracksSchema,
   type SpotifyTopTracks,
-} from "~/typings/spotify.d";
+} from "~/typings/spotify";
 
 export const config = {
   runtime: "experimental-edge",

@@ -1,7 +1,7 @@
+import Layout from "app/layout";
 import type { NextPage } from "next";
 import heroCatPic from "~/../public/images/hero-cat.png";
 import HeroImage from "~/components/hero-image";
-import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import { type Og } from "~/typings/og";
 
@@ -14,12 +14,13 @@ const og: Og = {
 
 const Home: NextPage = () => {
   return (
-    <Layout>
-      <OgHead og={og} />
+    <>
+      {/* <OgHead og={og} /> */}
       <div className="flex flex-col items-center gap-4 p-8">
-        <HeroImage src={heroCatPic} alt="메롱하는 귀여운 턱시도 고양이, 유화" />
+        {/* <HeroImage src={heroCatPic} alt="메롱하는 귀여운 턱시도 고양이, 유화" /> */}
+        assdas
       </div>
-    </Layout>
+    </>
   );
 };
 

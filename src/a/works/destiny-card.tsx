@@ -1,5 +1,5 @@
+import Layout from "app/layout";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import {
   STRING_KR,

@@ -1,9 +1,9 @@
+import Layout from "app/layout";
 import { readFile, readdir } from "fs/promises";
 import type { GetStaticProps } from "next";
 import { serialize } from "next-mdx-remote/serialize";
 import { useRouter } from "next/router";
 import { join } from "path";
-import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import { Posts } from "~/components/post-list";
 import { TagChips } from "~/components/tag-chips";

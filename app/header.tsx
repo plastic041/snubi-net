@@ -33,7 +33,7 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-4">
           <CategoryItem name="작업" href="/works" />
-          <CategoryItem name="글" href="/posts" />
+          {/* <CategoryItem name="글" href="/posts" /> */}
           <a
             className="flex"
             href="https://github.com/plastic041"

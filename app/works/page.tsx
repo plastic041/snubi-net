@@ -1,7 +1,7 @@
 import destinyCardThumbnail from "../../public/images/destiny-card/thumbnail.png";
+import Layout from "app/layout";
 import Image from "next/image";
 import Link from "next/link";
-import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import { type Og } from "~/typings/og";
 
@@ -14,7 +14,7 @@ const og: Og = {
 
 const WorksPage = () => {
   return (
-    <Layout>
+    <>
       <OgHead og={og} />
       <div className="flex flex-col items-center gap-4 p-8">
         <Link
@@ -42,7 +42,7 @@ const WorksPage = () => {
           </div>
         </Link>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -18,16 +18,9 @@ export const GithubIcon = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
-export const SpotifyIcon = (
-  props: SVGProps<SVGSVGElement>,
-  {
-    className,
-  }: {
-    className?: string;
-  }
-) => (
+export const SpotifyIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    className={className || "h-6 w-6"}
+    className="h-6 w-6"
     fill="currentColor"
     role="img"
     viewBox="0 0 24 24"

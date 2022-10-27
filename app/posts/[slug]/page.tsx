@@ -75,9 +75,7 @@ const PostPage = async ({ params }: any) => {
         dangerouslySetInnerHTML={{
           __html: post.html,
         }}
-      >
-        {/* <MDXRemote {...mdxSource} components={components} /> */}
-      </div>
+      ></div>
     </article>
   );
 };

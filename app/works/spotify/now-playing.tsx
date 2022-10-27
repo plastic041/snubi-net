@@ -1,4 +1,4 @@
-import { getNowPlaying } from "./spotify";
+import { getNowPlaying } from "./get-now-playing";
 import { SpotifyIcon } from "./spotify-icon";
 import { TrackCard } from "./track-card";
 

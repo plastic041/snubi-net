@@ -1,6 +1,5 @@
-import { getTopTracks } from "./spotify";
+import { getTopTracks } from "./get-top-tracks";
 import { TrackCard } from "./track-card";
-import React from "react";
 
 export const TopTracks = async () => {
   const tracks = await getTopTracks();

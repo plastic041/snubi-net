@@ -2,9 +2,7 @@ import { NowPlaying, NowPlayingIcon } from "./now-playing";
 import { SpotifyIcon } from "./spotify-icon";
 import { TopTracks } from "./top-tracks";
 
-export const revalidate = 86400; // a day in seconds
-
-const TopTracksPage = async () => {
+const TopTracksPage = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
       <section className="flex flex-col gap-4">
@@ -25,7 +23,6 @@ const TopTracksPage = async () => {
         <NowPlaying />
       </section>
     </div>
-    // </Layout>
   );
 };
 

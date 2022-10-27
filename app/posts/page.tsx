@@ -1,5 +1,5 @@
 import { readFile, readdir } from "fs/promises";
-import { serialize } from "next-mdx-remote/serialize";
+import matter from "gray-matter";
 import { join } from "path";
 import { OgHead } from "~/components/og";
 import { Posts } from "~/components/post-list";
@@ -15,13 +15,8 @@ const getPosts = async () => {
       const text = await readFile(join(postsPath, filename), {
         encoding: "utf8",
       });
-      const { frontmatter } = (await serialize(text, {
-        parseFrontmatter: true,
-      })) as unknown as {
-        frontmatter: Frontmatter;
-      };
-
-      return frontmatter;
+      const { data: fm } = matter(text);
+      return fm as Frontmatter;
     })
   );
 

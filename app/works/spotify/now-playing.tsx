@@ -20,7 +20,7 @@ export const NowPlaying = async () => {
   return (
     <div className="flex flex-col gap-4 text-gray-900 dark:text-gray-50">
       <div className="">
-        {track ? (
+        {track !== "no data" ? (
           <TrackCard track={track} />
         ) : (
           <div>현재 노래를 듣고 있지 않습니다.</div>

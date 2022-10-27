@@ -1,29 +1,6 @@
+import { CategoryItem } from "./category-item";
 import Link from "next/link";
 import { GithubIcon } from "~/components/icons";
-
-// import { useIsActive } from "~/lib/hooks/use-is-active";
-
-type CategoryProps = {
-  name: string;
-  href: string;
-};
-const CategoryItem = ({ name, href }: CategoryProps) => {
-  // const isActive = useIsActive(href);
-  const isActive = false;
-
-  return (
-    <Link href={href}>
-      <a className="flex">
-        <span
-          className="border-blue-500 text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:text-blue-400 [&[aria-current='page']]:border-b-2"
-          aria-current={isActive && "page"}
-        >
-          {name}
-        </span>
-      </a>
-    </Link>
-  );
-};
 
 const Header = () => {
   return (

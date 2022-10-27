@@ -1,23 +1,14 @@
-import Layout from "app/layout";
 import { readFile, readdir } from "fs/promises";
-import "highlight.js/styles/base16/dracula.css";
-import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/image";
 import { join } from "path";
-import { useEffect } from "react";
 import remarkGfm from "remark-gfm";
-import { OgHead } from "~/components/og";
 import PostHeader from "~/components/post-header";
 import { validateFrontmatter } from "~/lib/validate-fm";
 import type { Frontmatter } from "~/typings/frontmatter";
-import { type Og } from "~/typings/og";
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const slug = context.params?.slug as string | undefined;
-
+const getPost = async (slug: string) => {
   if (!slug) {
     return {
       notFound: true,
@@ -69,13 +60,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   return {
-    props: {
-      mdxSource,
-    },
+    mdxSource,
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const generateStaticParams = async () => {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
   const fms = await Promise.all(
@@ -96,13 +85,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const fmsPublished = fms.filter((fm) => !fm.is_draft);
 
   const paths = fmsPublished.map((fm) => ({
-    params: { slug: fm.slug },
+    slug: fm.slug,
   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return paths;
 };
 
 type ImageProps = {
@@ -127,44 +113,20 @@ const components = {
   ),
 };
 
-type Props = {
-  mdxSource: MDXRemoteSerializeResult & { frontmatter: Frontmatter };
-};
-const PostPage = ({ mdxSource }: Props) => {
-  const og: Og = {
-    title: `${mdxSource.frontmatter.title} | Snubi`,
-    description: mdxSource.frontmatter.description,
-    image: "https://snubi-net.vercel.app/images/hero-cat.png",
-    url: `https://snubi-net.vercel.app/posts/${mdxSource.frontmatter.slug}`,
-  };
+const PostPage = async ({ params }: { params: { slug: string } }) => {
+  const { mdxSource } = await getPost(params.slug);
 
-  useEffect(() => {
-    const highlight = async () => {
-      const hljs = (await import("highlight.js/lib/core")).default;
-      const ini = (await import("highlight.js/lib/languages/ini")).default;
-      const rust = (await import("highlight.js/lib/languages/rust")).default;
-      const typescript = (await import("highlight.js/lib/languages/typescript"))
-        .default;
-
-      hljs.registerLanguage("rust", rust);
-      hljs.registerLanguage("toml", ini);
-      hljs.registerLanguage("typescript", typescript);
-      hljs.highlightAll();
-    };
-
-    highlight();
-  }, []);
+  if (!mdxSource) {
+    return <div>not found</div>;
+  }
 
   return (
-    <Layout>
-      <OgHead og={og} />
-      <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
-        <PostHeader frontmatter={mdxSource.frontmatter} />
-        <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
-          <MDXRemote {...mdxSource} components={components} />
-        </div>
-      </article>
-    </Layout>
+    <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
+      <PostHeader frontmatter={mdxSource.frontmatter} />
+      <div className="prose relative col-span-2 flex flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
+        <MDXRemote {...mdxSource} components={components} />
+      </div>
+    </article>
   );
 };
 

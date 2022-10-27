@@ -1,17 +1,13 @@
-import Layout from "app/layout";
 import { readFile, readdir } from "fs/promises";
-import type { GetStaticProps } from "next";
 import { serialize } from "next-mdx-remote/serialize";
-import { useRouter } from "next/router";
 import { join } from "path";
 import { OgHead } from "~/components/og";
 import { Posts } from "~/components/post-list";
 import { TagChips } from "~/components/tag-chips";
 import type { Frontmatter } from "~/typings/frontmatter";
-import { type Og } from "~/typings/og";
 import type { Tag } from "~/typings/tags";
 
-export const getStaticProps: GetStaticProps = async () => {
+const getPosts = async () => {
   const postsPath = join(process.cwd(), "./src/posts/");
   const postsFilenames = await readdir(postsPath);
   const fms = await Promise.all(
@@ -51,19 +47,13 @@ export const getStaticProps: GetStaticProps = async () => {
   );
 
   return {
-    props: {
-      frontmatters: fmsDateSorted,
-      tags: tagsCounted,
-    },
+    frontmatters: fmsDateSorted,
+    tags: tagsCounted,
   };
 };
 
-const og: Og = {
-  title: "글 목록 | Snubi",
-  description: "글 목록",
-  image: "https://snubi-net.vercel.app/images/hero-cat.png",
-  url: "https://snubi-net.vercel.app/posts",
-};
+const Posts = async ({ searchParams }: { searchParams: { tag: string } }) => {
+  const { frontmatters, tags } = await getPosts();
 
 type PageProps = {
   frontmatters: Frontmatter[];
@@ -82,8 +72,7 @@ const Page = ({ tags, frontmatters }: PageProps) => {
   });
 
   return (
-    <Layout>
-      <OgHead og={og} />
+    <>
       <aside className="hidden flex-col p-8 lg:flex">
         <h1
           className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-gray-100"
@@ -95,7 +84,7 @@ const Page = ({ tags, frontmatters }: PageProps) => {
       </aside>
       <div className="absolute inset-x-0 hidden border-b border-b-gray-500 lg:block"></div>
       <Posts fms={filteredFms} />
-    </Layout>
+    </>
   );
 };
 

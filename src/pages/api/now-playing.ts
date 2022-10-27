@@ -4,10 +4,6 @@ import {
   SpotifyNowPlayingSchema,
 } from "~/typings/spotify";
 
-export const config = {
-  runtime: "experimental-edge",
-};
-
 const validateTopTracks = (data: unknown): data is SpotifyNowPlaying => {
   const result = SpotifyNowPlayingSchema.safeParse(data);
 

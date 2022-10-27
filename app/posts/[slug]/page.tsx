@@ -1,11 +1,13 @@
 import { readFile, readdir } from "fs/promises";
-import { MDXRemote } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/image";
 import { join } from "path";
+import rehypeSanitize from "rehype-sanitize";
+import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 import PostHeader from "~/components/post-header";
-import { validateFrontmatter } from "~/lib/validate-fm";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 const getPost = async (slug: string) => {
@@ -23,14 +25,13 @@ const getPost = async (slug: string) => {
         encoding: "utf8",
       });
 
-      const mdxSource = await serialize(text, {
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-        },
-        parseFrontmatter: true,
-      });
-
-      return mdxSource;
+      const file = await unified()
+        .use(remarkParse)
+        .use(remarkGfm)
+        .use(remarkRehype)
+        .use(rehypeSanitize)
+        .use(rehypeStringify)
+        .process(text);
     })
   );
 

@@ -1,5 +1,6 @@
-// import { CardCanvas } from "./card-canvas";
-// import { CardForm } from "./card-form";
+import { CardCanvas } from "./card-canvas";
+import { CardForm } from "./card-form";
+
 // import { OgHead } from "~/components/og";
 // import { type Og } from "~/typings/og";
 
@@ -15,8 +16,8 @@ const DestinyCardPage = () => {
     <>
       {/* <OgHead og={og} /> */}
       <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
-        {/* <CardCanvas />
-        <CardForm /> */}
+        <CardCanvas />
+        <CardForm />
       </div>
     </>
   );

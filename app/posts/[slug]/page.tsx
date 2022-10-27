@@ -64,7 +64,7 @@ export const generateStaticParams = async () => {
   return paths;
 };
 
-const PostPage = async ({ params }: { params: { slug: string } }) => {
+const PostPage = async ({ params }: any) => {
   const post = await getPost(params.slug);
 
   return (

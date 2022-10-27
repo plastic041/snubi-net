@@ -2,7 +2,7 @@ import { NowPlaying, NowPlayingIcon } from "./now-playing";
 import { SpotifyIcon } from "./spotify-icon";
 import { TopTracks } from "./top-tracks";
 
-// export const revalidate = 86400; // a day in seconds
+export const revalidate = 86400; // a day in seconds
 
 const TopTracksPage = async () => {
   return (

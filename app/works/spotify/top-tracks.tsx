@@ -1,8 +1,9 @@
 import { getTopTracks } from "./get-top-tracks";
 import { TrackCard } from "./track-card";
+import { use } from "react";
 
-export const TopTracks = async () => {
-  const tracks = await getTopTracks();
+export const TopTracks = () => {
+  const tracks = use(getTopTracks());
 
   return (
     <ul

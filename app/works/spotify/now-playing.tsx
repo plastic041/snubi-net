@@ -1,9 +1,10 @@
 import { getNowPlaying } from "./get-now-playing";
 import { SpotifyIcon } from "./spotify-icon";
 import { TrackCard } from "./track-card";
+import { use } from "react";
 
-export const NowPlayingIcon = async () => {
-  const track = await getNowPlaying();
+export const NowPlayingIcon = () => {
+  const track = use(getNowPlaying());
 
   if (track) {
     return <SpotifyIcon className="h-8 w-8 text-[#1DB954] transition-colors" />;
@@ -14,8 +15,8 @@ export const NowPlayingIcon = async () => {
   );
 };
 
-export const NowPlaying = async () => {
-  const track = await getNowPlaying();
+export const NowPlaying = () => {
+  const track = use(getNowPlaying());
 
   return (
     <div className="flex flex-col gap-4 text-gray-900 dark:text-gray-50">

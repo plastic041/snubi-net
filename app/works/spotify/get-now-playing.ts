@@ -37,8 +37,6 @@ export const getNowPlaying = async (): Promise<
     },
   });
 
-  console.log("NowPlaying", response.status);
-
   if (response.status !== 200) {
     return "no data";
   }

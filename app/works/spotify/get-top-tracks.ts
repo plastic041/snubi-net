@@ -36,8 +36,6 @@ export const getTopTracks = async (): Promise<Track[] | null> => {
     },
   });
 
-  console.log("TopTracks", response.status);
-
   if (response.status !== 200) {
     return null;
   }

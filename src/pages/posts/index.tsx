@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { join } from "path";
 import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
-import PostItem from "~/components/post-list-item";
-import TagChip from "~/components/tag-chip";
+import { Posts } from "~/components/post-list";
+import { TagChips } from "~/components/tag-chips";
 import type { Frontmatter } from "~/typings/frontmatter";
 import { type Og } from "~/typings/og";
 import type { Tag } from "~/typings/tags";
@@ -69,13 +69,13 @@ type PageProps = {
   frontmatters: Frontmatter[];
   tags: Tag[];
 };
-const Posts = ({ tags, frontmatters }: PageProps) => {
+const Page = ({ tags, frontmatters }: PageProps) => {
   const router = useRouter();
-  const { tag: tagQuery } = router.query;
+  const { tag: query } = router.query as { tag?: string };
 
   const filteredFms = frontmatters.filter((fm) => {
-    if (tagQuery) {
-      return fm.tags.includes(tagQuery as string);
+    if (query) {
+      return fm.tags.includes(query as string);
     }
 
     return true;
@@ -91,33 +91,12 @@ const Posts = ({ tags, frontmatters }: PageProps) => {
         >
           글
         </h1>
-        <ul className="flex gap-2">
-          <li key="all">
-            <TagChip
-              tag="모든 글"
-              count={frontmatters.length}
-              current={!tagQuery}
-            />
-          </li>
-          {tags.map((tag) => (
-            <li key={tag.name}>
-              <TagChip
-                tag={tag.name}
-                count={tag.count}
-                current={tag.name === tagQuery}
-              />
-            </li>
-          ))}
-        </ul>
+        <TagChips tags={tags} query={query} />
       </aside>
       <div className="absolute inset-x-0 hidden border-b border-b-gray-500 lg:block"></div>
-      <ul className="flex flex-col gap-12 p-8" aria-label="글 목록">
-        {filteredFms.map((fm) => (
-          <PostItem frontmatter={fm} key={fm.title} />
-        ))}
-      </ul>
+      <Posts fms={filteredFms} />
     </Layout>
   );
 };
 
-export default Posts;
+export default Page;

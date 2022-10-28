@@ -1,5 +1,5 @@
-import TagChip from "./tag-chip";
 import Link from "next/link";
+import { TagChip } from "~/components/tag-chips";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 type PostItemProps = {
@@ -26,13 +26,28 @@ const PostItem = ({ frontmatter }: PostItemProps) => {
           </a>
         </Link>
         <div className="flex flex-row gap-2">
-          {frontmatter.tags.map((tag) => (
-            <TagChip tag={tag} key={tag} />
-          ))}
+          {frontmatter.tags.map((name) => {
+            const tag = {
+              name,
+              count: 0,
+            };
+            return <TagChip tag={tag} key={name} hideCount current={false} />;
+          })}
         </div>
       </section>
     </li>
   );
 };
 
-export default PostItem;
+type PageProps = {
+  fms: Frontmatter[];
+};
+export const Posts = ({ fms }: PageProps) => {
+  return (
+    <ul className="flex flex-col gap-12 p-8" aria-label="글 목록">
+      {fms.map((fm) => (
+        <PostItem frontmatter={fm} key={fm.title} />
+      ))}
+    </ul>
+  );
+};

@@ -1,7 +1,7 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import TagChip from "~/components/tag-chip";
+import { TagChip } from "~/components/tag-chips";
 import { Frontmatter } from "~/typings/frontmatter";
 
 type PostHeaderProps = {
@@ -21,9 +21,9 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
           <span>목록으로</span>
         </a>
       </Link>
-      <h2 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
+      <h1 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
         {frontmatter.title}
-      </h2>
+      </h1>
       <p className="hidden text-gray-700 dark:text-gray-200 lg:block">
         {frontmatter.description}
       </p>
@@ -34,9 +34,13 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
         {frontmatter.created_at}
       </time>
       <div className="flex flex-row gap-1">
-        {frontmatter.tags.map((tag) => (
-          <TagChip tag={tag} key={tag} />
-        ))}
+        {frontmatter.tags.map((name) => {
+          const tag = {
+            name,
+            count: 0,
+          };
+          return <TagChip tag={tag} key={name} hideCount current={false} />;
+        })}
       </div>
     </motion.div>
   );

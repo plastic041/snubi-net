@@ -6,7 +6,7 @@ if (!(clientId && clientSecret && refreshToken)) {
   throw new Error("Missing Spotify credentials");
 }
 
-const basic = btoa(`${clientId}:${clientSecret}`);
+const basic = window.btoa(`${clientId}:${clientSecret}`);
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks`;
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;

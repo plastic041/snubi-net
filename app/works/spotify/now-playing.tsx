@@ -19,7 +19,7 @@ export const NowPlaying = () => {
   const track = use(getNowPlaying());
 
   return (
-    <div className="flex flex-col gap-4 text-gray-900 dark:text-gray-50">
+    <div className="text-g-900 flex flex-col gap-4">
       <div className="">
         {track !== "no data" ? (
           <TrackCard track={track} />

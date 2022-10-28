@@ -1,7 +1,7 @@
+import { Posts } from "./post-list";
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
 import { join } from "path";
-import { Posts } from "~/components/post-list";
 import { TagChips } from "~/components/tag-chips";
 import type { Frontmatter } from "~/typings/frontmatter";
 import type { Tag } from "~/typings/tags";
@@ -62,10 +62,7 @@ const Page = async ({ searchParams }: { searchParams: { tag: string } }) => {
   return (
     <>
       <aside className="hidden flex-col p-8 lg:flex">
-        <h1
-          className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-gray-100"
-          aria-hidden
-        >
+        <h1 className="text-g-900 mb-4 text-4xl font-extrabold" aria-hidden>
           글
         </h1>
         <TagChips tags={tags} query={query} />

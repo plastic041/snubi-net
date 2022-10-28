@@ -19,21 +19,16 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
     >
       <Link
         href="/posts"
-        className="flex items-center gap-2 self-start text-gray-500 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+        className="text-g-500 flex items-center gap-2 self-start transition-colors duration-200 hover:text-gray-900 dark:hover:text-gray-100"
       >
         <ArrowUturnLeftIcon className="h-4 w-4" />
         <span>목록으로</span>
       </Link>
-      <h1 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
+      <h1 className="text-g-900 break-words text-4xl font-extrabold [word-break:keep-all]">
         {frontmatter.title}
       </h1>
-      <p className="hidden text-gray-700 dark:text-gray-200 lg:block">
-        {frontmatter.description}
-      </p>
-      <time
-        dateTime={frontmatter.created_at}
-        className="text-gray-700 dark:text-gray-200"
-      >
+      <p className="text-g-700 hidden lg:block">{frontmatter.description}</p>
+      <time dateTime={frontmatter.created_at} className="text-g-700">
         {frontmatter.created_at}
       </time>
       <div className="flex flex-row gap-1">

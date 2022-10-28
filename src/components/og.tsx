@@ -1,4 +1,5 @@
-import Head from "next/head";
+/* eslint-disable @next/next/no-head-element */
+
 import { type Og } from "~/typings/og";
 
 type OgHeadProps = {
@@ -6,7 +7,7 @@ type OgHeadProps = {
 };
 export const OgHead = ({ og }: OgHeadProps) => {
   return (
-    <Head>
+    <head>
       <meta name="title" content={og.title} />
       <meta name="description" content={og.description} />
       <meta name="copyright" content="snubi" />
@@ -20,6 +21,6 @@ export const OgHead = ({ og }: OgHeadProps) => {
       <meta property="twitter:title" content={og.title} />
       <meta property="twitter:description" content={og.description} />
       <meta property="twitter:image" content={og.image} />
-    </Head>
+    </head>
   );
 };

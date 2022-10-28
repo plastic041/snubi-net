@@ -13,7 +13,7 @@ const PostItem = ({ frontmatter }: PostItemProps) => {
           href={`/posts/${frontmatter.slug}`}
           className="group flex flex-col"
         >
-          <h3 className="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 group-hover:dark:text-blue-300">
+          <h3 className="text-g-900 text-2xl font-bold transition-colors group-hover:text-blue-500 group-hover:dark:text-blue-300">
             {frontmatter.title}
           </h3>
           <span className="mb-2 text-gray-700 dark:text-gray-200">

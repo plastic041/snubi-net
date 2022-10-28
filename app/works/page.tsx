@@ -19,13 +19,10 @@ const WorksPage = () => {
             placeholder="blur"
           />
           <div className="flex flex-col items-center gap-2">
-            <span className="text-center text-xl font-bold text-gray-900 dark:text-gray-100">
+            <span className="text-g-900 text-center text-xl font-bold">
               데스티니 카드 생성기
             </span>
-            <time
-              className="text-gray-700 dark:text-gray-300"
-              dateTime="2022-09-30"
-            >
+            <time className="text-g-700" dateTime="2022-09-30">
               2022년 9월 30일
             </time>
           </div>
@@ -36,13 +33,10 @@ const WorksPage = () => {
         >
           <div className="aspect-square w-full" />
           <div className="flex flex-col items-center gap-2">
-            <span className="break-words text-center text-xl font-bold text-gray-900 [word-break:keep-all] dark:text-gray-100">
+            <span className="text-g-900 break-words text-center text-xl font-bold [word-break:keep-all]">
               Spotify 재생목록
             </span>
-            <time
-              className="text-gray-700 dark:text-gray-300"
-              dateTime="2022-09-30"
-            >
+            <time className="text-g-700" dateTime="2022-09-30">
               2022년 10월 26일
             </time>
           </div>

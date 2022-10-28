@@ -85,7 +85,10 @@ const Posts = ({ tags, frontmatters }: PageProps) => {
     <Layout>
       <OgHead og={og} />
       <aside className="hidden flex-col p-8 lg:flex">
-        <h1 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+        <h1
+          className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-gray-100"
+          aria-hidden
+        >
           글
         </h1>
         <ul className="flex gap-2">
@@ -108,7 +111,7 @@ const Posts = ({ tags, frontmatters }: PageProps) => {
         </ul>
       </aside>
       <div className="absolute inset-x-0 hidden border-b border-b-gray-500 lg:block"></div>
-      <ul className="flex flex-col gap-12 p-8">
+      <ul className="flex flex-col gap-12 p-8" aria-label="글 목록">
         {filteredFms.map((fm) => (
           <PostItem frontmatter={fm} key={fm.title} />
         ))}

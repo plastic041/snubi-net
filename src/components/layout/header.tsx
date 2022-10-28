@@ -13,9 +13,9 @@ const CategoryItem = ({ name, href }: CategoryProps) => {
     <Link href={href}>
       <a className="flex">
         <span
-          className={`border-blue-500 text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:text-blue-400
-          ${isActive ? "border-b-2" : ""}
+          className={`border-blue-500 text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:text-blue-400 [&[aria-current='true']]:border-b-2
         `}
+          aria-current={isActive}
         >
           {name}
         </span>
@@ -30,9 +30,9 @@ const Header = () => {
       <nav className="container mx-auto flex flex-row items-center justify-between p-4 xl:px-40">
         <Link href="/">
           <a>
-            <h1 className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
+            <span className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
               Snubi
-            </h1>
+            </span>
           </a>
         </Link>
         <div className="flex items-center gap-4">

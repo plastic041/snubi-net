@@ -21,9 +21,9 @@ const PostHeader = ({ frontmatter }: PostHeaderProps) => {
           <span>목록으로</span>
         </a>
       </Link>
-      <h2 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
+      <h1 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
         {frontmatter.title}
-      </h2>
+      </h1>
       <p className="hidden text-gray-700 dark:text-gray-200 lg:block">
         {frontmatter.description}
       </p>

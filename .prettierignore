@@ -40,9 +40,7 @@ next-env.d.ts
 /playwright/.cache/
 
 /.github
-/tests
 /.vscode
-/e2e
 /playwright-report
 /.yarn/*
 

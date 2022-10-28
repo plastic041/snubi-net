@@ -1,3 +1,4 @@
+import PostHeader from "./post-header";
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
 import { join } from "path";
@@ -7,7 +8,6 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
-import PostHeader from "~/components/post-header";
 import type { Frontmatter } from "~/typings/frontmatter";
 
 const getPost = async (slug: string) => {

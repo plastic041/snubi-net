@@ -5,8 +5,12 @@ test.describe("works page", () => {
     await page.goto("/works");
 
     const works = page.locator("main a");
+    const worksCount = await works.count();
 
-    await expect(works).toBeVisible();
+    for (let i = 0; i < worksCount; i++) {
+      const work = works.nth(i);
+      await expect(work).toBeVisible();
+    }
   });
 
   test("works/destiny renders correctly", async ({ page }) => {

@@ -1,7 +1,6 @@
 import { readFile, readdir } from "fs/promises";
 import matter from "gray-matter";
 import { join } from "path";
-import { OgHead } from "~/components/og";
 import { Posts } from "~/components/post-list";
 import { TagChips } from "~/components/tag-chips";
 import type { Frontmatter } from "~/typings/frontmatter";
@@ -47,16 +46,10 @@ const getPosts = async () => {
   };
 };
 
-const Posts = async ({ searchParams }: { searchParams: { tag: string } }) => {
+const Page = async ({ searchParams }: { searchParams: { tag: string } }) => {
   const { frontmatters, tags } = await getPosts();
 
-type PageProps = {
-  frontmatters: Frontmatter[];
-  tags: Tag[];
-};
-const Page = ({ tags, frontmatters }: PageProps) => {
-  const router = useRouter();
-  const { tag: query } = router.query as { tag?: string };
+  const query = searchParams.tag;
 
   const filteredFms = frontmatters.filter((fm) => {
     if (query) {

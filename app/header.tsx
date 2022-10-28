@@ -7,9 +7,9 @@ const Header = () => {
     <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center border-b bg-gray-50 dark:border-b-gray-500 dark:bg-gray-700">
       <nav className="container mx-auto flex flex-row items-center justify-between p-4 xl:px-40">
         <Link href="/">
-          <h1 className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
+          <span className="text-3xl font-extrabold text-gray-900 transition-colors hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-300">
             Snubi
-          </h1>
+          </span>
         </Link>
         <div className="flex items-center gap-4">
           <CategoryItem name="작업" href="/works" />

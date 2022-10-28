@@ -16,9 +16,8 @@ export const CategoryItem = ({ name, href }: CategoryProps) => {
   return (
     <Link href={href} className="flex">
       <span
-        className={`border-blue-500 text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:text-blue-400
-          ${isActive ? "border-b-2" : ""}
-        `}
+        className="border-blue-500 text-blue-500 underline-offset-2 transition-colors hover:text-blue-700 dark:border-blue-300 dark:text-blue-300 dark:hover:text-blue-400 [&[aria-current='page']]:border-b-2"
+        aria-current={isActive && "page"}
       >
         {name}
       </span>

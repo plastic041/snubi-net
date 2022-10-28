@@ -32,7 +32,7 @@ export const getTopTracks = async (): Promise<Track[] | null> => {
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 86400,
+      revalidate: 60,
     },
   });
 

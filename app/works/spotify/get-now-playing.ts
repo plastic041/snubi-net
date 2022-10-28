@@ -33,7 +33,7 @@ export const getNowPlaying = async (): Promise<
       Authorization: `Bearer ${accessToken}`,
     },
     next: {
-      revalidate: 10,
+      revalidate: 60,
     },
   });
 

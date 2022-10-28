@@ -1,6 +1,5 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
   STRING_KR,
   DAMAGE_TYPE_COLORS,
@@ -11,8 +10,9 @@ import {
   PY,
   RARITY_COLORS,
   FONT_FAMILY,
-} from "~/lib/constants/destiny-card";
-import { downloadImage } from "~/lib/download-image";
+} from "./contants";
+import { downloadImage } from "./download-image";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDestinyItemStore } from "~/stores/destiny-item";
 
 export const CardCanvas = () => {

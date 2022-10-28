@@ -13,11 +13,7 @@ export const DAMAGE_TYPE_IMAGE_SRCS: Record<DamageType, string> = {
   void: "/images/destiny-card/destiny-void.webp",
 };
 
-type DAMAGE_TYPE_COLOR = {
-  [key in DamageType]: string;
-};
-
-export const DAMAGE_TYPE_COLORS: DAMAGE_TYPE_COLOR = {
+export const DAMAGE_TYPE_COLORS: Record<DamageType, string> = {
   kinetic: "#868686",
   solar: "#f0631e",
   arc: "#79bbe8",

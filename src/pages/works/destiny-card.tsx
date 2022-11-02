@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
@@ -131,6 +132,13 @@ const DestinyCardPage = () => {
   return (
     <Layout>
       <OgHead og={og} />
+      <Head>
+        <link
+          rel="preload"
+          as="font"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2"
+        />
+      </Head>
       <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
         <div className="flex flex-col items-center gap-4">
           <canvas

@@ -29,11 +29,11 @@ const DestinyCardPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+
   const [imageCache, setImageCache] = useState<
     Record<string, HTMLImageElement>
   >({});
-
-  const isFirstRender = useRef(true);
 
   const draw = useCallback(async () => {
     const canvas = canvasRef.current;
@@ -127,30 +127,12 @@ const DestinyCardPage = () => {
       return;
     }
 
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-
-      const ready = async () => {
-        const font = new FontFace(
-          FONT_FAMILY,
-          "url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2-variations')",
-          {
-            style: "normal",
-            weight: "45 920",
-            display: "swap",
-          }
-        );
-
-        await font.load();
-
-        document.fonts.add(font);
-      };
-
-      ready().then(draw);
-    } else {
-      draw();
+    if (!isFontLoaded) {
+      document.fonts.ready.then(() => setIsFontLoaded(true));
     }
-  }, [draw]);
+
+    draw();
+  }, [draw, isFontLoaded]);
 
   return (
     <Layout>

@@ -133,7 +133,10 @@ const DestinyCardPage = () => {
       const ready = async () => {
         const font = new FontFace(
           FONT_FAMILY,
-          "url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2-variations')",
+          `
+          local('Pretendard Variable'), url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2 supports variations'),
+          local('Pretendard Variable'), url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2) format('woff2-variations')
+          `,
           {
             style: "normal",
             weight: "45 920",
@@ -141,7 +144,7 @@ const DestinyCardPage = () => {
           }
         );
 
-        await font.load();
+        await font.load().catch(console.error);
 
         document.fonts.add(font);
       };

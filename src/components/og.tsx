@@ -7,6 +7,7 @@ type OgHeadProps = {
 export const OgHead = ({ og }: OgHeadProps) => {
   return (
     <Head>
+      <title>{og.title}</title>
       <meta name="title" content={og.title} />
       <meta name="description" content={og.description} />
       <meta name="copyright" content="snubi" />

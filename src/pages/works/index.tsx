@@ -6,8 +6,8 @@ import { OgHead } from "~/components/og";
 import { type Og } from "~/typings/og";
 
 const og: Og = {
-  title: "Snubi.net",
-  description: "Snubi.net",
+  title: "작업 목록 | Snubi",
+  description: "Snubi의 작업 목록입니다.",
   image: "https://snubi-net.vercel.app/images/hero-cat.png",
   url: "https://snubi-net.vercel.app",
 };

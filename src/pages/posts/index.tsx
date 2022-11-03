@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const og: Og = {
   title: "글 목록 | Snubi",
-  description: "글 목록",
+  description: "Snubi의 글 목록입니다.",
   image: "https://snubi-net.vercel.app/images/hero-cat.png",
   url: "https://snubi-net.vercel.app/posts",
 };

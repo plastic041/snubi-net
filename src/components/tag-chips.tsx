@@ -11,11 +11,10 @@ export const TagChip = ({ tag, current, hideCount }: TagChipProps) => {
     <Link
       href={tag.name === "모든 글" ? "/posts" : `/posts?tag=${tag.name}`}
       className="flex flex-row gap-2 rounded border border-gray-400 bg-white px-2 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-600 [&[aria-current='true']]:border-blue-400 [&[aria-current='true']]:bg-blue-400 [&[aria-current='true']]:text-white [&[aria-current='true']]:dark:border-blue-600 [&[aria-current='true']]:dark:bg-blue-600"
+      aria-current={current}
     >
-      <a aria-current={current}>
-        <span>#{tag.name}</span>
-        {!hideCount && <span className="tabular-nums">{tag.count}</span>}
-      </a>
+      <span>#{tag.name}</span>
+      {!hideCount && <span className="tabular-nums">{tag.count}</span>}
     </Link>
   );
 };

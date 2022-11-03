@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import remarkGfm from "remark-gfm";
 import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
-import PostHeader from "~/components/post-header";
+import { PostHeader } from "~/components/post-header";
 import { validateFrontmatter } from "~/lib/validate-fm";
 import type { Frontmatter } from "~/typings/frontmatter";
 import { type Og } from "~/typings/og";

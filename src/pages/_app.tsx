@@ -1,5 +1,4 @@
 import "../styles/global.css";
-import { MotionConfig } from "framer-motion";
 import { AppProps } from "next/app";
 import type { ReactElement } from "react";
 
@@ -9,11 +8,7 @@ import type { ReactElement } from "react";
  * @return {ReactNode} App
  */
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
-  return (
-    <MotionConfig reducedMotion="user">
-      <Component {...pageProps} />
-    </MotionConfig>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

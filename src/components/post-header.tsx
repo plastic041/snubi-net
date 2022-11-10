@@ -8,7 +8,7 @@ type PostHeaderProps = {
 };
 export const PostHeader = ({ frontmatter }: PostHeaderProps) => {
   return (
-    <div className="top-[5rem] col-span-1 -mt-8 flex animate-fade-in-down flex-col gap-4 self-start lg:sticky">
+    <div className="top-[5rem] col-span-1 flex animate-fade-in-down flex-col gap-4 self-start lg:sticky">
       <Link
         href="/posts"
         className="flex items-center gap-2 self-start text-gray-500 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"

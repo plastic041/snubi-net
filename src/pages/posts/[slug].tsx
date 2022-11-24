@@ -1,13 +1,14 @@
+import { nodeTypes } from "@mdx-js/mdx";
 import { readFile, readdir } from "fs/promises";
-import "highlight.js/styles/base16/dracula.css";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/image";
 import { join } from "path";
-import { useEffect } from "react";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import remarkTwoslash from "remark-shiki-twoslash";
 import Layout from "~/components/layout";
 import { OgHead } from "~/components/og";
 import { PostHeader } from "~/components/post-header";
@@ -34,7 +35,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
       const mdxSource = await serialize(text, {
         mdxOptions: {
-          remarkPlugins: [remarkGfm],
+          rehypePlugins: [[rehypeRaw, { passThrough: nodeTypes }]],
+          remarkPlugins: [remarkGfm, [remarkTwoslash, { theme: "dracula" }]],
         },
         parseFrontmatter: true,
       });
@@ -137,23 +139,6 @@ const PostPage = ({ mdxSource }: Props) => {
     image: "https://snubi-net.vercel.app/images/hero-cat.png",
     url: `https://snubi-net.vercel.app/posts/${mdxSource.frontmatter.slug}`,
   };
-
-  useEffect(() => {
-    const highlight = async () => {
-      const hljs = (await import("highlight.js/lib/core")).default;
-      const ini = (await import("highlight.js/lib/languages/ini")).default;
-      const rust = (await import("highlight.js/lib/languages/rust")).default;
-      const typescript = (await import("highlight.js/lib/languages/typescript"))
-        .default;
-
-      hljs.registerLanguage("rust", rust);
-      hljs.registerLanguage("toml", ini);
-      hljs.registerLanguage("typescript", typescript);
-      hljs.highlightAll();
-    };
-
-    highlight();
-  }, []);
 
   return (
     <Layout>

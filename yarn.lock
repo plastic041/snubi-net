@@ -3747,13 +3747,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.6.0":
-  version: 11.6.0
-  resolution: "highlight.js@npm:11.6.0"
-  checksum: 3908eb34a4b442ca1e20c1ae6415ea935fbbcdb2b532a89948d82b0fa4ad41fc5de3802a0de4e88a0bcb7d97d4445579048cd2aab1d105ac47f59dd58a9a98ae
-  languageName: node
-  linkType: hard
-
 "html-encoding-sniffer@npm:^3.0.0":
   version: 3.0.0
   resolution: "html-encoding-sniffer@npm:3.0.0"
@@ -6244,7 +6237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-raw@npm:^6.1.1":
+"rehype-raw@npm:6.1.1":
   version: 6.1.1
   resolution: "rehype-raw@npm:6.1.1"
   dependencies:
@@ -6300,7 +6293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-shiki-twoslash@npm:^3.1.0":
+"remark-shiki-twoslash@npm:3.1.0":
   version: 3.1.0
   resolution: "remark-shiki-twoslash@npm:3.1.0"
   dependencies:
@@ -6614,7 +6607,6 @@ __metadata:
     eslint-plugin-react: 7.31.8
     eslint-plugin-react-hooks: 4.6.0
     eslint-plugin-tailwindcss: 3.6.2
-    highlight.js: 11.6.0
     jsdom: 20.0.0
     next: 13.0.1
     next-mdx-remote: 4.1.0
@@ -6623,9 +6615,9 @@ __metadata:
     prettier-plugin-tailwindcss: 0.1.13
     react: 18.2.0
     react-dom: 18.2.0
-    rehype-raw: ^6.1.1
+    rehype-raw: 6.1.1
     remark-gfm: 3.0.1
-    remark-shiki-twoslash: ^3.1.0
+    remark-shiki-twoslash: 3.1.0
     swr: 1.3.0
     tailwindcss: 3.1.8
     typescript: 4.8.3

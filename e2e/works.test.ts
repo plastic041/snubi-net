@@ -4,13 +4,21 @@ test.describe("works page", () => {
   test("works visible", async ({ page }) => {
     await page.goto("/works");
 
-    const works = page.locator("main a");
+    const works = page.locator("main");
 
     await expect(works).toBeVisible();
   });
 
   test("works/destiny renders correctly", async ({ page }) => {
     await page.goto("/works/destiny-card");
+
+    const canvas = page.locator("canvas");
+
+    await expect(canvas).toBeVisible();
+  });
+
+  test("works/souls renders correctly", async ({ page }) => {
+    await page.goto("/works/souls-card");
 
     const canvas = page.locator("canvas");
 

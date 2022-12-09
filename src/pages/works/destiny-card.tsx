@@ -38,7 +38,7 @@ const DestinyCardPage = () => {
   const draw = useCallback(async () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) {
+    if (!(canvas && ctx)) {
       return;
     }
 
@@ -104,12 +104,12 @@ const DestinyCardPage = () => {
 
     const words = item.description.split(" ");
     for (let i = 0; i < words.length; i++) {
-      const testLine = line + words[i] + " ";
+      const testLine = `${line}${words[i]} `;
       const metrics = ctx.measureText(testLine);
       const testWidth = metrics.width;
       if (testWidth > canvas.width - PX * 2 && i > 0) {
         ctx.fillText(line, PX, y);
-        line = words[i] + " ";
+        line = `${words[i]} `;
         y += 44;
 
         if (y > canvas.height - PY * 2) {

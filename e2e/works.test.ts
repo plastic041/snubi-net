@@ -4,7 +4,7 @@ test.describe("works page", () => {
   test("works visible", async ({ page }) => {
     await page.goto("/works");
 
-    const works = page.locator("main a");
+    const works = page.locator("main");
 
     await expect(works).toBeVisible();
   });

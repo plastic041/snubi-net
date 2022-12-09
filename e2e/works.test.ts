@@ -17,6 +17,14 @@ test.describe("works page", () => {
     await expect(canvas).toBeVisible();
   });
 
+  test("works/souls renders correctly", async ({ page }) => {
+    await page.goto("/works/souls-card");
+
+    const canvas = page.locator("canvas");
+
+    await expect(canvas).toBeVisible();
+  });
+
   test("works/spotify has 10 aria-label='노래 정보'", async ({ page }) => {
     await page.goto("/works/spotify");
 

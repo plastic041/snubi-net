@@ -18,8 +18,8 @@ import { type Og } from "~/typings/og";
 const og: Og = {
   title: "다크소울 아이템 카드 생성기 | Snubi",
   description: "다크소울 아이템 카드를 생성하는 웹 도구입니다.",
-  image: "https://snubi-net.vercel.app/images/destiny-card/open-image.jpg",
-  url: "https://snubi-net.vercel.app/works/destiny-card",
+  image: "https://snubi-net.vercel.app/images/souls-card/open-image.jpg",
+  url: "https://snubi-net.vercel.app/works/soul-card",
 };
 
 const DestinyCardPage = () => {
@@ -39,6 +39,9 @@ const DestinyCardPage = () => {
     }
 
     ctx.textBaseline = "alphabetic";
+
+    ctx.fillStyle = "#666";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // bg
     if (bgImage) {

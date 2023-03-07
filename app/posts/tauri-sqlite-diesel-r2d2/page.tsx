@@ -1,7 +1,7 @@
 import TauriPost, {
   // @ts-expect-error
   fm as tauriFm,
-} from "app/../posts/tauri-sqlite-diesel-r2d2.mdx";
+} from "~/posts/tauri-sqlite-diesel-r2d2.mdx";
 import { PostHeader } from "./post-header";
 import type { Metadata } from "next";
 

@@ -511,6 +511,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdx-js/loader@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@mdx-js/loader@npm:2.3.0"
+  dependencies:
+    "@mdx-js/mdx": ^2.0.0
+    source-map: ^0.7.0
+  peerDependencies:
+    webpack: ">=4"
+  checksum: 1217f811b7ee37e4f63ca828642cd47120b7b2994975409b38cdd8550434166520c94f116efa975cb2b14760a5cc7a424848649519ce05d47f96d21b8c2c1066
+  languageName: node
+  linkType: hard
+
 "@mdx-js/mdx@npm:^2.0.0":
   version: 2.1.5
   resolution: "@mdx-js/mdx@npm:2.1.5"
@@ -533,18 +545,6 @@ __metadata:
     unist-util-visit: ^4.0.0
     vfile: ^5.0.0
   checksum: 51b8b40aafbbeee618fd289ef6e0311e28e2598c514016aefb094237fa9cdf3e1c1407267a08dc7f8da9673de354b5b946f3ceb7ba5735bdf869d18c2a49117d
-  languageName: node
-  linkType: hard
-
-"@mdx-js/react@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@mdx-js/react@npm:2.1.3"
-  dependencies:
-    "@types/mdx": ^2.0.0
-    "@types/react": ">=16"
-  peerDependencies:
-    react: ">=16"
-  checksum: 206124b74b75d9c7e124be6bc6b27b9759875d5824e3c8a0249e6ec717b49fae4d84ccea35c4ade479f30781487c53cf965372409256ead8379850f6250908b3
   languageName: node
   linkType: hard
 
@@ -6729,7 +6729,7 @@ __metadata:
   resolution: "snubi-net@workspace:."
   dependencies:
     "@heroicons/react": 2.0.11
-    "@mdx-js/react": 2.1.3
+    "@mdx-js/loader": ^2.3.0
     "@next/mdx": 13.2.3
     "@playwright/test": 1.27.1
     "@tailwindcss/typography": 0.5.7

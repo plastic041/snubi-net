@@ -3,7 +3,7 @@ import { Frontmatter } from "~/typings/frontmatter";
 import TauriContent, {
   // @ts-expect-error
   fm as tauriFm,
-} from "app/../posts/tauri-sqlite-diesel-r2d2.mdx";
+} from "~/posts/tauri-sqlite-diesel-r2d2.mdx";
 import type { ReactNode } from "react";
 
 type Post = {

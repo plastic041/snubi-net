@@ -33,8 +33,8 @@ test.describe("tests if page has <title>", () => {
     expect(title.includes("Snubi")).toBe(true);
   });
 
-  test("posts/tauri-sqlite-diesel-r2d2", async ({ page }) => {
-    await page.goto("/posts/tauri-sqlite-diesel-r2d2");
+  test("posts/136", async ({ page }) => {
+    await page.goto("/posts/136");
 
     const title = await page.title();
 

@@ -1,11 +1,14 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { Frontmatter } from "~/typings/frontmatter";
+import type { Post } from "../load-posts";
+import dayjs from "dayjs";
 
 type PostHeaderProps = {
-  frontmatter: Frontmatter;
+  post: Post;
 };
-export const PostHeader = ({ frontmatter }: PostHeaderProps) => {
+export const PostHeader = ({ post }: PostHeaderProps) => {
+  const createdAt = dayjs(post.createdAt).format("YYYY년 M월 D일");
+
   return (
     <div className="top-[5rem] col-span-1 flex animate-fade-in-down flex-col gap-4 self-start lg:sticky">
       <Link
@@ -16,16 +19,13 @@ export const PostHeader = ({ frontmatter }: PostHeaderProps) => {
         <span>목록으로</span>
       </Link>
       <h1 className="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100">
-        {frontmatter.title}
+        {post.title}
       </h1>
       <p className="hidden text-gray-700 dark:text-gray-200 lg:block">
-        {frontmatter.description}
+        {post.description}
       </p>
-      <time
-        dateTime={frontmatter.created_at}
-        className="text-gray-700 dark:text-gray-200"
-      >
-        {frontmatter.created_at}
+      <time className="text-gray-700 dark:text-gray-200" dateTime={createdAt}>
+        {createdAt}
       </time>
     </div>
   );

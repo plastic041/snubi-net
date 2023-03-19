@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.prose {
-  --tw-prose-pre-bg: #282936;
-}
-
-.prose > blockquote {
-  display: flex;
-  flex-direction: column;
-}
-
-.prose > blockquote > p {
-  margin: 0;
-}
-
-/* first img child  */
-.prose > p > img:first-child {
-  margin-top: 0;
-}
-
 select.unstyled {
   -webkit-appearance: none;
   -moz-appearance: none;

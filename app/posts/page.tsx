@@ -1,9 +1,23 @@
-import { Posts } from "~/components/post-list";
+import { Posts } from "./post-list";
 import { loadPosts } from "./load-posts";
+import type { Metadata } from "next";
 
-const Page = () => {
-  const posts = loadPosts();
-  const fms = posts.map((post) => post.frontmatter);
+export const revalidate = 60 * 60 * 24; // 24 hours
+
+export const metadata: Metadata = {
+  title: "Snubi.net - 글",
+  description: "Snubi.net의 글 목록입니다.",
+  openGraph: {
+    images: "https://snubi-net.vercel.app/images/hero-cat.png",
+    url: "https://snubi-net.vercel.app/posts",
+  },
+  twitter: {
+    images: "https://snubi-net.vercel.app/images/hero-cat.png",
+  },
+};
+
+const Page = async () => {
+  const posts = await loadPosts();
 
   return (
     <>
@@ -16,7 +30,7 @@ const Page = () => {
         </h1>
       </aside>
       <div className="absolute inset-x-0 hidden border-b border-b-gray-500 lg:block"></div>
-      <Posts fms={fms} />
+      <Posts posts={posts} />
     </>
   );
 };

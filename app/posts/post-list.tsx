@@ -1,53 +1,43 @@
 import Link from "next/link";
-import { TagChip } from "~/components/tag-chips";
-import type { Frontmatter } from "~/typings/frontmatter";
+import type { Post } from "./load-posts";
+import dayjs from "dayjs";
 
-type PostItemProps = {
-  frontmatter: Frontmatter;
-};
-const PostItem = ({ frontmatter }: PostItemProps) => {
+const PostItem = ({ post }: { post: Post }) => {
+  const createdAt = dayjs(post.createdAt).format("YYYY년 M월 D일");
+
   return (
     <li className="flex flex-col">
-      <section className="flex flex-col rounded-lg">
-        <Link
-          href={`/posts/${frontmatter.slug}`}
-          className="group flex flex-col"
-        >
+      <Link
+        href={`/posts/${post.id}`}
+        className="group flex flex-col rounded p-4 shadow transition-shadow hover:shadow-md"
+      >
+        <section className="flex flex-col rounded-lg">
           <h3 className="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 group-hover:dark:text-blue-300">
-            {frontmatter.title}
+            {post.title}
           </h3>
           <span className="mb-2 text-gray-700 dark:text-gray-200">
-            {frontmatter.description}
+            {post.description}
           </span>
           <time
             className="mb-2 text-gray-700 dark:text-gray-200"
-            dateTime={frontmatter.created_at}
+            dateTime={createdAt}
           >
-            {frontmatter.created_at}
+            {createdAt}
           </time>
-        </Link>
-        <div className="flex flex-row gap-2">
-          {frontmatter.tags.map((name) => {
-            const tag = {
-              name,
-              count: 0,
-            };
-            return <TagChip tag={tag} key={name} hideCount current={false} />;
-          })}
-        </div>
-      </section>
+        </section>
+      </Link>
     </li>
   );
 };
 
 type PageProps = {
-  fms: Frontmatter[];
+  posts: Post[];
 };
-export const Posts = ({ fms }: PageProps) => {
+export const Posts = ({ posts }: PageProps) => {
   return (
-    <ul className="flex flex-col gap-12 p-8" aria-label="글 목록">
-      {fms.map((fm) => (
-        <PostItem frontmatter={fm} key={fm.title} />
+    <ul className="flex flex-col gap-12 p-4" aria-label="글 목록">
+      {posts.map((post) => (
+        <PostItem post={post} key={post.id} />
       ))}
     </ul>
   );

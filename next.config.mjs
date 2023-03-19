@@ -1,13 +1,3 @@
-import remarkGfm from "remark-gfm";
-import nextMDX from "@next/mdx";
-
-const withMDX = nextMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [],
-  },
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -22,4 +12,4 @@ const nextConfig = {
 };
 
 // Merge MDX config with Next.js config
-export default withMDX(nextConfig);
+export default nextConfig;

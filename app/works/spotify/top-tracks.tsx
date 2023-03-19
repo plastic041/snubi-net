@@ -1,24 +1,15 @@
-import { TrackCard } from "./track-card";
-import useSWR from "swr";
-import { fetcher } from "~/lib/fetcher";
-import { Track } from "~/typings/spotify";
+import { TrackCard } from "~/components/track-card";
+import { getTopTracks } from "./fetcher";
 
-export const TopTracks = () => {
-  const { data } = useSWR<{ tracks: Track[] } | string>(
-    "/api/top-tracks",
-    fetcher
-  );
-
-  if (!data || typeof data === "string") {
-    return null;
-  }
+export const TopTracks = async () => {
+  const topTracks = await getTopTracks();
 
   return (
     <ul
       className="flex flex-col [&>li:not(:last-child)]:border-b"
       aria-label="많이 들은 노래 10곡"
     >
-      {data.tracks.map((track, index) => (
+      {topTracks.map((track, index) => (
         <li
           key={track.id}
           className="flex items-center"

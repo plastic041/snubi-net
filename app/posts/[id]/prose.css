@@ -1,0 +1,37 @@
+/* Assume light mode by default */
+@import "./light.css" screen;
+/* Supersede dark mode when applicable */
+@import "./dark.css" screen and (prefers-color-scheme: dark);
+
+@layer prose {
+  .prose :where(pre):not(:where([class~="not-prose"] *)) {
+    --tw-prose-pre-bg: #ffffff;
+    --tw-prose-pre-code: #24292e;
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    .prose :where(pre):not(:where([class~="not-prose"] *)) {
+      --tw-prose-pre-bg: #22272e;
+      --tw-prose-pre-code: #adbac7;
+    }
+  }
+
+  .prose :where(pre):not(:where([class~="not-prose"] *)) > blockquote {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .prose :where(pre):not(:where([class~="not-prose"] *)) > blockquote > p {
+    margin: 0;
+  }
+
+  /* first img child  */
+  .prose :where(pre):not(:where([class~="not-prose"] *)) > p > img:first-child {
+    margin-top: 0;
+  }
+
+  .prose :where(pre):not(:where([class~="not-prose"] *)) > ul {
+    display: flex;
+    flex-direction: column;
+  }
+}

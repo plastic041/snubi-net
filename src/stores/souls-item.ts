@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import type { Item } from "~/typings/souls-item";
 
 type SoulsItemStore = Item & {

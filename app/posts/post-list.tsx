@@ -35,7 +35,7 @@ type PageProps = {
 };
 export const Posts = ({ posts }: PageProps) => {
   return (
-    <ul className="flex flex-col gap-12 p-4" aria-label="글 목록">
+    <ul className="flex flex-col gap-8 p-4" aria-label="글 목록">
       {posts.map((post) => (
         <PostItem post={post} key={post.id} />
       ))}

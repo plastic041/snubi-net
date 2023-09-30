@@ -1,3 +1,8 @@
+import createMDX from "@next/mdx";
+
+import remarkGfm from "remark-gfm";
+import rehypeShikiji from "rehype-shikiji";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -6,10 +11,25 @@ const nextConfig = {
   images: {
     domains: ["i.scdn.co"],
   },
-  experimental: {
-    appDir: true,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.mjs$/,
+      include: /node_modules/,
+      type: "javascript/auto",
+    });
+    return config;
   },
 };
 
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [[rehypeShikiji]],
+    // If you use `MDXProvider`, uncomment the following line.
+    // providerImportSource: "@mdx-js/react",
+  },
+});
+
 // Merge MDX config with Next.js config
-export default nextConfig;
+export default withMDX(nextConfig);

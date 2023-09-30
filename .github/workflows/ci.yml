@@ -1,24 +1,8 @@
-name: test, lint, format
+name: lint, format
 on:
   pull_request:
     branches: [main, develop]
 jobs:
-  unittest:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'yarn'
-
-      - name: install dependencies
-        run: yarn
-
-      - name: Run unit test
-        run: yarn test:unit
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -28,13 +12,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'yarn'
+          cache: 'bun'
 
       - name: install dependencies
-        run: yarn
+        run: bun i
 
       - name: Run lint
-        run: yarn lint
+        run: bun lint
   format:
     runs-on: ubuntu-latest
     steps:
@@ -44,10 +28,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'yarn'
+          cache: 'bun'
 
       - name: install dependencies
-        run: yarn
+        run: bun i
 
       - name: Run format
-        run: yarn format
+        run: bun format

@@ -3,4 +3,4 @@ Next.js의 [App Router](https://beta.nextjs.org/docs/routing/fundamentals)를 �
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [next-mdx-remote](https://github.com/hashicorp/next-mdx-remote)
-- [yarn berry](https://github.com/yarnpkg/berry)
+- [bun](https://bun.sh)

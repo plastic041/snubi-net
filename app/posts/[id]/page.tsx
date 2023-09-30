@@ -1,10 +1,10 @@
 import { PostHeader } from "./post-header";
 import { loadPosts } from "../load-posts";
 import type { Metadata } from "next";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import { CustomMDX } from "~/components/custom-mdx";
+import rehypeShikiji from "rehype-shikiji";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
+import remarkGfm from "remark-gfm";
 
 export const generateMetadata = async ({
   params,
@@ -44,13 +44,26 @@ const PostPage = async ({ params }: { params: { id: string } }) => {
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader post={post} />
         <div className="prose relative col-span-2 flex max-w-full flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
-          <CustomMDX
+          <MDXRemote
             source={post.content}
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
-                rehypePlugins: [rehypeHighlight],
+                rehypePlugins: [
+                  [
+                    // @ts-ignore
+                    rehypeShikiji,
+                    {
+                      themes: {
+                        light: "vitesse-light",
+                        dark: "vitesse-dark",
+                      },
+                    },
+                  ],
+                ],
               },
+              // If you use `MDXProvider`, uncomment the following line.
+              // providerImportSource: "@mdx-js/react",
             }}
           />
         </div>

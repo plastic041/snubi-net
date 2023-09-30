@@ -13,16 +13,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-          cache: 'yarn'
+          cache: 'bun'
 
       - name: Install dependencies
-        run: yarn
+        run: bun i
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: yarn test:e2e
+        run: bun test:e2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SpotifyIcon } from "~/components/icons";
-import { NowPlaying, NowPlayingIcon } from "app/works/spotify/now-playing";
+import { NowPlaying, NowPlayingIcon } from "~/app/works/spotify/now-playing";
 import { TopTracks } from "./top-tracks";
 
 export const metadata: Metadata = {

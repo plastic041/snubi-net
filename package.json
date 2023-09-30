@@ -8,9 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check .",
-    "test:unit": "vitest run",
-    "test:e2e": "playwright test",
-    "test": "bun test:unit && bun test:e2e"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@heroicons/react": "2.0.11",

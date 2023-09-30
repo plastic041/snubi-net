@@ -1,6 +1,16 @@
 import Header from "./header";
 import "./globals.css";
 
+export const metadata = {
+  metadataBase: new URL("https://snubi-net.vercel.app"),
+  alternates: {
+    canonical: "/",
+    languages: {
+      "ko-KR": "/ko-KR",
+    },
+  },
+};
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">

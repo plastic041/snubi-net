@@ -1,5 +1,5 @@
 import type { Metadata, NextPage } from "next";
-import heroCatPic from "../public/images/hero-cat.png";
+import heroCatPic from "../../public/images/hero-cat.png";
 import HeroImage from "src/components/hero-image";
 
 export const metadata: Metadata = {

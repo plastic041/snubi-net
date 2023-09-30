@@ -11,19 +11,19 @@ export const generateMetadata = async ({
 }: {
   params: { id: string };
 }): Promise<Metadata> => {
-  const pages = await loadPosts();
-  const page = pages.find((page) => page.id.toString() === params.id);
+  const posts = await loadPosts();
+  const post = posts.find((p) => p.id.toString() === params.id);
 
-  if (!page) {
+  if (!post) {
     notFound();
   }
 
   return {
-    title: `${page.title} - Snubi.net`,
-    description: page.description,
+    title: `${post.title} - Snubi.net`,
+    description: post.description,
     openGraph: {
       images: "https://snubi-net.vercel.app/images/hero-cat.png",
-      url: `https://snubi-net.vercel.app/posts/${page.id}`,
+      url: `https://snubi-net.vercel.app/posts/${post.id}`,
     },
     twitter: {
       images: "https://snubi-net.vercel.app/images/hero-cat.png",

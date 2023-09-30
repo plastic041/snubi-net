@@ -19,7 +19,7 @@ type PostRaw = {
 
 export const loadPosts = async (): Promise<Post[]> => {
   const url = new URL(
-    "https://api.github.com/repos/plastic041/snubi-net/issues"
+    "https://api.github.com/repos/plastic041/snubi-net/issues",
   );
   url.search = new URLSearchParams({
     labels: "post",

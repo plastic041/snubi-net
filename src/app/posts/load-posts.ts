@@ -30,6 +30,7 @@ export const loadPosts = async (): Promise<Post[]> => {
       Accept: "application/vnd.github.v3+json",
       "X-GitHub-Api-Version": "2022-11-28",
     },
+    cache: "force-cache",
   }).then((res) => res.json() as Promise<PostRaw[]>);
 
   const posts: Post[] = postRaws.map((postRaw) => {

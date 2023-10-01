@@ -1,4 +1,4 @@
-import "./prose.css";
+import "./line-numbers.css";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return children;

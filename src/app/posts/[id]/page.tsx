@@ -43,7 +43,14 @@ const PostPage = async ({ params }: { params: { id: string } }) => {
     <>
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader post={post} />
-        <div className="prose relative col-span-2 flex max-w-full flex-col whitespace-pre-wrap break-words [word-break:keep-all] dark:prose-invert [&_p+p]:mt-0 [&_pre>code]:rounded">
+        <div
+          className={`
+            prose relative col-span-2 flex max-w-full flex-col whitespace-pre-wrap break-words break-keep
+            dark:prose-invert prose-blockquote:flex prose-blockquote:flex-col prose-pre:bg-white prose-pre:text-gray-900
+            prose-ol:flex prose-ol:flex-col
+            prose-ul:flex prose-ul:flex-col prose-pre:dark:bg-gray-900 prose-pre:dark:text-gray-100
+          `}
+        >
           <MDXRemote
             source={post.content}
             options={{

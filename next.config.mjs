@@ -19,6 +19,9 @@ const nextConfig = {
     });
     return config;
   },
+  experimental: {
+    mdxRs: true,
+  },
 };
 
 const withMDX = createMDX({

@@ -1,7 +1,7 @@
 import { TrackCard } from "~/components/track-card";
 import { getTopTracks } from "./fetcher";
 
-export async function TopTracks() {
+export const TopTracks = async () => {
   const topTracks = await getTopTracks();
 
   return (
@@ -25,4 +25,4 @@ export async function TopTracks() {
       ))}
     </ul>
   );
-}
+};

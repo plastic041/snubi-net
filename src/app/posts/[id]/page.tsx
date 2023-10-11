@@ -6,6 +6,14 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import remarkGfm from "remark-gfm";
 
+export const generateStaticParams = async () => {
+  const posts = await loadPosts();
+
+  return posts.map((post) => ({
+    slug: post.id,
+  }));
+};
+
 export const generateMetadata = async ({
   params,
 }: {
@@ -44,6 +52,7 @@ const PostPage = async ({ params }: { params: { id: string } }) => {
       <article className="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
         <PostHeader post={post} />
         <div
+          // eslint-disable-next-line tailwindcss/no-contradicting-classname
           className={`
             prose relative col-span-2 flex max-w-full flex-col whitespace-pre-wrap break-words break-keep
             dark:prose-invert prose-blockquote:flex prose-blockquote:flex-col prose-pre:bg-white prose-pre:text-gray-900

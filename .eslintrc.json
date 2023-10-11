@@ -6,7 +6,6 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
     "google",
     "prettier",
     "plugin:tailwindcss/recommended"

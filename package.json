@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "lint": "bun eslint --ext .tsx,.ts,.astro src",
+    "test": "playwright test",
     "astro": "astro"
   },
   "dependencies": {

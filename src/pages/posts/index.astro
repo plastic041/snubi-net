@@ -4,7 +4,7 @@ import PostItem from "~/components/posts/post-item.astro";
 import type { Frontmatter } from "~/lib/frontmatter";
 
 const frontmatters = await Astro.glob<Frontmatter>(
-  "../../content/posts/*.mdx"
+  "../../content/posts/*.md"
 ).then((fms) =>
   fms
     .map((fm) => ({

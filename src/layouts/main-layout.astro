@@ -1,0 +1,62 @@
+---
+import Header from "~/components/ui/header.astro";
+import "~/styles/globals.css";
+import { SEO } from "astro-seo";
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+}
+
+const { title, description, image } = Astro.props;
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="google-site-verification"
+      content="5PXIoBe2lYSYORu-zYYU2u4qP7Gwl3LwgxWS3Gjjc3I"
+    />
+    <SEO
+      title={title}
+      description={description}
+      openGraph={{
+        basic: {
+          title,
+          type: "website",
+          image,
+        },
+      }}
+      twitter={{
+        creator: "@plastik041",
+      }}
+      extend={{
+        // extending the default link tags
+        link: [{ rel: "icon", href: "/favicon.ico" }],
+        // extending the default meta tags
+        meta: [
+          {
+            name: "twitter:image",
+            content: image,
+          },
+          { name: "twitter:title", content: title },
+          { name: "twitter:description", content: description },
+        ],
+      }}
+    />
+    <title>Astro</title>
+  </head>
+  <body class="overflow-y-scroll bg-white dark:bg-gray-800">
+    <div class="relative flex w-full flex-col">
+      <Header />
+      <main class="container mx-auto flex-1 xl:px-40">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

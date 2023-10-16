@@ -1,0 +1,20 @@
+---
+import TrackCard from "./track-card.astro";
+import { getNowPlaying } from "~/lib/spotify/fetcher";
+import { validateIsPlaying } from "~/lib/spotify/validate-is-playing";
+
+const nowPlaying = await getNowPlaying();
+const isPlaying = validateIsPlaying(nowPlaying);
+---
+
+<div class="flex flex-col gap-4 text-gray-900 dark:text-gray-50">
+  <div>
+    {
+      isPlaying ? (
+        <TrackCard track={nowPlaying} />
+      ) : (
+        <div>현재 노래를 듣고 있지 않습니다.</div>
+      )
+    }
+  </div>
+</div>

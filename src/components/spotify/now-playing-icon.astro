@@ -1,0 +1,16 @@
+---
+import { SpotifyIcon } from "../icons";
+import { getNowPlaying } from "~/lib/spotify/fetcher";
+import { validateIsPlaying } from "~/lib/spotify/validate-is-playing";
+
+const nowPlaying = await getNowPlaying();
+const isPlaying = validateIsPlaying(nowPlaying);
+---
+
+{
+  isPlaying ? (
+    <SpotifyIcon className="h-8 w-8 text-[#1DB954] transition-colors" />
+  ) : (
+    <SpotifyIcon className="h-8 w-8 text-gray-300 transition-colors dark:text-gray-500" />
+  )
+}

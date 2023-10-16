@@ -1,0 +1,13 @@
+---
+import MainLayout from "~/layouts/main-layout.astro";
+import { SoulsCard } from "~/components/souls-card";
+import "~/styles/font-souls.css";
+---
+
+<MainLayout
+  title="다크소울 아이템 카드 생성기 | Snubi"
+  description="다크소울 아이템 카드를 생성하는 웹 도구입니다."
+  image="https://snubi-net.vercel.app/images/souls-card/open-image.jpg"
+>
+  <SoulsCard client:load />
+</MainLayout>

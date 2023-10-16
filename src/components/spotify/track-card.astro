@@ -1,0 +1,45 @@
+---
+import { Picture } from "astro:assets";
+import type { Track } from "~/lib/spotify/spotify";
+
+interface Props {
+  track: Track;
+}
+
+const { track } = Astro.props;
+---
+
+<article class="flex flex-1 gap-4 border-gray-300 p-4" aria-label="노래 정보">
+  <a
+    href={track.songUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`spotify의 ${track.title} 곡 페이지로 이동`}
+    class="overflow-hidden rounded transition-transform hover:scale-110 md:rounded-lg"
+  >
+    <Picture
+      src={track.image}
+      width={60}
+      height={60}
+      aria-hidden="true"
+      alt={track.title}
+    />
+  </a>
+  <div class="flex flex-col justify-center">
+    <a
+      class="overflow-hidden text-base font-bold text-gray-900 transition-colors [-webkit-box-orient:vertical] [-webkit-line-clamp:1] [display:-webkit-box] hover:text-blue-500 dark:text-gray-100 hover:dark:text-blue-300 md:text-xl"
+      href={track.songUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`spotify의 ${track.title} 곡 페이지로 이동`}
+    >
+      {track.title}
+    </a>
+    <span
+      class="text-sm text-gray-700 dark:text-gray-300"
+      aria-label="아티스트"
+    >
+      {track.artist}
+    </span>
+  </div>
+</article>

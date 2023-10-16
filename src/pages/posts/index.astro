@@ -1,0 +1,26 @@
+---
+import MainLayout from "~/layouts/main-layout.astro";
+import PostItem from "~/components/posts/post-item.astro";
+import type { Frontmatter } from "~/lib/frontmatter";
+
+const frontmatters = await Astro.glob<Frontmatter>(
+  "../../content/posts/*.mdx"
+).then((fms) =>
+  fms
+    .map((fm) => ({
+      ...fm.frontmatter,
+      createdAt: new Date(fm.frontmatter.createdAt),
+    }))
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+);
+---
+
+<MainLayout
+  title="Snubi.net - 글"
+  description="Snubi.net의 글 목록입니다."
+  image="https://snubi-net.vercel.app/images/hero-cat.png"
+>
+  <ul class="flex flex-col gap-8 p-4" aria-label="글 목록">
+    {frontmatters.map((fm) => <PostItem frontmatter={fm} />)}
+  </ul>
+</MainLayout>

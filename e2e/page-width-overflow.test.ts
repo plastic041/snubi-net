@@ -52,8 +52,8 @@ test.describe("tests if pages width overflows on mobile", () => {
     expect(clientWidth).toBe(scrollWidth);
   });
 
-  test("posts/tauri-sqlite-diesel-r2d2", async ({ page }) => {
-    await page.goto("/posts/tauri-sqlite-diesel-r2d2");
+  test("posts/136", async ({ page }) => {
+    await page.goto("/posts/136");
 
     const { clientWidth, scrollWidth } = await page.evaluate(getBodyWidths);
 

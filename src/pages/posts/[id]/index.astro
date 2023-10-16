@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from "astro";
+import PostHeader from "~/components/posts/post-header.astro";
+import MainLayout from "~/layouts/main-layout.astro";
+import type { Frontmatter } from "~/lib/frontmatter";
+
+export const getStaticPaths = (async () => {
+  const posts = await Astro.glob<Frontmatter>("../../../content/posts/*.mdx");
+
+  return posts.map((post) => ({
+    params: {
+      id: post.frontmatter.id,
+    },
+    props: {
+      post,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { Content, frontmatter } = Astro.props.post;
+---
+
+<MainLayout
+  title={`${frontmatter.title} | Snubi`}
+  description={frontmatter.description}
+  image="https://snubi-net.vercel.app/images/hero-cat.png"
+>
+  <article class="flex flex-1 flex-col gap-16 p-4 lg:grid lg:grid-cols-3">
+    <PostHeader frontmatter={frontmatter} />
+    <div
+      class={`
+      prose col-span-2 max-w-full break-words break-keep
+      dark:prose-invert prose-pre:bg-white prose-pre:text-gray-900
+      prose-pre:dark:bg-gray-900 prose-pre:dark:text-gray-100
+    `}
+    >
+      <Content />
+    </div>
+  </article>
+</MainLayout>

@@ -1,16 +1,6 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("posts page", () => {
-  test("글 visible", async ({ page }) => {
-    await page.goto("/posts");
-
-    const postsLabel = page.locator("[aria-hidden]", {
-      hasText: "글",
-    });
-
-    await expect(postsLabel).toBeVisible();
-  });
-
   test("글 목록 visible", async ({ page }) => {
     await page.goto("/posts");
 

@@ -1,0 +1,13 @@
+---
+import MainLayout from "~/layouts/main-layout.astro";
+import { DestinyCard } from "~/components/destiny-card";
+import "~/styles/font-destiny.css";
+---
+
+<MainLayout
+  title="데스티니 무기 카드 생성기 | Snubi"
+  description="데스티니 무기 카드를 생성하는 웹 도구입니다."
+  image="https://snubi-net.vercel.app/images/destiny-card/open-image.jpg"
+>
+  <DestinyCard client:load />
+</MainLayout>

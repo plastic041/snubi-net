@@ -1,0 +1,35 @@
+---
+import type { Frontmatter } from "~/lib/frontmatter";
+
+interface Props {
+  frontmatter: Frontmatter;
+}
+const { frontmatter } = Astro.props;
+
+const createdAt = new Date(frontmatter.createdAt).toLocaleDateString("ko-KR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<li class="flex flex-col">
+  <a
+    href={`/posts/${frontmatter.id}`}
+    class="group flex flex-col rounded p-4 shadow transition-shadow hover:shadow-md border"
+  >
+    <section class="flex flex-col rounded-lg">
+      <h3
+        class="text-2xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 group-hover:dark:text-blue-300"
+      >
+        {frontmatter.title}
+      </h3>
+      <span class="mb-2 text-gray-700 dark:text-gray-200">
+        {frontmatter.description}
+      </span>
+      <time class="mb-2 text-gray-700 dark:text-gray-200" datetime={createdAt}>
+        {createdAt}
+      </time>
+    </section>
+  </a>
+</li>

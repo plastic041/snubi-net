@@ -1,4 +1,4 @@
-name: lint, format
+name: lint
 on:
   pull_request:
     branches: [main, develop]
@@ -8,30 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '16'
-          cache: 'bun'
+          bun-version: latest
 
       - name: install dependencies
         run: bun i
 
       - name: Run lint
-        run: bun lint
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'bun'
-
-      - name: install dependencies
-        run: bun i
-
-      - name: Run format
-        run: bun format
+        run: bun run lint

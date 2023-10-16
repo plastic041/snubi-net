@@ -1,0 +1,79 @@
+---
+import { Picture } from "astro:assets";
+import MainLayout from "~/layouts/main-layout.astro";
+
+const destinyCardThumbnail = "/images/destiny-card/thumbnail.png";
+const soulsCardThumbnail = "/images/souls-card/thumbnail.png";
+const eldenringDictThumbnail = "/images/eldenring-dict/thumbnail.png";
+---
+
+<MainLayout
+  title="작업 목록 | Snubi"
+  description="Snubi의 작업 목록입니다."
+  image="https://snubi-net.vercel.app/images/hero-cat.png"
+>
+  <div
+    class="grid grid-cols-1 justify-center gap-8 p-8 sm:grid-cols-2 lg:grid-cols-3"
+  >
+    <a
+      href="/works/souls-card"
+      class="mx-auto flex flex-col items-center gap-4 border border-gray-300 p-4 transition-colors dark:border-gray-400 hover:dark:bg-gray-600"
+    >
+      <Picture
+        src={soulsCardThumbnail}
+        alt="souls-card"
+        width={400}
+        height={400}
+        class="w-64"
+      />
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xl font-bold text-gray-900 dark:text-gray-100">
+          다크소울 카드 생성기
+        </span>
+        <time class="text-gray-700 dark:text-gray-300" datetime="2022-12-9">
+          2022년 12월 9일
+        </time>
+      </div>
+    </a>
+    <a
+      href="/works/destiny-card"
+      class="mx-auto flex flex-col items-center gap-4 border border-gray-300 p-4 transition-colors dark:border-gray-400 hover:dark:bg-gray-600"
+    >
+      <Picture
+        src={destinyCardThumbnail}
+        alt="destiny-card"
+        width={400}
+        height={400}
+        class="w-64"
+      />
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xl font-bold text-gray-900 dark:text-gray-100">
+          데스티니 카드 생성기
+        </span>
+        <time class="text-gray-700 dark:text-gray-300" datetime="2022-09-30">
+          2022년 9월 30일
+        </time>
+      </div>
+    </a>
+    <a
+      href="https://eldenring-kr-en.pages.dev"
+      class="mx-auto flex flex-col items-center gap-4 border border-gray-300 p-4 transition-colors dark:border-gray-400 hover:dark:bg-gray-600"
+    >
+      <Picture
+        src={eldenringDictThumbnail}
+        alt="eldenring-dict"
+        width={400}
+        height={400}
+        class="w-64"
+      />
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-xl font-bold text-gray-900 dark:text-gray-100">
+          엘든링 한영사전
+        </span>
+        <time class="text-gray-700 dark:text-gray-300" datetime="2022-3-26">
+          2022년 3월 26일
+        </time>
+      </div>
+    </a>
+  </div>
+</MainLayout>

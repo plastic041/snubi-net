@@ -1,0 +1,37 @@
+---
+// import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
+import type { Frontmatter } from "~/lib/frontmatter";
+
+interface Props {
+  frontmatter: Frontmatter;
+}
+
+const { frontmatter } = Astro.props;
+
+const createdAt = new Date(frontmatter.createdAt).toLocaleDateString("ko-KR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<div class="top-[5rem] col-span-1 flex flex-col gap-4 self-start lg:sticky">
+  <a
+    href="/posts"
+    class="flex items-center gap-2 self-start text-gray-500 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+  >
+    <!-- <ArrowUturnLeftIcon class="h-4 w-4" /> -->
+    <span>목록으로</span>
+  </a>
+  <h1
+    class="break-words text-4xl font-extrabold text-gray-900 [word-break:keep-all] dark:text-gray-100"
+  >
+    {frontmatter.title}
+  </h1>
+  <p class="hidden text-gray-700 dark:text-gray-200 lg:block">
+    {frontmatter.description}
+  </p>
+  <time class="text-gray-700 dark:text-gray-200" datetime={createdAt}>
+    {createdAt}
+  </time>
+</div>

@@ -1,5 +1,4 @@
 ---
-import { SpotifyIcon } from "~/components/icons";
 import NowPlaying from "~/components/spotify/now-playing.astro";
 import NowPlayingIcon from "~/components/spotify/now-playing-icon.astro";
 import TopTracks from "~/components/spotify/top-tracks.astro";
@@ -13,16 +12,19 @@ export const prerender = false;
   description="Snubi의 스포티파이 재생 목록입니다."
   image="https://snubi-net.vercel.app/images/hero-cat.png"
 >
-  <div class="flex flex-col gap-8 p-8">
-    <section class="flex flex-col gap-4">
-      <div class="flex items-center gap-4 text-gray-900 dark:text-gray-100">
+  <div class="flex flex-col space-y-8 p-8">
+    <section class="flex flex-col space-y-4">
+      <div class="flex items-center space-x-2 text-gray-900 dark:text-gray-100">
         <h2 class="text-4xl font-extrabold">많이 들은 노래</h2>
-        <SpotifyIcon className="h-8 w-8 text-[#1DB954]" />
+        <span
+          role="img"
+          aria-hidden
+          class="i-tabler-brand-spotify h-8 w-8 text-[#1DB954]"></span>
       </div>
       <TopTracks />
     </section>
-    <section class="flex flex-col gap-4">
-      <div class="flex items-center gap-4 text-gray-900 dark:text-gray-100">
+    <section class="flex flex-col space-y-4">
+      <div class="flex items-center space-x-2 text-gray-900 dark:text-gray-100">
         <h2 class="text-4xl font-extrabold">지금 듣고 있는 노래</h2>
         <NowPlayingIcon />
       </div>

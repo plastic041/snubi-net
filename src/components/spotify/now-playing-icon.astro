@@ -1,5 +1,4 @@
 ---
-import { SpotifyIcon } from "../icons";
 import { getNowPlaying } from "~/lib/spotify/fetcher";
 import { validateIsPlaying } from "~/lib/spotify/validate-is-playing";
 
@@ -7,10 +6,9 @@ const nowPlaying = await getNowPlaying();
 const isPlaying = validateIsPlaying(nowPlaying);
 ---
 
-{
-  isPlaying ? (
-    <SpotifyIcon className="h-8 w-8 text-[#1DB954] transition-colors" />
-  ) : (
-    <SpotifyIcon className="h-8 w-8 text-gray-300 transition-colors dark:text-gray-500" />
-  )
-}
+<span
+  role="img"
+  aria-hidden
+  class={`i-tabler-brand-spotify h-8 w-8 transition-colors ${
+    isPlaying ? "text-[#1DB954]" : "text-gray-300 dark:text-gray-500"
+  }`}></span>

@@ -135,6 +135,13 @@ export const DestinyCard = () => {
     draw();
   }, [draw, isFontLoaded]);
 
+  const damageTypes: DestinyWeapon["damageType"][] =
+    slot === "kinetic"
+      ? ["kinetic", "stasis", "strand"]
+      : slot === "energy"
+      ? ["arc", "solar", "void"]
+      : ["arc", "solar", "void", "stasis", "strand"];
+
   return (
     <div className="flex flex-col justify-center gap-8 p-8 lg:flex-row lg:gap-12">
       <div className="flex flex-col items-center gap-4">
@@ -191,7 +198,15 @@ export const DestinyCard = () => {
               className="unstyled rounded-none border bg-white p-2"
               id="slot"
               value={slot}
-              onChange={(e) => setSlot(e.target.value as DestinyWeapon["slot"])}
+              onChange={(e) => {
+                if (e.target.value === "kinetic") {
+                  setDamageType("kinetic");
+                } else {
+                  setDamageType("arc");
+                }
+
+                setSlot(e.target.value as DestinyWeapon["slot"]);
+              }}
             >
               <option value="kinetic">물리</option>
               <option value="energy">에너지</option>
@@ -201,7 +216,6 @@ export const DestinyCard = () => {
           <div className="flex flex-1 flex-col">
             <label htmlFor="rarity">피해 유형</label>
             <select
-              disabled={slot === "kinetic"}
               className="unstyled rounded-none border bg-white p-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:dark:bg-gray-500"
               id="rarity"
               value={damageType}
@@ -209,12 +223,11 @@ export const DestinyCard = () => {
                 setDamageType(e.target.value as DestinyWeapon["damageType"])
               }
             >
-              <option value="kinetic">물리</option>
-              <option value="arc">전기</option>
-              <option value="solar">태양</option>
-              <option value="void">공허</option>
-              <option value="stasis">시공</option>
-              <option value="strand">초월</option>
+              {damageTypes.map((type) => (
+                <option key={type} value={type}>
+                  {STRING_KR.damageType[type]}
+                </option>
+              ))}
             </select>
           </div>
         </div>

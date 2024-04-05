@@ -1,4 +1,8 @@
-import type { DamageType, ItemRarity } from "~/typings/destiny-item";
+type ItemRarity = "common" | "uncommon" | "rare" | "legendary" | "exotic";
+
+type DamageType = "kinetic" | "arc" | "solar" | "void" | "stasis" | "strand";
+
+type Slot = "kinetic" | "energy" | "power";
 
 export const WIDTH = 600;
 export const HEIGHT = 600;
@@ -11,6 +15,8 @@ export const DAMAGE_TYPE_IMAGE_SRCS: Record<DamageType, string> = {
   solar: "/images/destiny-card/destiny-solar.webp",
   arc: "/images/destiny-card/destiny-arc.webp",
   void: "/images/destiny-card/destiny-void.webp",
+  stasis: "/images/destiny-card/destiny-stasis.webp",
+  strand: "/images/destiny-card/destiny-strand.webp",
 };
 
 type DAMAGE_TYPE_COLOR = {
@@ -22,6 +28,8 @@ export const DAMAGE_TYPE_COLORS: DAMAGE_TYPE_COLOR = {
   solar: "#f0631e",
   arc: "#79bbe8",
   void: "#b185df",
+  stasis: "#476697",
+  strand: "#35e366",
 };
 
 type RARITY_COLOR = {
@@ -31,6 +39,7 @@ type RARITY_COLOR = {
   rarity: string;
   desc: string;
 };
+
 export const RARITY_COLORS: Record<ItemRarity, RARITY_COLOR> = {
   common: {
     bg: "#c3bcb4",
@@ -82,4 +91,31 @@ export const STRING_KR = {
     energy: "에너지 무기",
     power: "파워 무기",
   },
+  damageType: {
+    kinetic: "물리",
+    arc: "전기",
+    solar: "태양",
+    void: "공허",
+    stasis: "시공",
+    strand: "초월",
+  },
 };
+
+export type DestinyWeapon = {
+  name: string;
+  level: number;
+  slot: Slot;
+  damageType: DamageType;
+  rarity: ItemRarity;
+  description: string;
+};
+
+export const TELESTO: Readonly<DestinyWeapon> = {
+  name: "텔레스토",
+  level: 1020,
+  slot: "energy",
+  damageType: "void",
+  rarity: "exotic",
+  description:
+    "여왕의 하빈저가 남긴 자취가 아직도 토성의 위성들 사이를 떠도는군요.",
+} as const;

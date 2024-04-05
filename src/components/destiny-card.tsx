@@ -9,44 +9,23 @@ import {
   PY,
   RARITY_COLORS,
   FONT_FAMILY,
+  TELESTO,
+  type DestinyWeapon,
 } from "~/lib/constants/destiny-card";
 import { downloadImage } from "~/lib/download-image";
 
-const TELESTO = {
-  name: "텔레스토",
-  level: 1020,
-  slot: "energy",
-  damageType: "void",
-  rarity: "exotic",
-  description:
-    "여왕의 하빈저가 남긴 자취가 아직도 토성의 위성들 사이를 떠도는군요.",
-} as const;
-
-type ItemRarity = "common" | "uncommon" | "rare" | "legendary" | "exotic";
-
-type DamageType = "kinetic" | "arc" | "solar" | "void";
-
-type Slot = "kinetic" | "energy" | "power";
-
-type Item = {
-  name: string;
-  level: number;
-  slot: Slot;
-  damageType: DamageType;
-  rarity: ItemRarity;
-  description: string;
-};
-
 export const DestinyCard = () => {
-  const [name, setName] = useState(TELESTO.name as Item["name"]);
-  const [level, setLevel] = useState(TELESTO.level as Item["level"]);
-  const [slot, setSlot] = useState(TELESTO.slot as Item["slot"]);
+  const [name, setName] = useState(TELESTO.name as DestinyWeapon["name"]);
+  const [level, setLevel] = useState(TELESTO.level as DestinyWeapon["level"]);
+  const [slot, setSlot] = useState(TELESTO.slot as DestinyWeapon["slot"]);
   const [damageType, setDamageType] = useState(
-    TELESTO.damageType as Item["damageType"]
+    TELESTO.damageType as DestinyWeapon["damageType"]
   );
-  const [rarity, setRarity] = useState(TELESTO.rarity as Item["rarity"]);
+  const [rarity, setRarity] = useState(
+    TELESTO.rarity as DestinyWeapon["rarity"]
+  );
   const [description, setDescription] = useState(
-    TELESTO.description as Item["description"]
+    TELESTO.description as DestinyWeapon["description"]
   );
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -157,7 +136,7 @@ export const DestinyCard = () => {
   }, [draw, isFontLoaded]);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 p-8 lg:flex-row lg:gap-12">
+    <div className="flex flex-col justify-center gap-8 p-8 lg:flex-row lg:gap-12">
       <div className="flex flex-col items-center gap-4">
         <canvas
           id="canvas"
@@ -185,7 +164,7 @@ export const DestinyCard = () => {
             id="name"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value as Item["name"])}
+            onChange={(e) => setName(e.target.value as DestinyWeapon["name"])}
           />
         </div>
         <div className="flex flex-col">
@@ -194,7 +173,9 @@ export const DestinyCard = () => {
             className="unstyled rounded-none border bg-white p-2"
             id="rarity"
             value={rarity}
-            onChange={(e) => setRarity(e.target.value as Item["rarity"])}
+            onChange={(e) =>
+              setRarity(e.target.value as DestinyWeapon["rarity"])
+            }
           >
             <option value="common">일반</option>
             <option value="uncommon">고급</option>
@@ -210,7 +191,7 @@ export const DestinyCard = () => {
               className="unstyled rounded-none border bg-white p-2"
               id="slot"
               value={slot}
-              onChange={(e) => setSlot(e.target.value as Item["slot"])}
+              onChange={(e) => setSlot(e.target.value as DestinyWeapon["slot"])}
             >
               <option value="kinetic">물리</option>
               <option value="energy">에너지</option>
@@ -225,12 +206,15 @@ export const DestinyCard = () => {
               id="rarity"
               value={damageType}
               onChange={(e) =>
-                setDamageType(e.target.value as Item["damageType"])
+                setDamageType(e.target.value as DestinyWeapon["damageType"])
               }
             >
+              <option value="kinetic">물리</option>
               <option value="arc">전기</option>
               <option value="solar">태양</option>
               <option value="void">공허</option>
+              <option value="stasis">시공</option>
+              <option value="strand">초월</option>
             </select>
           </div>
         </div>
@@ -251,6 +235,7 @@ export const DestinyCard = () => {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            rows={3}
           />
         </div>
       </form>

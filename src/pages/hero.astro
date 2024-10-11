@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+---
+
+<script>
+  const imgEl = document.getElementById("hero-image")!;
+  const imgWrapperEl = document.getElementById("hero-image-wrapper")!;
+  const glareEl = document.getElementById("glare")!;
+
+  if (!imgEl || !imgWrapperEl || !glareEl) {
+    throw new Error("Element not found");
+  }
+
+  function onMouseMove(event: MouseEvent) {
+    const { clientX, clientY } = event;
+    const { left, top, width, height } = imgWrapperEl.getBoundingClientRect();
+    const x = clientX - left;
+    const y = clientY - top;
+    const xPercent = (x / width) * 100;
+    const yPercent = (y / height) * 100;
+    const xDeg = ((xPercent / 100) * 90 - 45) * 0.3;
+    const yDeg = ((yPercent / 100) * 90 - 45) * 0.3;
+    imgEl.style.transform = `perspective(600px) rotateX(${yDeg}deg) rotateY(${-xDeg}deg)`;
+    imgEl.style.transition =
+      "transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 75ms";
+    imgEl.classList.remove("shadow");
+    imgEl.classList.add("shadow-xl");
+
+    glareEl.style.setProperty("--glare-opacity", "1");
+    glareEl.style.setProperty("--pointer-x", `${xPercent}%`);
+    glareEl.style.setProperty("--pointer-y", `${yPercent}%`);
+    glareEl.style.transition = "opacity 75ms ease-out";
+  }
+
+  imgWrapperEl.addEventListener("mousemove", onMouseMove);
+
+  let idleDegree = 0; // initial rotation angle
+  const DISTANCE_FROM_CENTER = 4;
+  imgWrapperEl.addEventListener("mouseleave", () => {
+    imgEl.style.transform = `perspective(600px) rotateX(0deg) rotateY(0deg)`;
+    imgEl.style.scale = "1";
+    imgEl.style.transition =
+      "transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 75ms";
+    imgEl.classList.remove("shadow-xl");
+    imgEl.classList.add("shadow");
+
+    glareEl.style.setProperty("--glare-opacity", "0");
+    glareEl.style.transition = "opacity 75ms ease-out";
+
+    setTimeout(() => {
+      // idle animation. rotate the image slowly, as if the mouse is moving around the center of the image
+
+      imgEl.style.transition =
+        "transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 75ms";
+
+      const interval = setInterval(() => {
+        // calculate the new rotation angles
+        const xDeg = Math.sin(idleDegree) * DISTANCE_FROM_CENTER;
+        const yDeg = Math.cos(idleDegree) * DISTANCE_FROM_CENTER;
+        idleDegree += 0.008; // increment the angle
+        imgEl.style.transform = `perspective(600px) rotateX(${yDeg}deg) rotateY(${-xDeg}deg)`;
+      }, 1000 / 60);
+
+      imgWrapperEl.addEventListener("mousemove", () => {
+        clearInterval(interval);
+      });
+    }, 1000);
+  });
+
+  imgEl.style.transition =
+    "transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 75ms";
+
+  const interval = setInterval(() => {
+    // calculate the new rotation angles
+    const xDeg = Math.sin(idleDegree) * DISTANCE_FROM_CENTER;
+    const yDeg = Math.cos(idleDegree) * DISTANCE_FROM_CENTER;
+    idleDegree += 0.008; // increment the angle
+    imgEl.style.transform = `perspective(600px) rotateX(${yDeg}deg) rotateY(${-xDeg}deg)`;
+  }, 1000 / 60);
+
+  imgWrapperEl.addEventListener("mousemove", () => {
+    clearInterval(interval);
+  });
+</script>
+
+<div id="hero-image-wrapper">
+  <div
+    id="hero-image"
+    class="overflow-hidden rounded-xl grid border-8 border-zinc-800 bg-zinc-800"
+    style="transition: scale 200ms;"
+  >
+    <Image
+      src="/images/hero-kami.jpeg"
+      width={390}
+      height={520}
+      alt="메롱하는 귀여운 턱시도 고양이, 유화"
+      class="rounded-md"
+      style="grid-area: 1 / 1;"
+    />
+    <div
+      id="glare"
+      style="
+      grid-area: 1 / 1;
+      background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%, hsla(0, 0%, 0%, 0.5) 90%); 
+      opacity: var(--glare-opacity, 0);
+      mix-blend-mode: overlay;
+      "
+    >
+    </div>
+  </div>
+</div>

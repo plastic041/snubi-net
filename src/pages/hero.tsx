@@ -5,7 +5,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 const WIDTH = 351;
 const HEIGHT = 468;
@@ -16,34 +16,31 @@ const spring = {
   damping: 30,
 } as const;
 
-const IDLE_DISTANCE = 6;
-
-export function Hero() {
+type HeroProps = {
+  children: ReactNode;
+};
+export function Hero({ children }: HeroProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-
-  const [isIdle, setIsIdle] = useState(true);
-  const idleDegree = useMotionValue(0);
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
+
+  // https://poke-holo.simey.me/
   const glarePositionTemplate = useMotionTemplate`radial-gradient(farthest-corner circle at ${pointerX}px ${pointerY}px, hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%, hsla(0, 0%, 0%, 0.5) 90%)`;
 
   const rotateXSpring = useSpring(0, spring);
   const rotateYSpring = useSpring(0, spring);
 
-  useAnimationFrame((_time, delta) => {
-    if (ref.current === null || !isIdle) {
+  const rotateZSpring = useMotionValue(0);
+
+  useAnimationFrame((time, _delta) => {
+    if (ref.current === null) {
       return;
     }
 
-    const _rotateX = Math.sin(idleDegree.get()) * IDLE_DISTANCE;
-    const _rotateY = Math.cos(idleDegree.get()) * IDLE_DISTANCE;
+    const rotateZ = Math.sin(time * 0.0012);
 
-    idleDegree.set(idleDegree.get() + delta / 2000);
-    rotateXSpring.set(_rotateX);
-    rotateYSpring.set(_rotateY);
-
-    // ref.current.style.transform = `rotateX(${}deg) rotateY(${_rotateY}deg)`;
+    rotateZSpring.set(rotateZ);
   });
 
   useEffect(() => {
@@ -65,7 +62,6 @@ export function Hero() {
       const _rotateY = (mouseX / width - 0.5) * -30;
       const _rotateX = (mouseY / height - 0.5) * 30;
 
-      setIsIdle(false);
       pointerX.set(mouseX);
       pointerY.set(mouseY);
       rotateXSpring.set(_rotateX);
@@ -75,9 +71,6 @@ export function Hero() {
     const handleMouseEnd = () => {
       rotateXSpring.set(0);
       rotateYSpring.set(0);
-      setTimeout(() => {
-        setIsIdle(true);
-      }, 1000);
     };
 
     const element = ref.current;
@@ -100,8 +93,17 @@ export function Hero() {
       }}
     >
       <motion.div
+        className="rounded-md overflow-hidden"
         ref={ref}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{
+          scale: 1.1,
+          boxShadow: `0px 0.9px 2.2px rgba(0, 0, 0, 0.062),
+0px 2.1px 5.3px rgba(0, 0, 0, 0.089),
+0px 4px 10px rgba(0, 0, 0, 0.11),
+0px 7.1px 17.9px rgba(0, 0, 0, 0.131),
+0px 13.4px 33.4px rgba(0, 0, 0, 0.158),
+0px 32px 80px rgba(0, 0, 0, 0.22)`,
+        }}
         transition={spring}
         style={{
           perspective: "1000px",
@@ -110,26 +112,23 @@ export function Hero() {
           height: "100%",
           rotateX: rotateXSpring,
           rotateY: rotateYSpring,
+          rotateZ: rotateZSpring,
           display: "grid",
         }}
       >
-        <img
+        {/* <img
           src="/images/hero-kami.jpeg"
           width={WIDTH}
           height={HEIGHT}
-          alt="메롱하는 귀여운 턱시도 고양이, 유화"
-          className="rounded-md"
+          alt="턱시도 고양이 까미"
           style={{
             gridArea: "1 / 1",
           }}
-        />
+        /> */}
+        {children}
         <motion.div
           id="glare"
-          whileHover={{ opacity: 1 }} //Change the opacity of glare when hovering
-          animate={{
-            "--pointer-x": pointerX.get(),
-            "--pointer-y": pointerY.get(),
-          }}
+          whileHover={{ opacity: 1 }}
           style={{
             gridArea: "1 / 1",
             backgroundImage: glarePositionTemplate,

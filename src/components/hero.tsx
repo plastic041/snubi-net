@@ -150,6 +150,7 @@ url("/images/gradient.jpg")
       }}
     >
       <motion.div
+        title="https://github.com/plastic041/snubi-net/blob/main/src/pages/hero.tsx"
         className="rounded-md overflow-hidden"
         ref={ref}
         whileHover={{

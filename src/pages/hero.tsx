@@ -9,14 +9,19 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, type ReactNode } from "react";
 
-const WIDTH = 351;
-const HEIGHT = 468;
+const WIDTH = 300;
+const HEIGHT = 400;
+const MAX_FOLLOW_DISTANCE = 30;
 
 const spring = {
   type: "spring",
   stiffness: 1000,
   damping: 30,
 } as const;
+
+function isTouchDevice() {
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+}
 
 type HeroProps = {
   children: ReactNode;
@@ -63,13 +68,24 @@ url("/images/gradient.jpg")
       return;
     }
 
-    const handleMouseMove = (event: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent | TouchEvent) => {
       const element = ref.current;
       if (!element) {
         return;
       }
 
-      const { clientX, clientY } = event;
+      const { clientX, clientY } = (() => {
+        if ("touches" in event) {
+          return {
+            clientX: event.touches[0].clientX,
+            clientY: event.touches[0].clientY,
+          };
+        }
+        return {
+          clientX: event.clientX,
+          clientY: event.clientY,
+        };
+      })();
       const { left, top, width, height } = element.getBoundingClientRect();
       const mouseX = clientX - left;
       const mouseY = clientY - top;
@@ -89,10 +105,8 @@ url("/images/gradient.jpg")
       mousePercentX.set(_mousePercentX);
       mousePercentY.set(_mousePercentY);
 
-      const MAX = 30;
-
-      translateX.set(easeOut(percentX) * MAX);
-      translateY.set(easeOut(percentY) * MAX);
+      translateX.set((easeOut(percentX) - 0.5) * MAX_FOLLOW_DISTANCE);
+      translateY.set((easeOut(percentY) - 0.5) * MAX_FOLLOW_DISTANCE);
 
       overlayOpacity.set(0.8);
     };
@@ -105,14 +119,25 @@ url("/images/gradient.jpg")
       translateY.set(0);
     };
 
-    const element = ref.current;
-    element.addEventListener("mousemove", handleMouseMove);
-    element.addEventListener("mouseleave", handleMouseEnd);
+    if (isTouchDevice()) {
+      const element = ref.current;
+      element.addEventListener("touchmove", handleMouseMove);
+      element.addEventListener("touchend", handleMouseEnd);
 
-    return () => {
-      element.removeEventListener("mousemove", handleMouseMove);
-      element.removeEventListener("mouseleave", handleMouseEnd);
-    };
+      return () => {
+        element.removeEventListener("touchmove", handleMouseMove);
+        element.removeEventListener("touchend", handleMouseEnd);
+      };
+    } else {
+      const element = ref.current;
+      element.addEventListener("mousemove", handleMouseMove);
+      element.addEventListener("mouseleave", handleMouseEnd);
+
+      return () => {
+        element.removeEventListener("mousemove", handleMouseMove);
+        element.removeEventListener("mouseleave", handleMouseEnd);
+      };
+    }
   });
 
   return (
@@ -136,8 +161,18 @@ url("/images/gradient.jpg")
 0px 13.4px 33.4px rgba(0, 0, 0, 0.158),
 0px 32px 80px rgba(0, 0, 0, 0.22)`,
         }}
+        whileTap={{
+          scale: 1.1,
+          boxShadow: `0px 0.9px 2.2px rgba(0, 0, 0, 0.062),
+0px 2.1px 5.3px rgba(0, 0, 0, 0.089),
+0px 4px 10px rgba(0, 0, 0, 0.11),
+0px 7.1px 17.9px rgba(0, 0, 0, 0.131),
+0px 13.4px 33.4px rgba(0, 0, 0, 0.158),
+0px 32px 80px rgba(0, 0, 0, 0.22)`,
+        }}
         transition={spring}
         style={{
+          touchAction: "none",
           perspective: "1000px",
           transformStyle: "preserve-3d",
           width: "100%",

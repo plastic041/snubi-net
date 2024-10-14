@@ -1,4 +1,6 @@
+// https://poke-holo.simey.me/
 import {
+  easeOut,
   motion,
   useAnimationFrame,
   useMotionTemplate,
@@ -22,25 +24,38 @@ type HeroProps = {
 export function Hero({ children }: HeroProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
+  const mousePercentX = useMotionValue(0);
+  const mousePercentY = useMotionValue(0);
+  const translateX = useSpring(0, spring);
+  const translateY = useSpring(0, spring);
 
-  // https://poke-holo.simey.me/
-  const glarePositionTemplate = useMotionTemplate`radial-gradient(farthest-corner circle at ${pointerX}px ${pointerY}px, hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%, hsla(0, 0%, 0%, 0.5) 90%)`;
+  const overlayTemplate = useMotionTemplate`
+radial-gradient(
+  circle 300px at ${mousePercentX}% ${mousePercentY}%,
+  #d8d8d8, #9d9d9d, #666666, #343434, #000000
+),
+url("/images/gradient.jpg")
+`;
+  const glareTemplate = useMotionTemplate`radial-gradient(
+  circle 600px at ${mousePercentX}% ${mousePercentY}%,
+  #fff 0%, 46%, #ccc 69% 69%
+)`;
+  const overlayPositionTemplate = useMotionTemplate`center, ${mousePercentX}% -${mousePercentY}%`;
+
+  const overlayOpacity = useSpring(0);
 
   const rotateXSpring = useSpring(0, spring);
   const rotateYSpring = useSpring(0, spring);
-
-  const rotateZSpring = useMotionValue(0);
+  const rotateZ = useMotionValue(0);
 
   useAnimationFrame((time, _delta) => {
     if (ref.current === null) {
       return;
     }
 
-    const rotateZ = Math.sin(time * 0.0012);
+    const _rotateZ = Math.sin(time * 0.0012);
 
-    rotateZSpring.set(rotateZ);
+    rotateZ.set(_rotateZ);
   });
 
   useEffect(() => {
@@ -59,18 +74,35 @@ export function Hero({ children }: HeroProps) {
       const mouseX = clientX - left;
       const mouseY = clientY - top;
 
-      const _rotateY = (mouseX / width - 0.5) * -30;
-      const _rotateX = (mouseY / height - 0.5) * 30;
+      const percentX = mouseX / width;
+      const percentY = mouseY / height;
 
-      pointerX.set(mouseX);
-      pointerY.set(mouseY);
+      const _rotateY = (percentX - 0.5) * -30;
+      const _rotateX = (percentY - 0.5) * 30;
+
+      const _mousePercentX = percentX * 100;
+      const _mousePercentY = percentY * 100;
+
       rotateXSpring.set(_rotateX);
       rotateYSpring.set(_rotateY);
+
+      mousePercentX.set(_mousePercentX);
+      mousePercentY.set(_mousePercentY);
+
+      const MAX = 30;
+
+      translateX.set(easeOut(percentX) * MAX);
+      translateY.set(easeOut(percentY) * MAX);
+
+      overlayOpacity.set(0.8);
     };
 
     const handleMouseEnd = () => {
       rotateXSpring.set(0);
       rotateYSpring.set(0);
+      overlayOpacity.set(0);
+      translateX.set(0);
+      translateY.set(0);
     };
 
     const element = ref.current;
@@ -112,30 +144,38 @@ export function Hero({ children }: HeroProps) {
           height: "100%",
           rotateX: rotateXSpring,
           rotateY: rotateYSpring,
-          rotateZ: rotateZSpring,
+          rotateZ: rotateZ,
+          x: translateX,
+          y: translateY,
           display: "grid",
         }}
       >
-        {/* <img
-          src="/images/hero-kami.jpeg"
-          width={WIDTH}
-          height={HEIGHT}
-          alt="턱시도 고양이 까미"
-          style={{
-            gridArea: "1 / 1",
-          }}
-        /> */}
         {children}
         <motion.div
           id="glare"
-          whileHover={{ opacity: 1 }}
           style={{
+            backgroundImage: glareTemplate,
+            width: "100%",
+            height: "100%",
             gridArea: "1 / 1",
-            backgroundImage: glarePositionTemplate,
-            opacity: 0,
-            mixBlendMode: "overlay",
-            width: WIDTH,
-            height: HEIGHT,
+            objectFit: "cover",
+            backgroundBlendMode: "multiply",
+            mixBlendMode: "multiply",
+            opacity: overlayOpacity,
+          }}
+        />
+        <motion.div
+          id="foil"
+          style={{
+            backgroundImage: overlayTemplate,
+            width: "100%",
+            height: "100%",
+            gridArea: "1 / 1",
+            backgroundSize: "100%, 200%",
+            backgroundBlendMode: "multiply, screen",
+            mixBlendMode: "color-dodge",
+            backgroundPosition: overlayPositionTemplate,
+            opacity: overlayOpacity,
           }}
         />
       </motion.div>

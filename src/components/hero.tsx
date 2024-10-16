@@ -2,6 +2,7 @@
 import {
   easeOut,
   motion,
+  useReducedMotion,
   useAnimationFrame,
   useMotionTemplate,
   useMotionValue,
@@ -27,6 +28,16 @@ type HeroProps = {
   children: ReactNode;
 };
 export function Hero({ children }: HeroProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  if (shouldReduceMotion) {
+    return <div className="rounded-md">{children}</div>;
+  }
+
+  return <HeroCardMotion>{children}</HeroCardMotion>;
+}
+
+function HeroCardMotion({ children }: HeroProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const mousePercentX = useMotionValue(0);

@@ -81,7 +81,7 @@ export const getNowPlaying = async (): Promise<
       songUrl,
       title,
     };
-  } catch (error) {
+  } catch {
     return false;
   }
 };

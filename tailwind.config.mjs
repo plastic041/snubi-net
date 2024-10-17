@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const {
-  iconsPlugin,
-  getIconCollections,
-} = require("@egoist/tailwindcss-icons");
-const typography = require("@tailwindcss/typography");
+import { iconsPlugin, getIconCollections } from "@egoist/tailwindcss-icons";
+import typography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
 export default {

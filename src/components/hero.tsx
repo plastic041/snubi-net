@@ -64,7 +64,7 @@ url("/images/gradient.jpg")
   const rotateYSpring = useSpring(0, spring);
   const rotateZ = useMotionValue(0);
 
-  useAnimationFrame((time, _delta) => {
+  useAnimationFrame((time) => {
     if (ref.current === null) {
       return;
     }

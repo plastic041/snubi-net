@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "bun eslint --ext .tsx,.ts,.astro src",
+    "lint": "pnpm eslint",
     "test": "playwright test",
     "astro": "astro"
   },
@@ -28,6 +28,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.12.0",
     "@playwright/test": "^1.48.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.7.5",
@@ -38,6 +40,7 @@
     "eslint": "^9.12.0",
     "eslint-plugin-astro": "^1.2.4",
     "eslint-plugin-react": "^7.37.1",
+    "globals": "^15.11.0",
     "playwright": "^1.48.0",
     "typescript": "^5.6.3"
   },

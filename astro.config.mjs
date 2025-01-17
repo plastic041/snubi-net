@@ -9,7 +9,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://snubi-net.vercel.app/",
   integrations: [tailwind(), react(), mdx(), sitemap()],
-  output: "hybrid",
+  output: "static",
   adapter: vercel({
     webAnalytics: { enabled: true },
   }),

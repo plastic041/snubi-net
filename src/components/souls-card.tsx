@@ -143,7 +143,9 @@ export const SoulsCard = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="description">설명</label>
+          <label htmlFor="description" style={{ fontFamily: FONT_FAMILY }}>
+            설명
+          </label>
           <textarea
             className="h-40 border bg-white p-2"
             id="description"

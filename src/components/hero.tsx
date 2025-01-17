@@ -7,7 +7,7 @@ import {
   useMotionTemplate,
   useMotionValue,
   useSpring,
-} from "framer-motion";
+} from "motion/react";
 import { useEffect, useRef, type ReactNode } from "react";
 
 const WIDTH = 300;

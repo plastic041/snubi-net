@@ -172,6 +172,7 @@ export const DestinyCard = () => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value as DestinyWeapon["name"])}
+            autoComplete="off"
           />
         </div>
         <div className="flex flex-col">
@@ -239,6 +240,7 @@ export const DestinyCard = () => {
             type="number"
             value={level}
             onChange={(e) => setLevel(Number(e.target.value))}
+            autoComplete="off"
           />
         </div>
         <div className="flex flex-col">

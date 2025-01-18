@@ -18,7 +18,7 @@ const frontmatters = await Astro.glob<Frontmatter>(
 <MainLayout
   title="Snubi.net - 글"
   description="Snubi.net의 글 목록입니다."
-  image="https://snubi-net.vercel.app/images/hero-cat.png"
+  image="https://snubi-net.vercel.app/images/hero-kami.png"
 >
   <ul class="flex flex-col gap-8 p-4" aria-label="글 목록">
     {frontmatters.map((fm) => <PostItem frontmatter={fm} />)}

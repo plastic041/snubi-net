@@ -29,20 +29,36 @@ function useSudoku() {
   return context;
 }
 
-function init() {
-  const game =
-    "080200400570000100002300000820090005000715000700020041000006700003000018007009050";
-
-  const values = game.split("").map((c) => Number(c));
+function getGameValues(gameString: string) {
+  const values = gameString.split("").map((c) => Number(c));
 
   return values;
 }
 
 export function SudokuPage() {
-  const [values, setValues] = useState<Sudoku["values"]>(init());
+  const [gameString, setGameString] = useState(
+    "080200400570000100002300000820090005000715000700020041000006700003000018007009050"
+  );
+  const [values, setValues] = useState<Sudoku["values"]>(
+    getGameValues(gameString)
+  );
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-8">
+      <input
+        className="border w-full"
+        type="text"
+        inputMode="numeric"
+        value={gameString}
+        onChange={(e) => {
+          const value = e.target.value.trim();
+          if (value.length === 81) {
+            setGameString(value);
+            setValues(getGameValues(value));
+          }
+        }}
+      />
+
       <SudokuContext.Provider value={{ values, setValues }}>
         <Game />
       </SudokuContext.Provider>

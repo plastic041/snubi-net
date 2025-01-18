@@ -152,16 +152,6 @@ function Cell({ value, coord }: CellProps) {
     invalidValues
   );
 
-  useEffect(() => {
-    if (validValues.size === 1) {
-      setValues((prev) => {
-        const newValues = [...prev];
-        newValues[coordToIndex(coord)] = [...validValues][0];
-        return newValues;
-      });
-    }
-  }, [setValues, values]);
-
   return (
     <div className="size-20 border grid">
       <div className="grid grid-cols-3 grid-rows-3 place-content-center text-gray-500">

@@ -125,8 +125,6 @@ function getValueByCoord(values: number[], coord: Coord): number {
   return values[index];
 }
 
-const NUMBERS = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
 type CellProps = {
   value: number;
   coord: Coord;
@@ -150,7 +148,9 @@ function Cell({ value, coord }: CellProps) {
     ...getVertical(coord).map((c) => getValueByCoord(values, c)),
   ]);
 
-  const validValues = NUMBERS.difference(invalidValues);
+  const validValues = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]).difference(
+    invalidValues
+  );
 
   useEffect(() => {
     if (validValues.size === 1) {

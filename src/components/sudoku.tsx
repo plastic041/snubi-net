@@ -1,7 +1,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
   type Dispatch,
   type SetStateAction,
@@ -45,19 +44,28 @@ export function SudokuPage() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-8">
-      <input
-        className="border w-full"
-        type="text"
-        inputMode="numeric"
-        value={gameString}
-        onChange={(e) => {
-          const value = e.target.value.trim();
-          if (value.length === 81) {
+      <div className="flex flex-row gap-2 w-full">
+        <input
+          className="border w-full px-2 font-mono"
+          type="text"
+          inputMode="numeric"
+          value={gameString}
+          onChange={(e) => {
+            const value = e.target.value.trim();
             setGameString(value);
-            setValues(getGameValues(value));
-          }
-        }}
-      />
+          }}
+        />
+        <button
+          className="border grid place-content-center size-10 shrink-0 bg-white hover:bg-gray-200"
+          onClick={() => {
+            if (gameString.length === 81) {
+              setValues(getGameValues(gameString));
+            }
+          }}
+        >
+          <span className="i-tabler-arrow-right text-xl" />
+        </button>
+      </div>
 
       <SudokuContext.Provider value={{ values, setValues }}>
         <Game />
@@ -80,7 +88,7 @@ function Game() {
   const { values } = useSudoku();
 
   return (
-    <div className="grid grid-cols-9 grid-rows-9 border">
+    <div className="overflow-auto max-w-full place-items-start grid grid-cols-[repeat(9,_minmax(5rem,_1fr))] grid-rows-[repeat(9,_minmax(5rem,_1fr))] border-gray-500 border data-[cell-x=2]:*:border-r-gray-500 data-[cell-x=3]:*:border-l-0 data-[cell-x=5]:*:border-r-gray-500 data-[cell-x=6]:*:border-l-0 data-[cell-y=2]:*:border-b-gray-500 data-[cell-y=5]:*:border-b-gray-500 data-[cell-y=3]:*:border-t-0 data-[cell-y=6]:*:border-t-0">
       {values.map((value, index) => (
         <Cell key={index} value={value} coord={indexToCoord(index)} />
       ))}
@@ -134,7 +142,11 @@ function Cell({ value, coord }: CellProps) {
 
   if (value !== 0) {
     return (
-      <div className="size-20 border grid">
+      <div
+        className="size-full border grid"
+        data-cell-y={coord.y}
+        data-cell-x={coord.x}
+      >
         <div className="text-xl font-bold grid place-content-center">
           {value}
         </div>
@@ -153,7 +165,11 @@ function Cell({ value, coord }: CellProps) {
   );
 
   return (
-    <div className="size-20 border grid">
+    <div
+      className="size-full border grid"
+      data-cell-y={coord.y}
+      data-cell-x={coord.x}
+    >
       <div className="grid grid-cols-3 grid-rows-3 place-content-center text-gray-500">
         {[...validValues].map((v, index) => (
           <button

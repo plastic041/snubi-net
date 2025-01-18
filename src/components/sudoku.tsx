@@ -14,6 +14,10 @@ type Coord = {
 type Sudoku = {
   values: number[];
   setValues: Dispatch<SetStateAction<Sudoku["values"]>>;
+  currentHoveringValue: number | null;
+  setCurrentHoveringValue: Dispatch<
+    SetStateAction<Sudoku["currentHoveringValue"]>
+  >;
 };
 
 const SudokuContext = createContext<Sudoku | null>(null);
@@ -41,6 +45,8 @@ export function SudokuPage() {
   const [values, setValues] = useState<Sudoku["values"]>(
     getGameValues(gameString)
   );
+  const [currentHoveringValue, setCurrentHoveringValue] =
+    useState<Sudoku["currentHoveringValue"]>(null);
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 p-8">
@@ -67,7 +73,14 @@ export function SudokuPage() {
         </button>
       </div>
 
-      <SudokuContext.Provider value={{ values, setValues }}>
+      <SudokuContext.Provider
+        value={{
+          values,
+          setValues,
+          currentHoveringValue,
+          setCurrentHoveringValue,
+        }}
+      >
         <Game />
       </SudokuContext.Provider>
     </div>
@@ -138,14 +151,16 @@ type CellProps = {
   coord: Coord;
 };
 function Cell({ value, coord }: CellProps) {
-  const { values, setValues } = useSudoku();
+  const { values, setValues, currentHoveringValue, setCurrentHoveringValue } =
+    useSudoku();
 
   if (value !== 0) {
     return (
       <div
-        className="size-full border grid"
+        className="size-full border grid data-[is-current-hovering=true]:bg-blue-200"
         data-cell-y={coord.y}
         data-cell-x={coord.x}
+        data-is-current-hovering={currentHoveringValue === value}
       >
         <div className="text-xl font-bold grid place-content-center">
           {value}
@@ -173,13 +188,20 @@ function Cell({ value, coord }: CellProps) {
       <div className="grid grid-cols-3 grid-rows-3 place-content-center text-gray-500">
         {[...validValues].map((v, index) => (
           <button
-            className="grid place-content-center bg-white hover:bg-gray-200"
+            className="grid place-content-center bg-white hover:bg-gray-200 data-[is-current-hovering=true]:bg-blue-100"
+            data-is-current-hovering={currentHoveringValue === v}
             onClick={() => {
               setValues((prev) => {
                 const newValues = [...prev];
                 newValues[coordToIndex(coord)] = v;
                 return newValues;
               });
+            }}
+            onMouseEnter={() => {
+              setCurrentHoveringValue(v);
+            }}
+            onMouseLeave={() => {
+              setCurrentHoveringValue(null);
             }}
             key={index}
           >

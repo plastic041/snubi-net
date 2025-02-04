@@ -1,0 +1,12 @@
+---
+import MainLayout from "~/layouts/main-layout.astro";
+import { ThreePage } from "~/components/three.tsx";
+---
+
+<MainLayout
+  title="Snubi.net"
+  description="Snubi.net"
+  image="https://snubi-net.vercel.app/images/hero-kami.png"
+>
+  <ThreePage client:load />
+</MainLayout>

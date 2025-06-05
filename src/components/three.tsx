@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-
 import { Canvas, useThree } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 import { useControls } from "leva";

@@ -1,0 +1,16 @@
+---
+import { GrubList } from "~/components/grub";
+
+const GRUBS = [
+  { label: "Windows 11" },
+  { label: "Windows 12" },
+  { label: "Windows 13" },
+  { label: "Windows 14" },
+  { label: "Windows 15" },
+  { label: "Windows 06.16" },
+];
+---
+
+<main class="h-dvh w-screen flex items-center justify-center">
+  <GrubList grubs={GRUBS} client:load />
+</main>

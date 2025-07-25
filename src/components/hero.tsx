@@ -1,230 +1,221 @@
-// https://poke-holo.simey.me/
-import {
-  easeOut,
-  motion,
-  useReducedMotion,
-  useAnimationFrame,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-} from "motion/react";
-import { useEffect, useRef, type ReactNode } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 const WIDTH = 300;
 const HEIGHT = 400;
-const MAX_FOLLOW_DISTANCE = 30;
-
-const spring = {
-  type: "spring",
-  stiffness: 1000,
-  damping: 30,
-} as const;
-
-function isTouchDevice() {
-  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
-}
+const MAX_FOLLOW_DISTANCE = 0.15;
 
 type HeroProps = {
-  children: ReactNode;
+  imageSrc: string;
 };
-export function Hero({ children }: HeroProps) {
-  const shouldReduceMotion = useReducedMotion();
 
-  if (shouldReduceMotion) {
-    return <div className="rounded-md">{children}</div>;
-  }
-
-  return <HeroCardMotion>{children}</HeroCardMotion>;
+export function Hero({ imageSrc }: HeroProps) {
+  return <HeroCardThree imageSrc={imageSrc} />;
 }
 
-function HeroCardMotion({ children }: HeroProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
+function HeroCard3D({ imageSrc }: HeroProps) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const groupRef = useRef<THREE.Group>(null);
 
-  const mousePercentX = useMotionValue(0);
-  const mousePercentY = useMotionValue(0);
-  const translateX = useSpring(0, spring);
-  const translateY = useSpring(0, spring);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
-  const overlayTemplate = useMotionTemplate`
-radial-gradient(
-  circle 300px at ${mousePercentX}% ${mousePercentY}%,
-  #d8d8d8, #9d9d9d, #666666, #343434, #000000
-),
-url("/images/gradient.jpg")
-`;
-  const glareTemplate = useMotionTemplate`radial-gradient(
-  circle 600px at ${mousePercentX}% ${mousePercentY}%,
-  #fff 0%, 46%, #ccc 69% 69%
-)`;
-  const overlayPositionTemplate = useMotionTemplate`center, ${mousePercentX}% -${mousePercentY}%`;
+  const targetRotation = useRef({ x: 0, y: 0, z: 0 });
+  const targetPosition = useRef({ x: 0, y: 0 });
+  const targetScale = useRef(1);
 
-  const overlayOpacity = useSpring(0);
+  const texture = useLoader(THREE.TextureLoader, imageSrc);
 
-  const rotateXSpring = useSpring(0, spring);
-  const rotateYSpring = useSpring(0, spring);
-  const rotateZ = useMotionValue(0);
-
-  useAnimationFrame((time) => {
-    if (ref.current === null) {
-      return;
+  const vertexShader = `
+    varying vec2 vUv;
+    
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
+  `;
 
-    const _rotateZ = Math.sin(time * 0.0012);
-
-    rotateZ.set(_rotateZ);
-  });
-
-  useEffect(() => {
-    if (ref.current === null) {
-      return;
+  // Corrected Fragment Shader
+  const fragmentShader = `
+    uniform float uTime;
+    uniform vec2 uMouse;
+    uniform float uOpacity;
+    varying vec2 vUv;
+    
+    void main() {
+      vec2 center = uMouse;
+      float dist = distance(vUv, center);
+      
+      // Radial gradient for glare effect
+      float glare = 1.0 - smoothstep(0.0, 0.8, dist);
+      glare = pow(glare, 2.0);
+      
+      // Holographic rainbow effect
+      float angle = atan(vUv.y - center.y, vUv.x - center.x);
+      float rainbow = sin(angle * 3.0 + uTime * 2.0) * 0.5 + 0.5;
+      
+      // Create holographic colors
+      vec3 holo1 = vec3(1.0, 0.2, 0.8); // Pink
+      vec3 holo2 = vec3(0.2, 0.8, 1.0); // Cyan
+      vec3 holo3 = vec3(0.8, 1.0, 0.2); // Yellow-green
+      
+      vec3 holoColor = mix(holo1, holo2, rainbow);
+      holoColor = mix(holoColor, holo3, sin(rainbow * 2.0) * 0.5 + 0.5);
+      
+      // Add shimmer waves
+      float shimmer = sin(uTime * 3.0 + vUv.x * 15.0 + vUv.y * 10.0) * 0.3 + 0.7;
+      
+      // Combine effects - Apply uOpacity to the color
+      vec3 finalColor = holoColor * shimmer * glare * uOpacity;
+      float alpha = glare * uOpacity;
+      
+      gl_FragColor = vec4(finalColor, alpha);
     }
+  `;
 
-    const handleMouseMove = (event: MouseEvent | TouchEvent) => {
-      const element = ref.current;
-      if (!element) {
-        return;
-      }
+  const materialUniforms = useMemo(
+    () => ({
+      uTime: { value: 0.0 },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uOpacity: { value: 1.0 },
+    }),
+    []
+  );
 
-      const { clientX, clientY } = (() => {
-        if ("touches" in event) {
-          return {
-            clientX: event.touches[0].clientX,
-            clientY: event.touches[0].clientY,
-          };
-        }
-        return {
-          clientX: event.clientX,
-          clientY: event.clientY,
-        };
-      })();
-      const { left, top, width, height } = element.getBoundingClientRect();
-      const mouseX = clientX - left;
-      const mouseY = clientY - top;
+  useFrame(({ clock, pointer }) => {
+    if (!groupRef.current || !materialRef.current) return;
 
-      const percentX = mouseX / width;
-      const percentY = mouseY / height;
+    const time = clock.getElapsedTime();
 
-      const _rotateY = (percentX - 0.5) * -30;
-      const _rotateX = (percentY - 0.5) * 30;
+    // Subtle rotation animation
+    targetRotation.current.z = Math.sin(time * 0.7) * 0.02;
 
-      const _mousePercentX = percentX * 100;
-      const _mousePercentY = percentY * 100;
+    // Mouse interaction
+    if (isHovered) {
+      const mouseX = (pointer.x + 1) / 2; // Convert from -1,1 to 0,1
+      const mouseY = (pointer.y + 1) / 2;
 
-      rotateXSpring.set(_rotateX);
-      rotateYSpring.set(_rotateY);
+      targetRotation.current.y = (mouseX - 0.5) * -0.5;
+      targetRotation.current.x = (mouseY - 0.5) * 0.5;
 
-      mousePercentX.set(_mousePercentX);
-      mousePercentY.set(_mousePercentY);
+      targetPosition.current.x = (mouseX - 0.5) * MAX_FOLLOW_DISTANCE;
+      targetPosition.current.y = (mouseY - 0.5) * MAX_FOLLOW_DISTANCE;
 
-      translateX.set((easeOut(percentX) - 0.5) * MAX_FOLLOW_DISTANCE);
-      translateY.set((easeOut(percentY) - 0.5) * MAX_FOLLOW_DISTANCE);
-
-      overlayOpacity.set(0.8);
-    };
-
-    const handleMouseEnd = () => {
-      rotateXSpring.set(0);
-      rotateYSpring.set(0);
-      overlayOpacity.set(0);
-      translateX.set(0);
-      translateY.set(0);
-    };
-
-    if (isTouchDevice()) {
-      const element = ref.current;
-      element.addEventListener("touchmove", handleMouseMove);
-      element.addEventListener("touchend", handleMouseEnd);
-
-      return () => {
-        element.removeEventListener("touchmove", handleMouseMove);
-        element.removeEventListener("touchend", handleMouseEnd);
-      };
+      materialRef.current.uniforms.uMouse.value.set(mouseX, mouseY);
+      materialRef.current.uniforms.uOpacity.value = 0.8;
     } else {
-      const element = ref.current;
-      element.addEventListener("mousemove", handleMouseMove);
-      element.addEventListener("mouseleave", handleMouseEnd);
+      targetRotation.current.x = 0;
+      targetRotation.current.y = 0;
+      targetPosition.current.x = 0;
+      targetPosition.current.y = 0;
 
-      return () => {
-        element.removeEventListener("mousemove", handleMouseMove);
-        element.removeEventListener("mouseleave", handleMouseEnd);
-      };
+      materialRef.current.uniforms.uOpacity.value = 0;
     }
+
+    if (isHovered || isPressed) {
+      targetScale.current = 1.1;
+    } else {
+      targetScale.current = 1;
+    }
+
+    // Smooth interpolation (Lerp)
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(
+      groupRef.current.rotation.x,
+      targetRotation.current.x,
+      0.1
+    );
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      targetRotation.current.y,
+      0.1
+    );
+    groupRef.current.rotation.z = THREE.MathUtils.lerp(
+      groupRef.current.rotation.z,
+      targetRotation.current.z,
+      0.1
+    );
+
+    groupRef.current.position.x = THREE.MathUtils.lerp(
+      groupRef.current.position.x,
+      targetPosition.current.x,
+      0.1
+    );
+    groupRef.current.position.y = THREE.MathUtils.lerp(
+      groupRef.current.position.y,
+      targetPosition.current.y,
+      0.1
+    );
+
+    groupRef.current.scale.setScalar(
+      THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale.current, 0.1)
+    );
+
+    // Update shader uniforms
+    materialRef.current.uniforms.uTime.value = time;
   });
+
+  const handlePointerEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handlePointerLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handlePointerDown = () => {
+    setIsPressed(true);
+  };
+
+  const handlePointerUp = () => {
+    setIsPressed(false);
+  };
 
   return (
-    <div
-      style={{
-        perspective: "1000px",
-        transformStyle: "preserve-3d",
-        width: WIDTH,
-        height: HEIGHT,
-      }}
+    <group
+      ref={groupRef}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
     >
-      <motion.div
-        className="rounded-md overflow-hidden"
-        ref={ref}
-        whileHover={{
-          scale: 1.1,
-          boxShadow: `0px 0.9px 2.2px rgba(0, 0, 0, 0.062),
-0px 2.1px 5.3px rgba(0, 0, 0, 0.089),
-0px 4px 10px rgba(0, 0, 0, 0.11),
-0px 7.1px 17.9px rgba(0, 0, 0, 0.131),
-0px 13.4px 33.4px rgba(0, 0, 0, 0.158),
-0px 32px 80px rgba(0, 0, 0, 0.22)`,
-        }}
-        whileTap={{
-          scale: 1.1,
-          boxShadow: `0px 0.9px 2.2px rgba(0, 0, 0, 0.062),
-0px 2.1px 5.3px rgba(0, 0, 0, 0.089),
-0px 4px 10px rgba(0, 0, 0, 0.11),
-0px 7.1px 17.9px rgba(0, 0, 0, 0.131),
-0px 13.4px 33.4px rgba(0, 0, 0, 0.158),
-0px 32px 80px rgba(0, 0, 0, 0.22)`,
-        }}
-        transition={spring}
+      {/* Image texture layer */}
+      <mesh ref={meshRef}>
+        <planeGeometry args={[3, 4]} />
+        <meshBasicMaterial map={texture} />
+      </mesh>
+
+      {/* Holographic overlay */}
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[3, 4]} />
+        <shaderMaterial
+          ref={materialRef}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
+          transparent
+          blending={THREE.AdditiveBlending}
+          uniforms={materialUniforms}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function HeroCardThree({ imageSrc }: HeroProps) {
+  return (
+    <div style={{ width: WIDTH, height: HEIGHT, position: "relative" }}>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 50 }}
         style={{
-          touchAction: "none",
-          perspective: "1000px",
-          transformStyle: "preserve-3d",
           width: "100%",
           height: "100%",
-          rotateX: rotateXSpring,
-          rotateY: rotateYSpring,
-          rotateZ: rotateZ,
-          x: translateX,
-          y: translateY,
-          display: "grid",
+          borderRadius: "6px",
+          overflow: "hidden",
         }}
       >
-        {children}
-        <motion.div
-          id="glare"
-          style={{
-            backgroundImage: glareTemplate,
-            width: "100%",
-            height: "100%",
-            gridArea: "1 / 1",
-            objectFit: "cover",
-            backgroundBlendMode: "multiply",
-            mixBlendMode: "multiply",
-            opacity: overlayOpacity,
-          }}
-        />
-        <motion.div
-          id="foil"
-          style={{
-            backgroundImage: overlayTemplate,
-            width: "100%",
-            height: "100%",
-            gridArea: "1 / 1",
-            backgroundSize: "100%, 200%",
-            backgroundBlendMode: "multiply, screen",
-            mixBlendMode: "color-dodge",
-            backgroundPosition: overlayPositionTemplate,
-            opacity: overlayOpacity,
-          }}
-        />
-      </motion.div>
+        <HeroCard3D imageSrc={imageSrc} />
+      </Canvas>
     </div>
   );
 }

@@ -1,21 +1,9 @@
-import { Canvas, useThree } from "@react-three/fiber";
-import { useSpring, animated } from "@react-spring/three";
-import { useControls } from "leva";
-import { SoftShadows } from "@react-three/drei";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
+import { useMemo, useRef } from "react";
 
 export function ThreePage() {
-  const spotCtl = useControls("Spot Light", {
-    intensity: 1,
-    position: {
-      x: 0,
-      y: 2,
-      z: 3,
-    },
-    castShadow: true,
-    angle: 0.1,
-    penumbra: 0,
-  });
-
   return (
     <div className="w-full h-[calc(100vh-4rem)]">
       <Canvas
@@ -25,93 +13,106 @@ export function ThreePage() {
           fov: 60,
         }}
       >
-        <mesh position={[0, 0, 0]} scale={[20, 20, 1]} receiveShadow>
-          <boxGeometry args={[2, 2, 0.1]} />
-          <meshStandardMaterial color="white" />
-        </mesh>
-        <Card />
-        <SoftShadows size={100} samples={50} />
-        <ambientLight intensity={1} />
-        <pointLight color="salmon" position={[-1, 1, 2]} intensity={15} />
-        <directionalLight
-          shadow-mapSize={[2048, 2048]}
-          castShadow={spotCtl.castShadow}
-          shadow-camera-top={4}
-          shadow-camera-bottom={-4}
-          shadow-camera-left={-4}
-          shadow-camera-right={4}
-          position={[
-            spotCtl.position.x,
-            spotCtl.position.y,
-            spotCtl.position.z,
-          ]}
-          color="white"
-          intensity={spotCtl.intensity}
-        />
+        <ThreeScene />
+
+        <OrbitControls />
       </Canvas>
     </div>
   );
 }
 
-function Card() {
-  const { width, height } = useThree((state) => state.size);
+const holographicVertexShader = `
+varying vec2 vUv;
 
-  const [springs, api] = useSpring(
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const holographicFragmentShader = `
+  uniform float uTime;
+  uniform vec2 uMouse;
+  uniform float uOpacity;
+  varying vec2 vUv;
+  
+  void main() {
+    vec2 center = uMouse;
+    float dist = distance(vUv, center);
+    
+    // Radial gradient for glare effect
+    float glare = 1.0 - smoothstep(0.0, 0.8, dist);
+    glare = pow(glare, 2.0);
+    
+    // Holographic rainbow effect
+    float angle = atan(vUv.y - center.y, vUv.x - center.x);
+    float rainbow = sin(angle * 3.0 + uTime * 2.0) * 0.5 + 0.5;
+    
+    // Create holographic colors
+    vec3 holo1 = vec3(1.0, 0.2, 0.8); // Pink
+    vec3 holo2 = vec3(0.2, 0.8, 1.0); // Cyan
+    vec3 holo3 = vec3(0.8, 1.0, 0.2); // Yellow-green
+    
+    vec3 holoColor = mix(holo1, holo2, rainbow);
+    holoColor = mix(holoColor, holo3, sin(rainbow * 2.0) * 0.5 + 0.5);
+    
+    // Add shimmer waves
+    float shimmer = sin(uTime * 3.0 + vUv.x * 15.0 + vUv.y * 10.0) * 0.3 + 0.7;
+    
+    // Combine effects - Apply uOpacity to the color
+    vec3 finalColor = holoColor * shimmer * glare * uOpacity;
+    float alpha = glare * uOpacity;
+    
+    gl_FragColor = vec4(finalColor, alpha);
+  }
+`;
+
+function ThreeScene() {
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+
+  const texture = useLoader(THREE.TextureLoader, "/images/hero-kami.jpeg");
+
+  const uniforms = useMemo(
     () => ({
-      rotation: [0, 0],
-      position: [0, 0, 0.3],
-      config: (key) => {
-        switch (key) {
-          case "rotation":
-            return {
-              mass: 1,
-              friction: 25,
-              tension: 1000,
-            };
-          case "position":
-            return {
-              mass: 1,
-              friction: 25,
-              tension: 1000,
-
-              // mass: 1,
-              // friction: 1000,
-              // tension: 25,
-            };
-          default:
-            return {};
-        }
-      },
+      uTime: { value: 0.0 },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uOpacity: { value: 1.0 },
     }),
     []
   );
 
-  return (
-    <animated.mesh
-      castShadow
-      onPointerMove={(e) => {
-        const ROT_MULT = 0.3;
-        const POS_MULT = 0.1;
-        const x = (e.offsetX / width) * -2 + 1;
-        const y = (e.offsetY / height) * -2 + 1;
+  useFrame(({ clock, pointer }) => {
+    if (!materialRef.current) {
+      return;
+    }
 
-        api.start({
-          rotation: [y * ROT_MULT, x * ROT_MULT],
-          position: [-x * POS_MULT, y * POS_MULT, 1],
-        });
-      }}
-      onPointerLeave={() => {
-        api.start({
-          rotation: [0, 0],
-          position: [0, 0, 0.3],
-        });
-      }}
-      // @ts-expect-error: Spring type is Vector3 Type (Typescript return error on position)
-      rotation={springs.rotation.to((x, y) => [x, y, 0])}
-      position={springs.position.to((x, y, z) => [x, y, z])}
-    >
-      <boxGeometry args={[2, 2, 0.02]} />
-      <meshStandardMaterial color="lightblue" />
-    </animated.mesh>
+    materialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+
+    const mouseX = (pointer.x + 1) / 2; // Convert from -1,1 to 0,1
+    const mouseY = (pointer.y + 1) / 2;
+
+    materialRef.current.uniforms.uMouse.value.set(mouseX, mouseY);
+  });
+
+  return (
+    <group>
+      <mesh>
+        <planeGeometry args={[3, 4]} />
+        <meshBasicMaterial map={texture} />
+      </mesh>
+
+      <mesh position={[0, 0, 0.01]} rotation={[0, 0, 0]}>
+        <planeGeometry args={[3, 4]} />
+        <shaderMaterial
+          ref={materialRef}
+          vertexShader={holographicVertexShader}
+          fragmentShader={holographicFragmentShader}
+          uniforms={uniforms}
+          transparent
+          blending={THREE.AdditiveBlending}
+          depthWrite={false} // Added for best practice
+        />
+      </mesh>
+    </group>
   );
 }

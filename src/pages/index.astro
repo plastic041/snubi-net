@@ -1,7 +1,6 @@
 ---
 import MainLayout from "~/layouts/main-layout.astro";
 import { Hero } from "../components/hero.tsx";
-import { Image } from "astro:assets";
 ---
 
 <style>
@@ -18,14 +17,6 @@ import { Image } from "astro:assets";
   image="https://snubi-net.vercel.app/images/hero-kami.png"
 >
   <div class="flex flex-col items-center gap-4 p-16">
-    <Hero client:load>
-      <Image
-        src="/images/hero-kami.jpeg"
-        width="300"
-        height="400"
-        alt="턱시도 고양이 까미"
-        style="grid-area: 1 / 1;"
-      />
-    </Hero>
+    <Hero client:only="true" imageSrc="/images/hero-kami.jpeg" />
   </div>
 </MainLayout>
